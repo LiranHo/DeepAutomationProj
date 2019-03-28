@@ -1,0 +1,37 @@
+plugins {
+    id 'java'
+}
+
+group 'com.experitest'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven{
+        url "${STrepository}"
+    }
+    maven {
+        url "http://192.168.1.213:8081/artifactory/libs-release"
+    }
+    maven {
+        url "http://192.168.1.213:8081/artifactory/libs-snapshot"
+    }
+    maven { url "http://repo.maven.apache.org/maven2" }
+
+}
+    
+
+
+dependencies {
+    compile group: 'org.junit.platform', name: 'junit-platform-launcher', version: '1.2.0'
+    compile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.2.0'
+
+    compile group: 'org.springframework', name: 'spring-core', version: '2.5.6'
+    compile 'io.github.glytching:junit-extensions:2.3.0'
+
+    compile group: 'io.appium', name: 'java-client', version: '6.1.0'
+    compile group: 'com.experitest', name: 'appium-seetest-extension', version: '+'
+
+}
