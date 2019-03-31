@@ -2,11 +2,9 @@ package Project.Settings;
 
 import Project.Main;
 
-    public enum CloudUsers {
+public enum CloudUsers {
 
-        Example1("user", "pass", "default", false, "domain", 80),
-        Example2("AccessKey", "default", false, "domain", 80),
-
+    Example("name","pass", "default", false,"111.111.1.111", 80),
 
     ;
 
@@ -29,6 +27,7 @@ import Project.Main;
         this.grid_domain=grid_domain;
         this.grid_port=grid_port;
         this.Authorization="";
+        this.AccessKey="0";
     }
 
     CloudUsers(String userName, String Password , String projectName , Boolean isSecured ,
@@ -40,6 +39,8 @@ import Project.Main;
         this.grid_domain=grid_domain;
         this.grid_port=grid_port;
         this.Authorization=Authorization;
+        this.AccessKey="0";
+
     }
 
     CloudUsers(String AccessKey , String projectName , Boolean isSecured ,
@@ -67,6 +68,7 @@ import Project.Main;
                     ;
     }
 
+
     public String toString(){
         return "## Cloud User: ##"+ Main.delimiter+
                 "userName: "+userName+ Main.delimiter+
@@ -75,6 +77,16 @@ import Project.Main;
                 "grid_domain: "+grid_domain+ Main.delimiter +
                 "grid_port: "+grid_port + Main.delimiter
                 ;
+    }
+
+    public String getUserName(){return userName;}
+    public String getPassword(){return Password;}
+    public String getAccessKey(){return AccessKey;}
+    public String getprojectName(){return projectName;}
+    public String getCloudFullAdress(){
+        String starts="http";
+        if(isSecured) starts+="s";
+        return starts+"://"+grid_domain+":"+grid_port;
     }
 
 }
