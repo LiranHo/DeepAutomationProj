@@ -4,6 +4,7 @@ import Project.Reports.Files;
 import Project.Reports.Reporter;
 import Project.Settings.BeeperControl;
 import Project.Settings.CloudUsers;
+import Project.Settings.ProjectSettingPerUser;
 import Project.Settings.TestSuites;
 import Project.TestWrapper.Device;
 import com.experitest.appium.SeeTestClient;
@@ -191,8 +192,8 @@ public class Main {
 
 
     //**Report**
-    public static String projectBaseDirectory = "E:\\Reports\\Main Project Test Report";
-    public static String Repository_project = "C:\\Users\\liran.hochman\\workspace\\project2";
+    public static String projectBaseDirectory = ProjectSettingPerUser.projectBaseDirectory;
+    //public static String Repository_project = "C:\\Users\\liran.hochman\\workspace\\project2";
     public static String innerDirectoryPath = "";
     public static String startTime;
     public static Reporter report;
