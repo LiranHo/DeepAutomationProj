@@ -24,7 +24,7 @@ public class Test_Simple_1 extends BaseTest {
 
 
     @DisplayName("Test_Simple_web")
-   // @Test
+    @Test
     public void Test_Simple_web() {
         Main.sout("Info!", "Starting test Test_Simple_web for device " + device.getSerialnumber());
 
@@ -34,7 +34,7 @@ public class Test_Simple_1 extends BaseTest {
 
         }
 
-        if(Main.client.isElementFound("native", "xpath=//*[@text='No Thanks']")) {
+        if(client.isElementFound("native", "xpath=//*[@text='No Thanks']")) {
             try {
                 driver.findElement(By.xpath("//*[@text='No Thanks']")).click();
             } catch (Exception e) {

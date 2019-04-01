@@ -45,10 +45,18 @@ public class InitDeviceList {
 
         //print the devices list
         System.out.println("Devices List info: " + delimiter);
+        if(NUMBER_OF_DEVICES_TO_RUN<=0)
         System.out.println("Number of Devices in this run: " + devices.size());
+        else
+            System.out.println("Number of Devices in this run: " + NUMBER_OF_DEVICES_TO_RUN);
         PrintDevicesInfo = "";
         PrintDeviceSN = "";
         for (int i = 0; i < devices.size(); i++) {
+            if(Main.NUMBER_OF_DEVICES_TO_RUN>0){
+                if(i>=Main.NUMBER_OF_DEVICES_TO_RUN){
+                    break;
+                }
+            }
             PrintDevicesInfo += "#" + (i + 1) + " " + devices.get(i).toString() + delimiter + delimiter;
             PrintDeviceSN += devices.get(i).getSerialnumber() + delimiter;
         }

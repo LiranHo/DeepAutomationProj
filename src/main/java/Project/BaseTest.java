@@ -55,6 +55,8 @@ public class BaseTest {
    // protected Client client = null;
 
     protected AppiumDriver driver = null;
+    public static SeeTestClient client = null;
+
     //protected IOSDriver<IOSElement> IOSDriver = null;
     //protected AndroidDriver<AndroidElement> AndroidDriver = null;
     public DesiredCapabilities dc = new DesiredCapabilities();
@@ -163,8 +165,8 @@ public class BaseTest {
         dc.setCapability("reportFormat", "xml");
 
         if (Main.Grid) {
+            ChooseAppDC();
             if (device.isAndroid()) {
-                ChooseAppDC();
 //                dc.setCapability(MobileCapabilityType.APP, "cloud:com.experitest.ExperiBank/.LoginActivity");
 //                dc.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, "com.experitest.ExperiBank");
 //                dc.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, ".LoginActivity");
@@ -180,7 +182,6 @@ public class BaseTest {
 
             }
             else { //Device IOS
-                ChooseAppDC();
 //                    dc.setCapability(MobileCapabilityType.APP, "cloud:com.experitest.ExperiBank");
 //                    dc.setCapability(IOSMobileCapabilityType.BUNDLE_ID, "com.experitest.ExperiBank");
                     Main.sout("Info", "Starting to find IOS device " + device.getSerialnumber());
@@ -195,7 +196,7 @@ public class BaseTest {
                     Main.sout("Info", "Succession to find IOS device " + device.getSerialnumber());
             }
             try {
-                Main.client = new SeeTestClient(driver);
+                client = new SeeTestClient(driver);
             } catch (Exception e) {
                 Main.sout("Exception!","Failed to start SeeTestClient device "+device.getSerialnumber());
             }
@@ -220,7 +221,7 @@ public class BaseTest {
         if(Main.CollectSupportDataVar.compareAndSet(true,false)){ //check if true and than change it to false
             String collectSupportDataPATH = Main.innerDirectoryPath + "\\SupportData" + new SimpleDateFormat("dd.MM.yyyy - HH.mm.ss").format(new java.util.Date()) + ".zip";
             System.out.println("** Start to collectSupportData from beeperControl activation," + Main.delimiter + "collectSupportData Path is: " + collectSupportDataPATH);
-            Main.client.collectSupportData(collectSupportDataPATH, "", "", "", "", "", true, false);
+            client.collectSupportData(collectSupportDataPATH, "", "", "", "", "", true, false);
         }
     }
 

@@ -13,7 +13,7 @@ public enum TestSuites {
     EriBankInstrumented("Project.Tests.EriBank_Tests.Instrumented_Eribank_Tests"),
     WebTests("Project.Tests.WebTests"),
     //AllTest("Project.Tests"),
-    AllTest("Project"),
+    AllTest("Project.Tests"),
     //OneTimeTest(Project.Test_NotInLongRun.RegressionTests_noLongRun.GridTest.class),
     //OneTimeTest_1("Project.Test_NotInLongRun.InstallAndLaunch_Tests.UnlockManyTimes"),
    // LongRunTest_NoRelease(LongRunTestWithoutReleaseOriginal.class),

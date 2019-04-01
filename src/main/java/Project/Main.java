@@ -25,7 +25,7 @@ import static Project.MainWrapper.InitDeviceList.initDevicesList;
 
 public class Main {
     final protected static String RUN_ONE_DEVICE_SN = "14bdd0fd9904";
-    final protected static int NUMBER_OF_DEVICES = 0;
+    public final static int NUMBER_OF_DEVICES_TO_RUN = 0; //choose 0 to run ALL devices
 
     public static void initTheMain() {
 
@@ -46,7 +46,7 @@ public class Main {
 
         //T: 3. Choose the run length (Run by time or choose number of Rounds - Or choose the length time you want)
         Runby_NumberOfRounds = true; /**/
-        NumberOfRoundsToRun = 2;
+        NumberOfRoundsToRun = 20000;
         TimeToRun = 60 * 60 * 3; //Seconds * minutes * hours
         //T: 4. choose classes or packages to run with
         testsSuites = TestSuites.AllTest;
@@ -105,12 +105,22 @@ public class Main {
         ExecutorService executorService = Executors.newCachedThreadPool();
 //        ArrayList<Future> futures = new ArrayList<>();
 
+        int i=0;
         for (Device device : devices) {
-            System.out.println("starting device - " + device.getSerialnumber());
-            Runner r = new Runner(device);
-            System.out.println("Runner is up for device - " + device.getSerialnumber());
+            if(NUMBER_OF_DEVICES_TO_RUN>0) {
+                if( i>=NUMBER_OF_DEVICES_TO_RUN)
+                    break;
+                i++;
+
+            }
+
+                System.out.println("starting device - " + device.getSerialnumber());
+                Runner r = new Runner(device);
+                System.out.println("Runner is up for device - " + device.getSerialnumber());
 //            futures.add(executorService.submit(r));
-            executorService.execute(r);
+                executorService.execute(r);
+
+
         }
 
 
@@ -179,7 +189,6 @@ public class Main {
 
     //**Local**
 //    public static Client client = null;
-    public static SeeTestClient client = null;
     protected AndroidDriver<AndroidElement> driverAndroid = null;
     protected IOSDriver<AndroidElement> driverIOS = null;
 
