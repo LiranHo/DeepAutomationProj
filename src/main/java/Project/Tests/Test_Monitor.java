@@ -13,6 +13,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 
 import static io.appium.java_client.remote.MobileCapabilityType.APP;
@@ -46,7 +47,7 @@ public class Test_Monitor extends BaseTest {
 
         String sub_sessionID = sessionID.split(":")[1];
         try {
-            client.getMonitorsData(Main.innerDirectoryPath+"\\getMonitor\\"+device.getSerialnumber()+"\\"+sub_sessionID+".csv");
+            client.getMonitorsData(Main.innerDirectoryPath+ File.separator+"getMonitor"+File.separator+device.getSerialnumber()+File.separator+""+sub_sessionID+".csv");
         }
         catch (Exception e) {
             e.printStackTrace();

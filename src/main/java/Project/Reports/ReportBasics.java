@@ -9,7 +9,7 @@ public class ReportBasics {
 
     public static PrintWriter CreateReportFile (String Path, String FileName , String FileFormat){
         //create New File
-        File report = new File(Path + "/" + FileName+"."+FileFormat);
+        File report = new File(Path + File.separator + FileName+"."+FileFormat);
         FileWriter fw = null;
         try {
             fw = new FileWriter(report);
