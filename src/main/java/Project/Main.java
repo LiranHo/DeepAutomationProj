@@ -236,8 +236,8 @@ public class Main {
 
     //create new directory, get the directory path and the new folder name
     public static String createNewDir(String path, String folderName) {
-        File newDir = new File(path + "\\" + folderName);
-        String createdPath = path + "\\" + folderName;
+        File newDir = new File(path + File.separator + folderName);
+        String createdPath = path + File.separator + folderName;
         //create
         if (!newDir.exists()) {
             System.out.println("creating directory: " + newDir.getName());
