@@ -55,7 +55,7 @@ public class BaseTest {
    // protected Client client = null;
 
     protected AppiumDriver driver = null;
-    public static SeeTestClient client = null;
+    public SeeTestClient client = null;
 
     //protected IOSDriver<IOSElement> IOSDriver = null;
     //protected AndroidDriver<AndroidElement> AndroidDriver = null;

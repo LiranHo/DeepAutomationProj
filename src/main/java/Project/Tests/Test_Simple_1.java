@@ -41,8 +41,17 @@ public class Test_Simple_1 extends BaseTest {
             }
         }
 
-        new WebDriverWait(driver, 10).until(ExpectedConditions.presenceOfElementLocated(By.name("q")));
-        WebElement searchBar = driver.findElement(By.name("q"));
+        WebElement searchBar;
+        try {
+            new WebDriverWait(driver, 10).until(ExpectedConditions.presenceOfElementLocated(By.name("q")));
+            searchBar= driver.findElement(By.name("q"));
+        } catch (Exception e) {
+            client.report(e.getMessage(),false);
+            driver.quit();
+            Main.sout("Exception | Test_Simple_web ",device.getSerialnumber(),e.getMessage());
+
+            throw e;
+        }
         searchBar.sendKeys("Experitest");
         driver.findElement(By.xpath("//*[@css='BUTTON.Tg7LZd']")).click();
     }
