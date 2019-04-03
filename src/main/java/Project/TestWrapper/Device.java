@@ -10,11 +10,13 @@ public class Device extends Thread{
     private String manufacture;
     private String remote;
     private String reservedtoyou;
+    private String agent;
     private String deviceFolderPath="";
 
 
 
-    public Device(String serialnumber, String name, String os, String version, String model, String category, String manufacture, String remote, String reservedtoyou){
+
+    public Device(String serialnumber, String name, String os, String version, String model, String category, String manufacture, String remote, String reservedtoyou, String agent){
         this.serialnumber =serialnumber;
         this.name =name;
         this.os =os;
@@ -24,10 +26,11 @@ public class Device extends Thread{
         this.manufacture =manufacture;
         this.remote =remote;
         this.reservedtoyou = reservedtoyou;
+        this.agent = agent;
     }
 
     public Device(String serialnumber){
-        this(serialnumber,"","","","","","","","");
+        this(serialnumber,"","","","","","","","","");
     }
 
 
@@ -42,7 +45,8 @@ public class Device extends Thread{
                         "model: "+this.model+delimiter+
                         "category: "+this.category+delimiter+
                         "manufacture: "+this.manufacture+delimiter+
-                        "remote: "+this.remote;
+                        "remote: "+this.remote+
+                        "agent: "+this.agent;
         if(this.remote.equals("true")){deviceParameter+=delimiter+"reservedtoyou: "+this.reservedtoyou;}
 
         return deviceParameter;
@@ -61,6 +65,7 @@ public class Device extends Thread{
     public String getSerialnumber(){
         return this.serialnumber;
     }
+    public String getAgent(){ return this.agent;}
     public String getVersion(){ return this.version;}
     public String getCategory(){ return this.category;}
     public String getManufactor(){ return this.manufacture;}

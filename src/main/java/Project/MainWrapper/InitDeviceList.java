@@ -90,7 +90,8 @@ public class InitDeviceList {
                     eElement.getAttribute("category"),
                     eElement.getAttribute("manufacture"),
                     eElement.getAttribute("remote"),
-                    eElement.getAttribute("reservedtoyou"));
+                    eElement.getAttribute("reservedtoyou"),
+                    eElement.getAttribute("dhminternalhost"));
 //            System.out.println(eElement.getAttribute("serialnumber"));
 
             //if we don't want to use all devices, check if the device is in the list of device

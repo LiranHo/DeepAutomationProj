@@ -33,7 +33,7 @@ public class Reporter extends ReportBasics{
 
     //TODO: fix the report!
     //T: add row to main report
-    public void addRowToReport(String type, String testName, String deviceSN, String status,String testDuring,String SessionID, String reportURL , String exception){
+    public void addRowToReport(String type, String testName, String deviceSN,String Agent, String status,String testDuring,String SessionID, String reportURL , String exception){
         Date currentTime = new Date();
         String line;
         currentTime.getTime();
@@ -41,6 +41,7 @@ public class Reporter extends ReportBasics{
                 type+","+
                 testName+","+
                 deviceSN+","+
+                Agent+","+
                 status+","+
                 testDuring+","+
                 SessionID+","+

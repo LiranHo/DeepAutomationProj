@@ -20,6 +20,7 @@ public class AfterClassExtension implements AfterEachCallback {
         String sessionID = baseTest.sessionID;
         String testName = context.getDisplayName();
         String deviceSN= baseTest.device.getSerialnumber();
+        String Agent = baseTest.device.getAgent();
 
         String reportPath = baseTest.reportURL;
         if(!reportPath.contains("http") && !reportPath.contains("ReportURL")) {
@@ -33,14 +34,14 @@ public class AfterClassExtension implements AfterEachCallback {
         if(testResult.equals(false)){
             System.err.println("afterTestExecution - FAIL \t"+"+Thread.currentThread().getName() "+Thread.currentThread().getName()+"\t devicesn: "+deviceSN);
             String error=executionException.toString().replaceAll("\n"," | ");
-            Main.report.addRowToReport("Report",testName, deviceSN,String.valueOf(testResult), calculateTestDuring(testDuring),sessionID,reportPath,error);
+            Main.report.addRowToReport("Report",testName, deviceSN,Agent,String.valueOf(testResult), calculateTestDuring(testDuring),sessionID,reportPath,error);
 //           System.out.println("the test failed");
             Main.countTests_fail++;
         }
 
         if(testResult.equals(true)){
             System.err.println("afterTestExecution - PASS \t"+"+Thread.currentThread().getName() "+Thread.currentThread().getName()+"\t devicesn: "+deviceSN);
-            Main.report.addRowToReport("Report",testName, deviceSN,String.valueOf(testResult), calculateTestDuring(testDuring),sessionID,reportPath,"");
+            Main.report.addRowToReport("Report",testName, deviceSN,Agent,String.valueOf(testResult), calculateTestDuring(testDuring),sessionID,reportPath,"");
 //            System.out.println("the test passed");
             Main.countTests_pass++;
 

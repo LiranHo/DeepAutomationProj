@@ -60,7 +60,7 @@ public class Main {
         //T: Init reports
         // INIT report and add first raw titles
         report = Reporter.Reporter("MainReport", innerDirectoryPath);
-        report.addRowToReport("Type", "Test Name", "Device SN", "Status", "Test During", "Session ID", "Report URL", "Exception");
+        report.addRowToReport("Type", "Test Name", "Device SN", "Agent","Status", "Test During", "Session ID", "Report URL", "Exception");
         // INIT info file
         infoFile = new Files("Init Info", innerDirectoryPath);
         ErrorFile = new Files("Error File", innerDirectoryPath);
@@ -89,7 +89,7 @@ public class Main {
             System.err.println("Failed to initDevicesList");
             infoFile.addRowToReport(true, "*** Failed to initDevicesList *** " + delimiter + e.getMessage(), true);
             ErrorFile.addRowToReport(true, "*** Failed to initDevicesList *** " + delimiter + e.getMessage(), true);
-            report.addRowToReport("FAILURE", "initDevicesList", "", "Fail", "0", "", "", e.getMessage());
+            report.addRowToReport("FAILURE", "initDevicesList", "", "","Fail", "0", "", "", e.getMessage());
 
             e.printStackTrace();
         }
@@ -279,10 +279,14 @@ public class Main {
 
     }
     public static void sout(String type,String deviceSN, String output)throws NullPointerException { //print and add to file "error file"
-        //TODO: add device serial number
-
-
+        //if using ! in the type - it will be printes in red in the console
+        if(type.toLowerCase().contains("!")){
+            System.err.println(Main.ErrorFile.addRowToReport(type,deviceSN,output));
+        }else
+            System.out.println(Main.ErrorFile.addRowToReport(type,deviceSN,output));
     }
+
+
 
     public static void sout(String type, String output)throws NullPointerException{ //print and add to file "error file"
         //if using ! in the type - it will be printes in red in the console

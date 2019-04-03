@@ -43,6 +43,20 @@ public class Files extends ReportBasics {
         return line;
     }
 
+    public String addRowToReport(String LogType, String DeviceSN,String text){
+        String line="";
+        Date currentTime = new Date();
+        currentTime.getTime();
+        line = "** "+currentTime+"; #"+LogType+"# ; "+DeviceSN+" ; "+text;
+//        System.out.println(line);
+        file.println(line);
+        file.flush();
+
+        return line;
+    }
+
+
+
     public void addRowToReport(boolean addTime, String text, boolean addFailureStamp){
         String line="";
         if(addTime){
