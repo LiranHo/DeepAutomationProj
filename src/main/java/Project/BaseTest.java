@@ -221,6 +221,7 @@ public class BaseTest {
     protected void CollectSupportDataFromBeep(String theClassThatActivateMe) {
         System.out.println("** BeeperControl check in class " + theClassThatActivateMe + " \t Main.CollectSupportDataVar = " + Main.CollectSupportDataVar.get());
         if(Main.CollectSupportDataVar.compareAndSet(true,false)){ //check if true and than change it to false
+            System.out.println("CollectSupportData from device: "+device.getSerialnumber());
             String collectSupportDataPATH = Main.innerDirectoryPath + File.separator+"SupportData" + new SimpleDateFormat("dd.MM.yyyy - HH.mm.ss").format(new java.util.Date()) + ".zip";
             System.out.println("** Start to collectSupportData from beeperControl activation," + Main.delimiter + "collectSupportData Path is: " + collectSupportDataPATH);
             client.collectSupportData(collectSupportDataPATH, "", "", "", "", "", true, false);

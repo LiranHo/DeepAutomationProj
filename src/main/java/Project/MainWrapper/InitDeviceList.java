@@ -34,8 +34,13 @@ public class InitDeviceList {
 //            client.releaseClient();
 
         } else if (Grid) {
-            GridClient gridClient = new GridClient(cloudUser.userName, cloudUser.Password, cloudUser.projectName, cloudUser.grid_domain, cloudUser.grid_port, cloudUser.isSecured);
-            devices = getDevices(gridClient.getDevicesInformation());
+            GridClient gridClient=null;
+            if(cloudUser.getAccessKey().equals("0")) {
+                gridClient = new GridClient(cloudUser.userName, cloudUser.Password, cloudUser.projectName, cloudUser.grid_domain, cloudUser.grid_port, cloudUser.isSecured);
+            }else {
+                gridClient = new GridClient(cloudUser.AccessKey, cloudUser.grid_domain, cloudUser.grid_port, cloudUser.isSecured);
+            }
+                devices = getDevices(gridClient.getDevicesInformation());
 
 
 //           gridClient = new GridClient(userName, Password, projectName, grid_domain, grid_port, isSecured);

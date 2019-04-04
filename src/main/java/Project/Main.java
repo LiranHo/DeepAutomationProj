@@ -212,7 +212,7 @@ public class Main {
     public static int countTests_fail = 0;
     public static int countTests_pass = 0;
     private static BeeperControl beep;
-    final public static int CollectEveryX_inMin=20; //Optimal is 30 MIN
+    final public static int CollectEveryX_inMin=30; //Optimal is 30 MIN
     public static AtomicBoolean CollectSupportDataVar = new AtomicBoolean(false);
     public static String PrintDevicesInfo;
     public static String PrintDeviceSN;
@@ -262,7 +262,7 @@ public class Main {
 
     //run collect support data only if the test is long enough
     private static void collectSupportData() { //with beep
-        if ((Runby_NumberOfRounds && NumberOfRoundsToRun >= 30) || (!Runby_NumberOfRounds && TimeToRun >= (60 * 60 * 2))) {
+        if ((Runby_NumberOfRounds && NumberOfRoundsToRun >= 10) || (!Runby_NumberOfRounds && TimeToRun >= (60 * 60 * 2))) {
 
 //            CollectSupportDataVar=true;
             CollectSupportDataVar.set(true);

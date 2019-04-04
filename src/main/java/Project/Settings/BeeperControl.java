@@ -35,6 +35,7 @@ public class BeeperControl {
 //                Main.ErrorFile.addRowToReport("Beep",errorOutput);
 
         };
+        //scheduler.scheduleAtFixedRate(beeper, 10, Main.CollectEveryX_inMin, MINUTES);
         scheduler.scheduleAtFixedRate(beeper, 10, Main.CollectEveryX_inMin, MINUTES);
 //        beeperHandle = scheduler.scheduleAtFixedRate(beeper, 10, Main.CollectEveryX_inMin, MINUTES);
         //scheduler.scheduleAtFixedRate(beeper, 10, 10, SECONDS);
