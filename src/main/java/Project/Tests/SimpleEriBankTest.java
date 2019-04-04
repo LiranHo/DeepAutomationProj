@@ -15,14 +15,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static io.appium.java_client.remote.MobileCapabilityType.APP;
 
-public class Test_Simple_2 extends BaseTest {
+public class SimpleEriBankTest extends BaseTest {
 
 
-
-
-    @DisplayName("Test_Simple_EriBank")
+    @DisplayName("SimpleEriBankTest")
     @Test
-    public void Test_Simple_EriBank() throws InterruptedException {
+    public void SimpleEriBankTest() throws InterruptedException {
         Main.sout("Info!", "Starting test Test_Simple_EriBank for device " + device.getSerialnumber());
 
         driver.rotate(ScreenOrientation.PORTRAIT);
@@ -47,6 +45,7 @@ public class Test_Simple_2 extends BaseTest {
 
     @Override
     public void ChooseAppDC(){
+        dc.setCapability("testName","SimpleEriBankTest");
         if (device.isAndroid()) {
             dc.setCapability(MobileCapabilityType.APP, "cloud:com.experitest.ExperiBank/.LoginActivity");
             dc.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, "com.experitest.ExperiBank");

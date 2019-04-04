@@ -20,12 +20,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.URL;
 
-public class Test_Simple_1 extends BaseTest {
+public class SimpleWebTest extends BaseTest {
 
 
-    @DisplayName("Test_Simple_web")
+    @DisplayName("SimpleWebTest")
     @Test
-    public void Test_Simple_web() {
+    public void SimpleWebTest() {
         Main.sout("Info!", "Starting test Test_Simple_web for device " + device.getSerialnumber());
 
         try {
@@ -55,5 +55,11 @@ public class Test_Simple_1 extends BaseTest {
         searchBar.sendKeys("Experitest");
         driver.findElement(By.xpath("//*[@css='BUTTON.Tg7LZd']")).click();
     }
+
+
+    public void ChooseAppDC(){
+        dc.setCapability("testName","SimpleWebTest");
+    }
+
 
 }

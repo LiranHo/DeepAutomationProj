@@ -25,6 +25,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.MalformedURLException;
@@ -153,6 +154,7 @@ public class BaseTest {
     public void createDriver() throws Exception {
         System.out.println("Crete Driver for device: "+device.getSerialnumber());
 
+        dc.setCapability("RunName", Main.startTime);
         dc.setCapability("testName", testName);
         dc.setCapability("deviceQuery", "@serialNumber='"+device.getSerialnumber()+"'");
         if(Main.cloudUser.getAccessKey().equals("0")){
@@ -219,7 +221,7 @@ public class BaseTest {
     protected void CollectSupportDataFromBeep(String theClassThatActivateMe) {
         System.out.println("** BeeperControl check in class " + theClassThatActivateMe + " \t Main.CollectSupportDataVar = " + Main.CollectSupportDataVar.get());
         if(Main.CollectSupportDataVar.compareAndSet(true,false)){ //check if true and than change it to false
-            String collectSupportDataPATH = Main.innerDirectoryPath + "\\SupportData" + new SimpleDateFormat("dd.MM.yyyy - HH.mm.ss").format(new java.util.Date()) + ".zip";
+            String collectSupportDataPATH = Main.innerDirectoryPath + File.separator+"SupportData" + new SimpleDateFormat("dd.MM.yyyy - HH.mm.ss").format(new java.util.Date()) + ".zip";
             System.out.println("** Start to collectSupportData from beeperControl activation," + Main.delimiter + "collectSupportData Path is: " + collectSupportDataPATH);
             client.collectSupportData(collectSupportDataPATH, "", "", "", "", "", true, false);
         }
