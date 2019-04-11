@@ -26,7 +26,9 @@ public class AfterClassExtension implements AfterEachCallback {
         if(!reportPath.contains("http") && !reportPath.contains("ReportURL")) {
             reportPath = reportPath + "/index.html";
         }
-        long testDuring = System.currentTimeMillis() - baseTest.testStartTime_calculate;
+        String EndTime=String.valueOf(baseTest.testEndTime);
+        String StartTime=String.valueOf(baseTest.testStartTime);
+        long testDuring =System.currentTimeMillis() - baseTest.testStartTime_calculate;
 
 
         Main.countTests++;
@@ -34,20 +36,19 @@ public class AfterClassExtension implements AfterEachCallback {
         if(testResult.equals(false)){
             System.err.println("afterTestExecution - FAIL \t"+"+Thread.currentThread().getName() "+Thread.currentThread().getName()+"\t devicesn: "+deviceSN);
             String error=executionException.toString().replaceAll("\n"," | ");
-            Main.report.addRowToReport("Report",testName, deviceSN,Agent,String.valueOf(testResult), calculateTestDuring(testDuring),sessionID,reportPath,error);
+            Main.report.addRowToReport("Report",testName, deviceSN,Agent,String.valueOf(testResult),StartTime ,EndTime,calculateTestDuring(testDuring),sessionID,reportPath,error);
 //           System.out.println("the test failed");
             Main.countTests_fail++;
         }
 
         if(testResult.equals(true)){
             System.err.println("afterTestExecution - PASS \t"+"+Thread.currentThread().getName() "+Thread.currentThread().getName()+"\t devicesn: "+deviceSN);
-            Main.report.addRowToReport("Report",testName, deviceSN,Agent,String.valueOf(testResult), calculateTestDuring(testDuring),sessionID,reportPath,"");
+            Main.report.addRowToReport("Report",testName, deviceSN,Agent,String.valueOf(testResult), StartTime , EndTime,calculateTestDuring(testDuring),sessionID,reportPath,"");
 //            System.out.println("the test passed");
             Main.countTests_pass++;
 
         }
     }
-
 
 
 

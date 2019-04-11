@@ -1,5 +1,6 @@
 package Project;
 
+import Project.MainWrapper.googleSheets.GoogleSheetsIntegration;
 import Project.Reports.Files;
 import Project.Reports.Reporter;
 import Project.Settings.BeeperControl;
@@ -8,11 +9,13 @@ import Project.Settings.ProjectSettingPerUser;
 import Project.Settings.TestSuites;
 import Project.TestWrapper.Device;
 import com.experitest.appium.SeeTestClient;
+import com.google.api.services.sheets.v4.Sheets;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.ios.IOSDriver;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +28,15 @@ import static Project.MainWrapper.InitDeviceList.initDevicesList;
 
 public class Main {
     final protected static String RUN_ONE_DEVICE_SN = "14bdd0fd9904";
-    public final static int NUMBER_OF_DEVICES_TO_RUN = 0; //choose 0 to run ALL devices
+    public final static int NUMBER_OF_DEVICES_TO_RUN = 12; //choose 0 to run ALL devices
+    //**Add Report To google Sheets**
+
+    public static Boolean WriteToGoogleSheet = true;;
+    //public static String SPREADSHEET_ID = "1rdqW9i8jPMuZlmYWqJH2Ga56-BtAA6TFJ5k4wpPbDVg";
+    //public static String SPREADSHEET_ID = "1U7IY_cj-ussOLovn1joM5X7elxRV46mPu3G_YpiXOHQ";
+    public static String SPREADSHEET_ID = "";
+    public static String mainSpreadShit = "1U7IY_cj-ussOLovn1joM5X7elxRV46mPu3G_YpiXOHQ";
+
 
     public static void initTheMain() {
 
@@ -55,12 +66,15 @@ public class Main {
         BatteryMonitoring = false;
 
         //T: ***Start To Prepare The Test***
-        startTime = new SimpleDateFormat("dd.MM.yyyy - HH.mm.ss").format(new java.util.Date());
+        if(startTime == null) {
+            startTime = new SimpleDateFormat("dd.MM.yyyy - HH.mm.ss").format(new java.util.Date());
+        }
         innerDirectoryPath = createNewDir(projectBaseDirectory, startTime); //create new directory for this test run
         //T: Init reports
         // INIT report and add first raw titles
         report = Reporter.Reporter("MainReport", innerDirectoryPath);
-        report.addRowToReport("Type", "Test Name", "Device SN", "Agent","Status", "Test During", "Session ID", "Report URL", "Exception");
+        report.addRowToReport("Type", "Test Name", "Device SN", "Agent","Status", "Start Time" ,"End Time","Test During", "Session ID", "Report URL", "Exception");
+
         // INIT info file
         infoFile = new Files("Init Info", innerDirectoryPath);
         ErrorFile = new Files("Error File", innerDirectoryPath);
@@ -68,6 +82,16 @@ public class Main {
     }
 
     public static void main(String[] args) throws Exception {
+        startTime = new SimpleDateFormat("dd.MM.yyyy - HH.mm.ss").format(new java.util.Date());
+        if(WriteToGoogleSheet){
+            System.out.println("APPROVE THE GOOGLE SHEETS PERMISSIONS");
+            GoogleSheetsIntegration.sheets_setup();
+           String ID =  GoogleSheetsIntegration.newSheet(String.valueOf(startTime));
+            SPREADSHEET_ID = ID;
+            GoogleSheetsIntegration.add_SPREADSHEET_ID(startTime , SPREADSHEET_ID);
+            System.err.println("GoogleSheetID:  "+ SPREADSHEET_ID);
+        }
+
         initTheMain();
 
         //NOTE: EnterInput
@@ -75,6 +99,8 @@ public class Main {
             Project.MainWrapper.GetInput.getInputFromUser();
         else
             Project.MainWrapper.GetInput.printCurrentTunProperties();
+
+
 
         System.err.println("###STARTING...###");
 
@@ -89,7 +115,7 @@ public class Main {
             System.err.println("Failed to initDevicesList");
             infoFile.addRowToReport(true, "*** Failed to initDevicesList *** " + delimiter + e.getMessage(), true);
             ErrorFile.addRowToReport(true, "*** Failed to initDevicesList *** " + delimiter + e.getMessage(), true);
-            report.addRowToReport("FAILURE", "initDevicesList", "", "","Fail", "0", "", "", e.getMessage());
+            report.addRowToReport("FAILURE", "initDevicesList", "", "","Fail", "0", "","","","","");
 
             e.printStackTrace();
         }
@@ -183,6 +209,8 @@ public class Main {
     public static boolean Devices;
     public static boolean Grid = false;
     public static Boolean EnterInput;
+
+
     //Tests
     public static TestSuites testsSuites;
 
@@ -216,6 +244,9 @@ public class Main {
     public static AtomicBoolean CollectSupportDataVar = new AtomicBoolean(false);
     public static String PrintDevicesInfo;
     public static String PrintDeviceSN;
+
+
+
 
 
     //**Applications install paths**

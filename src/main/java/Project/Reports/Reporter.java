@@ -2,7 +2,9 @@ package Project.Reports;
 
 
 import Project.Main;
+import Project.MainWrapper.googleSheets.GoogleSheetsIntegration;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,7 +35,7 @@ public class Reporter extends ReportBasics{
 
     //TODO: fix the report!
     //T: add row to main report
-    public void addRowToReport(String type, String testName, String deviceSN,String Agent, String status,String testDuring,String SessionID, String reportURL , String exception){
+    public void addRowToReport(String type, String testName, String deviceSN,String Agent, String status,String startTime, String endTime, String testDuring,String SessionID, String reportURL , String exception){
         Date currentTime = new Date();
         String line;
         currentTime.getTime();
@@ -43,6 +45,8 @@ public class Reporter extends ReportBasics{
                 deviceSN+","+
                 Agent+","+
                 status+","+
+                startTime+","+
+                endTime+","+
                 testDuring+","+
                 SessionID+","+
                 reportURL+","+
@@ -50,6 +54,15 @@ public class Reporter extends ReportBasics{
         System.out.println(line);
         file.println(line);
         file.flush();
+
+        if(Main.WriteToGoogleSheet){
+            try {
+                //Add row to google sheet
+                GoogleSheetsIntegration.addTowAppending(String.valueOf(currentTime), type, testName, deviceSN,Agent, status,startTime, endTime, testDuring,SessionID, reportURL , exception);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 

@@ -138,7 +138,13 @@ public class GetInput {
         {
             System.out.println("5. TimeToRun: " + TimeToRun);
         }
-        System.out.println("6. testsSuites: "+testsSuites.toString());
+        if(testsSuites.toString().equals("AllTest")) {
+            System.out.println("6. testsSuites: " + testsSuites.toString());
+        }else{
+            System.err.println("!!!WARNING!!!");
+            System.out.println("6. testsSuites: " + testsSuites.toString());
+        }
+
         System.out.println("********************");
         System.out.println("********************");
     }
