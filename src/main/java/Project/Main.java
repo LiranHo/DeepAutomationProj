@@ -27,11 +27,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static Project.MainWrapper.InitDeviceList.initDevicesList;
 
 public class Main {
+
     final protected static String RUN_ONE_DEVICE_SN = "14bdd0fd9904";
     public final static int NUMBER_OF_DEVICES_TO_RUN = 12; //choose 0 to run ALL devices
     //**Add Report To google Sheets**
 
-    public static Boolean WriteToGoogleSheet = true;;
+    public static Boolean WriteToGoogleSheet = true;
     //public static String SPREADSHEET_ID = "1rdqW9i8jPMuZlmYWqJH2Ga56-BtAA6TFJ5k4wpPbDVg";
     //public static String SPREADSHEET_ID = "1U7IY_cj-ussOLovn1joM5X7elxRV46mPu3G_YpiXOHQ";
     public static String SPREADSHEET_ID = "";
