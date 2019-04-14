@@ -43,8 +43,8 @@ public class BaseTest {
     public String sessionID;
     protected String testName;
     protected long startTimePerDevice;
-    protected String testStartTime;
-    protected String testEndTime;
+    public String testStartTime;
+    public String testEndTime;
     public long testStartTime_calculate;
     protected long testDuring;
     public String path;
@@ -195,8 +195,9 @@ public class BaseTest {
                     return;
                 }
 
-                    Main.sout("Info", "Succession to find IOS device " + device.getSerialnumber());
+                Main.sout("Info", "Succession to find IOS device " + device.getSerialnumber());
             }
+
             try {
                 client = new SeeTestClient(driver);
             } catch (Exception e) {
@@ -225,6 +226,7 @@ public class BaseTest {
             String collectSupportDataPATH = Main.innerDirectoryPath + File.separator+"SupportData" + new SimpleDateFormat("dd.MM.yyyy - HH.mm.ss").format(new java.util.Date()) + ".zip";
             System.out.println("** Start to collectSupportData from beeperControl activation," + Main.delimiter + "collectSupportData Path is: " + collectSupportDataPATH);
             client.collectSupportData(collectSupportDataPATH, "", "", "", "", "", true, false);
+
         }
     }
 

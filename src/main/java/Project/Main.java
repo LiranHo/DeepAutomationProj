@@ -85,12 +85,16 @@ public class Main {
     public static void main(String[] args) throws Exception {
         startTime = new SimpleDateFormat("dd.MM.yyyy - HH.mm.ss").format(new java.util.Date());
         if(WriteToGoogleSheet){
+            System.out.println("The Main File Report is: "+"https://docs.google.com/spreadsheets/d/"+mainSpreadShit+"/edit#gid=1716146997");
+            System.out.println("***");
+            System.out.println("***");
             System.out.println("APPROVE THE GOOGLE SHEETS PERMISSIONS");
+
             GoogleSheetsIntegration.sheets_setup();
            String ID =  GoogleSheetsIntegration.newSheet(String.valueOf(startTime));
             SPREADSHEET_ID = ID;
             GoogleSheetsIntegration.add_SPREADSHEET_ID(startTime , SPREADSHEET_ID);
-            System.err.println("GoogleSheetID:  "+ SPREADSHEET_ID);
+            System.out.println("GoogleSheetID:  "+ "https://docs.google.com/spreadsheets/d/"+SPREADSHEET_ID+"/edit#gid=0");
         }
 
         initTheMain();

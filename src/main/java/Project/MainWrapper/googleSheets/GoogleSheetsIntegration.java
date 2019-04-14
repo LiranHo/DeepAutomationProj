@@ -43,7 +43,7 @@ public class GoogleSheetsIntegration {
     public static void add_SPREADSHEET_ID(String fileName, String SPREADSHEET_ID) throws IOException {
         ValueRange appendBody = new ValueRange()
                 .setValues(Arrays.asList(
-                        Arrays.asList("",fileName, SPREADSHEET_ID)));
+                        Arrays.asList("",fileName, "https://docs.google.com/spreadsheets/d/"+SPREADSHEET_ID+"/edit#gid=0")));
         AppendValuesResponse appendResult = sheetsService.spreadsheets().values()
                 .append(Main.mainSpreadShit, "A1", appendBody)
                 .setValueInputOption("USER_ENTERED")
@@ -100,7 +100,6 @@ public class GoogleSheetsIntegration {
 
 //        System.out.println("Spreadsheet ID: " + spreadSheet.getSpreadsheetId());
         String SS_ID  = spreadSheet.getSpreadsheetId();
-        System.out.println("SS_ID "+SS_ID);
         java.util.List<Sheet> sheets =  new ArrayList<>();
         sheets.add(new Sheet().setProperties(new SheetProperties ().setTitle("title"))
         );
