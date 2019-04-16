@@ -14,11 +14,11 @@ public enum CloudUsers {
     public boolean isSecured;
     public String grid_domain; //without https
     public int grid_port;
-    public String Authorization;
+    //public String Authorization;
     public String AccessKey;
 
 
-    CloudUsers(String userName, String Password , String projectName , Boolean isSecured ,
+    CloudUsers(String userName, String Password , String projectName, Boolean isSecured ,
                String grid_domain , int grid_port){
         this.userName=userName;
         this.Password=Password;
@@ -26,20 +26,18 @@ public enum CloudUsers {
         this.isSecured=isSecured;
         this.grid_domain=grid_domain;
         this.grid_port=grid_port;
-        this.Authorization="";
         this.AccessKey="0";
     }
 
-    CloudUsers(String userName, String Password , String projectName , Boolean isSecured ,
-               String grid_domain , int grid_port, String Authorization){
+    CloudUsers(String userName, String Password ,String AccessKey ,String projectName , Boolean isSecured ,
+               String grid_domain , int grid_port){
         this.userName=userName;
         this.Password=Password;
+        this.AccessKey=AccessKey;
         this.projectName=projectName;
         this.isSecured=isSecured;
         this.grid_domain=grid_domain;
         this.grid_port=grid_port;
-        this.Authorization=Authorization;
-        this.AccessKey="0";
 
     }
 
