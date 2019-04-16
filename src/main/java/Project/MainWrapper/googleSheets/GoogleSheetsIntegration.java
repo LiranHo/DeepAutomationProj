@@ -24,10 +24,10 @@ public class GoogleSheetsIntegration {
         sheetsService = SheetsServiceUtil.getSheetsService();
     }
 
-    public static void addTowAppending(String time, String type, String testName, String deviceSN,String Agent, String status,String startTime, String endTime,String testDuring,String SessionID, String reportURL , String exception ) throws IOException {
+    public static void addTowAppending(String time, String type, String testName, String deviceSN,String Agent, String status,String Reportstatus,String startTime, String endTime,String testDuring,String SessionID, String reportURL , String exception ) throws IOException {
         ValueRange appendBody = new ValueRange()
                 .setValues(Arrays.asList(
-                        Arrays.asList(time, type, testName,testName, deviceSN , Agent, status,startTime, endTime, testDuring,SessionID, reportURL , exception)));
+                        Arrays.asList(time, type, testName,testName, deviceSN , Agent, status, Reportstatus ,startTime, endTime, testDuring,SessionID, reportURL , exception)));
         AppendValuesResponse appendResult = sheetsService.spreadsheets().values()
                 .append(Main.SPREADSHEET_ID, "A1", appendBody)
                 .setValueInputOption("USER_ENTERED")

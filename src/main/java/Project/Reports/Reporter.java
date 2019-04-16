@@ -35,7 +35,7 @@ public class Reporter extends ReportBasics{
 
     //TODO: fix the report!
     //T: add row to main report
-    public void addRowToReport(String type, String testName, String deviceSN,String Agent, String status,String startTime, String endTime, String testDuring,String SessionID, String reportURL , String exception){
+    public void addRowToReport(String type, String testName, String deviceSN,String Agent, String status, String ReporterStatus,String startTime, String endTime, String testDuring,String SessionID, String reportURL , String exception){
         Date currentTime = new Date();
         String line;
         currentTime.getTime();
@@ -45,6 +45,7 @@ public class Reporter extends ReportBasics{
                 deviceSN+","+
                 Agent+","+
                 status+","+
+                ReporterStatus+","+
                 startTime+","+
                 endTime+","+
                 testDuring+","+
@@ -58,7 +59,7 @@ public class Reporter extends ReportBasics{
         if(Main.WriteToGoogleSheet){
             try {
                 //Add row to google sheet
-                GoogleSheetsIntegration.addTowAppending(String.valueOf(currentTime), type, testName, deviceSN,Agent, status,startTime, endTime, testDuring,SessionID, reportURL , exception);
+                GoogleSheetsIntegration.addTowAppending(String.valueOf(currentTime), type, testName, deviceSN,Agent, status,ReporterStatus,startTime, endTime, testDuring,SessionID, reportURL , exception);
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -31,6 +31,8 @@ import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 @ExtendWith(AfterClassExtension.class)
@@ -46,6 +48,7 @@ public class BaseTest {
     public String testStartTime;
     public String testEndTime;
     public long testStartTime_calculate;
+    public String testID;
     protected long testDuring;
     public String path;
     public static String FolderinnerDeviceDirPath;
@@ -96,6 +99,11 @@ public class BaseTest {
         createDriver();
 
 
+        testID = findTestID((String)driver.getCapabilities().getCapability("reportUrl"));
+        System.out.println("This testID is"+testID);
+
+      //  https://qa-win2016.experitest.com/reporter/#/test/262947/project/Default/
+
         //TODO:
 
     }
@@ -137,11 +145,7 @@ public class BaseTest {
 
         testEndTime = new SimpleDateFormat("dd.MM.yyyy - HH.mm.ss").format(new java.util.Date());
 
-
-
     }
-
-
 
     //Choose the application to work with in the test, if doesn't overided it will use nothing
     public void ChooseAppDC(){
@@ -183,15 +187,16 @@ public class BaseTest {
                 Main.sout("Info","Succession to find Android device "+device.getSerialnumber());
 
             }
-            else { //Device IOS
+            else if (device.isIOS()) {
+
 //                    dc.setCapability(MobileCapabilityType.APP, "cloud:com.experitest.ExperiBank");
 //                    dc.setCapability(IOSMobileCapabilityType.BUNDLE_ID, "com.experitest.ExperiBank");
-                    Main.sout("Info", "Starting to find IOS device " + device.getSerialnumber());
+                Main.sout("Info", "Starting to find IOS device " + device.getSerialnumber());
 
                 try {
-                    driver = new IOSDriver<>(new URL( Main.cloudUser.getCloudFullAdress()+"/wd/hub"), dc);
+                    driver = new IOSDriver<>(new URL(Main.cloudUser.getCloudFullAdress() + "/wd/hub"), dc);
                 } catch (MalformedURLException e) {
-                    Main.sout("Exception!","Failed to start IOS device "+device.getSerialnumber());
+                    Main.sout("Exception!", "Failed to start IOS device " + device.getSerialnumber());
                     return;
                 }
 
@@ -232,6 +237,21 @@ public class BaseTest {
 
     public String getTestName() {
         return this.testName;
+    }
+
+
+    public String findTestID(String cloudURL){
+       //  https://qa-win2016.experitest.com/reporter/#/test/262947/project/Default/
+        String TestID=null;
+        String[] strParts = cloudURL.split("/");
+        ArrayList<String> aList = new ArrayList<String>( Arrays.asList(strParts) );
+        for (int i = 0; i < aList.size(); i++) {
+            if (aList.get(i).equals("test")){
+                TestID = aList.get(i+1);
+                break;
+            }
+        }
+        return  TestID;
     }
 
 
