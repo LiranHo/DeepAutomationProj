@@ -2,6 +2,9 @@ package Project.Tests;
 
 import Project.BaseTest;
 import Project.Main;
+import io.appium.java_client.remote.AndroidMobileCapabilityType;
+import io.appium.java_client.remote.IOSMobileCapabilityType;
+import io.appium.java_client.remote.MobileCapabilityType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -28,6 +31,13 @@ public class LoggingDevices extends BaseTest {
             driver.quit();
             throw e;
         }
+    }
+
+
+    @Override
+    public void ChooseAppDC(){
+        dc.setCapability("testName", "LoggingDevices_test");
+
     }
 
 }
