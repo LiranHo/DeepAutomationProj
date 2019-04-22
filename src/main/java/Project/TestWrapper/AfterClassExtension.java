@@ -4,11 +4,13 @@ package Project.TestWrapper;
 import Project.BaseTest;
 import Project.Main;
 import Project.MainWrapper.ReporterApi.Api_Reporter;
+import Project.MainWrapper.googleSheets.SummaryReport;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
 import java.util.Optional;
 public class AfterClassExtension implements AfterEachCallback {
+    boolean deviceOS_isIOS;
 
     @Override
     public void afterEach(ExtensionContext context) throws Exception {
@@ -22,6 +24,7 @@ public class AfterClassExtension implements AfterEachCallback {
         String testName = context.getDisplayName();
         String deviceSN= baseTest.device.getSerialnumber();
         String Agent = baseTest.device.getAgent();
+        deviceOS_isIOS= baseTest.device.isIOS();
         String ReporterStatus = Api_Reporter.GetTestResultStatus(baseTest.testID);
 
         String reportPath = baseTest.reportURL;
@@ -41,6 +44,9 @@ public class AfterClassExtension implements AfterEachCallback {
             Main.report.addRowToReport("Report",testName, deviceSN,Agent,String.valueOf(testResult), ReporterStatus,StartTime ,EndTime,calculateTestDuring(testDuring),sessionID,reportPath,error);
 //           System.out.println("the test failed");
             Main.countTests_fail++;
+
+            addToSummaryReport(false);
+
         }
 
         if(testResult.equals(true)){
@@ -49,9 +55,31 @@ public class AfterClassExtension implements AfterEachCallback {
 //            System.out.println("the test passed");
             Main.countTests_pass++;
 
+            addToSummaryReport(true);
+
         }
     }
 
+
+    protected void addToSummaryReport(boolean result){
+        SummaryReport.add1_Total_TestsNum();
+        if(!result){
+            SummaryReport.add1_Total_TestsFailed();
+        }
+        if(deviceOS_isIOS){
+            SummaryReport.add1_IOS_TestsNum();
+            if(!result){
+                SummaryReport.add1_IOS_TestsFailed();
+            }
+
+            }else{ //Android
+            SummaryReport.add1_Android_TestsNum();
+            if(!result){
+                SummaryReport.add1_Android_TestsFailed();
+            }
+        }
+
+    }
 
 
     protected String calculateTestDuring(long TestDuring){

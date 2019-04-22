@@ -56,7 +56,8 @@ public class Reporter extends ReportBasics{
         file.println(line);
         file.flush();
 
-        if(Main.WriteToGoogleSheet){
+
+            if(Main.WriteToGoogleSheet &&!Thread.currentThread().getName().toLowerCase().equals("main")){
             try {
                 //Add row to google sheet
                 GoogleSheetsIntegration.addTowAppending(String.valueOf(currentTime), type, testName, deviceSN,Agent, status,ReporterStatus,startTime, endTime, testDuring,SessionID, reportURL , exception);

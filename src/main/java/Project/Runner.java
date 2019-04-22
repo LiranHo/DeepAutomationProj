@@ -1,5 +1,6 @@
 package Project;
 
+import Project.MainWrapper.googleSheets.SummaryReport;
 import Project.Settings.TestSuites;
 import Project.TestWrapper.Device;
 import org.junit.platform.launcher.Launcher;
@@ -9,6 +10,8 @@ import org.junit.platform.launcher.core.LauncherDiscoveryRequestBuilder;
 import org.junit.platform.launcher.core.LauncherFactory;
 import org.junit.platform.launcher.listeners.SummaryGeneratingListener;
 import org.junit.platform.launcher.listeners.TestExecutionSummary;
+
+import java.io.IOException;
 import java.util.List;
 
 //this class runs each device in separate Thread
@@ -91,8 +94,28 @@ public class Runner implements Runnable {
         failures.forEach(failure -> System.out.println("failure - " + failure.getException() +" --|-- "+ failure.getTestIdentifier()));
 
 
+        SummaryReportUpdateFromRunner();
+
     }
 
 
+    protected void SummaryReportUpdateFromRunner(){
+        System.out.println("Enter to SummaryReportUpdateFromRunner function");
+        if(Main.SummaryReportVar.compareAndSet(Main.numberOfDeviceInThisRun, Main.SummaryReportVar.incrementAndGet())){
+            try {
+//                System.err.println("Main.SummaryReportVar.incrementAndGet(): "+Main.SummaryReportVar.get());
+//                System.err.println("Main.numberOfDeviceInThisRun "+Main.numberOfDeviceInThisRun);
+//                System.err.println(this.ThreadName);
+
+                if(Main.WriteToGoogleSheet) {
+                    System.out.println("SummaryReport.updateTestsResult_SummeryReport for device: "+this.ThreadName);
+                    SummaryReport.updateTestsResult_SummeryReport();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Main.SummaryReportVar.set(0);
+        }
+    }
 
 }

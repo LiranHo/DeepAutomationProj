@@ -1,6 +1,8 @@
 package Project;
 
 import Project.MainWrapper.googleSheets.GoogleSheetsIntegration;
+import Project.MainWrapper.googleSheets.SummaryReportIntegration.GoogleSheetSummaryReportIntegration;
+import Project.MainWrapper.infoAboutTheRun;
 import Project.Reports.Files;
 import Project.Reports.Reporter;
 import Project.Settings.BeeperControl;
@@ -23,6 +25,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static Project.MainWrapper.InitDeviceList.initDevicesList;
 
@@ -90,11 +93,19 @@ public class Main {
             GoogleSheetsIntegration.sheets_setup();
            String ID =  GoogleSheetsIntegration.newSheet(String.valueOf(startTime));
             SPREADSHEET_ID = ID;
-            GoogleSheetsIntegration.add_SPREADSHEET_ID(startTime , SPREADSHEET_ID);
-            System.out.println("GoogleSheetID:  "+ "https://docs.google.com/spreadsheets/d/"+SPREADSHEET_ID+"/edit#gid=0");
+            GoogleSheetsIntegration.add_SPREADSHEET_ID(startTime, SPREADSHEET_ID);
+            System.out.println("GoogleSheetID:  " + "https://docs.google.com/spreadsheets/d/" + SPREADSHEET_ID + "/edit#gid=0");
+
+            ThisRunLineInSummaryReport = GoogleSheetSummaryReportIntegration.searchCurrentRunLineNumber(startTime);
+        }
+        initTheMain();
+
+        if(WriteToGoogleSheet) {
+            //Add Cloud Info to the SummaryReport
+            GoogleSheetSummaryReportIntegration.AddNumberToTheFirstColumn(ThisRunLineInSummaryReport);
+            infoAboutTheRun.addInfoAboutCloud();
         }
 
-        initTheMain();
 
         //NOTE: EnterInput
         if (EnterInput)
@@ -206,6 +217,7 @@ public class Main {
     public static boolean Runby_NumberOfRounds; //Choose nubmer of rounds or decided the time length you want to run
     public static int NumberOfRoundsToRun; //Choose nubmer of rounds
     public static int TimeToRun; //decided the time length you want to run: Hours * Min
+    public static int numberOfDeviceInThisRun = 0; //decided the time length you want to run: Hours * Min
 
 
     public static boolean Devices;
@@ -244,13 +256,13 @@ public class Main {
     private static BeeperControl beep;
     final public static int CollectEveryX_inMin=30; //Optimal is 30 MIN
     public static AtomicBoolean CollectSupportDataVar = new AtomicBoolean(false);
+    public static AtomicInteger SummaryReportVar = new AtomicInteger(0);
     public static String PrintDevicesInfo;
     public static String PrintDeviceSN;
 
     //**Google Sheets report**
     public static String SPREADSHEET_ID = "";
-
-
+    public static int ThisRunLineInSummaryReport = -1;
 
 
 

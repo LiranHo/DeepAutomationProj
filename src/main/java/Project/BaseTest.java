@@ -156,7 +156,7 @@ public class BaseTest {
 
 
     public void createDriver() throws Exception {
-        System.out.println("Crete Driver for device: "+device.getSerialnumber());
+        System.out.println("Create Driver for device: "+device.getSerialnumber());
 
         dc.setCapability("RunName", Main.startTime);
         dc.setCapability("testName", testName);
