@@ -20,7 +20,7 @@ public class Reporter extends ReportBasics{
 
     //singleton constructor (defined as private)
     private Reporter(String FileName , String projDir) {
-        //Crete new report
+        //Create new report
         this.file=CreateReportFile(projDir, FileName+" ; "+ Main.startTime, "csv");
     }
 
@@ -57,7 +57,8 @@ public class Reporter extends ReportBasics{
         file.flush();
 
 
-            if(Main.WriteToGoogleSheet &&!Thread.currentThread().getName().toLowerCase().equals("main")){
+           // if(Main.WriteToGoogleSheet &&!Thread.currentThread().getName().toLowerCase().equals("main")){
+            if(Main.WriteToGoogleSheet){
             try {
                 //Add row to google sheet
                 GoogleSheetsIntegration.addTowAppending(String.valueOf(currentTime), type, testName, deviceSN,Agent, status,ReporterStatus,startTime, endTime, testDuring,SessionID, reportURL , exception);
