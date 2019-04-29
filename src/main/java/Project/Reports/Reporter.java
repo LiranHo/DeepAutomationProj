@@ -20,7 +20,7 @@ public class Reporter extends ReportBasics{
 
     //singleton constructor (defined as private)
     private Reporter(String FileName , String projDir) {
-        //Crete new report
+        //Create new report
         this.file=CreateReportFile(projDir, FileName+" ; "+ Main.startTime, "csv");
     }
 
