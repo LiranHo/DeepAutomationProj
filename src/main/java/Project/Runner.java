@@ -2,6 +2,7 @@ package Project;
 
 import Project.MainWrapper.googleSheets.SummaryReport;
 import Project.Settings.TestSuites;
+import Project.TestWrapper.Browser;
 import Project.TestWrapper.Device;
 import org.junit.platform.launcher.Launcher;
 import org.junit.platform.launcher.LauncherDiscoveryRequest;
@@ -17,6 +18,7 @@ import java.util.List;
 //this class runs each device in separate Thread
 public class Runner implements Runnable {
     protected Device device;
+    protected Browser browser;
     protected String ThreadName;
     //Parameters for run by rounds
     public int CountRounds = 0;
@@ -25,23 +27,26 @@ public class Runner implements Runnable {
     protected long TimePassedSinceStart;
     protected long CurrentTime;
 
-    Runner(Device d) {
-        this.device = d;
+    Runner(Device device) {
+        this.device = device;
         this.ThreadName = device.getSerialnumber();
     }
 
+    Runner(Browser browser) {
+        this.browser = browser;
+        this.ThreadName = browser.getSerialnumber();
+    }
 
     public void run() {
-        Thread.currentThread().setName(device.getSerialnumber());
-        System.out.println("current t: " + Thread.currentThread().getName());
+        Thread.currentThread().setName(ThreadName);
+        System.out.println("current thread is: " + Thread.currentThread().getName());
         //Run by selected ROUNDS
         if (Main.Runby_NumberOfRounds) {
             while (Main.NumberOfRoundsToRun > CountRounds) {
                 System.out.println("Calling runTest with sn -"+Thread.currentThread().getName());
                 runTest(Main.testsSuites);
                 CountRounds++;
-                Main.sout("Info","CountRounds for device: "+device.getSerialnumber()+"is : "+CountRounds);
-
+                Main.sout("Info","CountRounds for device: "+ThreadName+"is : "+CountRounds);
             }
         } else {
             //Run by selected TIME
@@ -51,7 +56,7 @@ public class Runner implements Runnable {
                 TimePassedSinceStart = Math.round(CurrentTime - StartTime) / 1000;
                 runTest(Main.testsSuites);
                 CountRounds++; //need to know who many runs there was in this test
-                Main.sout("Info","CountRounds for device: "+device.getSerialnumber()+"is : "+CountRounds);
+                Main.sout("Info","CountRounds for device: "+ThreadName+"is : "+CountRounds);
 
             }
             while (TimePassedSinceStart <= Main.TimeToRun);

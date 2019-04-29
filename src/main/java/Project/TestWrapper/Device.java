@@ -33,6 +33,10 @@ public class Device extends Thread{
         this(serialnumber,"","","","","","","","","");
     }
 
+   // public Device(String serialnumber, boolean browser){
+  //      this(serialnumber,"","Browser","","","","","","","");
+  //  }
+
 
     public String toString(){
         String delimiter = "\r\n";

@@ -1,29 +1,16 @@
 package Project;
 
-import Project.Settings.CloudUsers;
 import Project.TestWrapper.AfterClassExtension;
 import Project.TestWrapper.Device;
+import Project.TestWrapper.BrowsersAndDevicesHandle.DisableBrowsers;
 import com.experitest.appium.SeeTestClient;
-import com.experitest.client.Client;
-import com.experitest.client.GridClient;
-import com.experitest.client.MobileListener;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.ios.IOSDriver;
-import io.appium.java_client.ios.IOSElement;
-import io.appium.java_client.remote.AndroidMobileCapabilityType;
-import io.appium.java_client.remote.IOSMobileCapabilityType;
-import io.appium.java_client.remote.MobileCapabilityType;
-import net.bytebuddy.implementation.bytecode.Throw;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.junit.platform.suite.api.SelectPackages;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -38,6 +25,8 @@ import java.util.Date;
 @ExtendWith(AfterClassExtension.class)
 @DisplayName("Base Test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@SelectPackages("Tests")
+@DisableBrowsers
 public class BaseTest {
 
     public String reportURL = "ReportURL";
@@ -126,6 +115,8 @@ public class BaseTest {
             }catch (Exception e){
                 Main.sout("Exception!","CollectSupportDataFromBeep failed"+ e.getMessage());
             }
+
+
             Main.sout("Info"," driver.quit() Start: "+device.getSerialnumber());
             driver.quit();
             Main.sout("Info"," driver.quit() End: "+device.getSerialnumber());
@@ -235,12 +226,14 @@ public class BaseTest {
         }
     }
 
+
+
     public String getTestName() {
         return this.testName;
     }
 
 
-    public String findTestID(String cloudURL){
+    public static String findTestID(String cloudURL){
        //  https://qa-win2016.experitest.com/reporter/#/test/262947/project/Default/
         String TestID=null;
         String[] strParts = cloudURL.split("/");

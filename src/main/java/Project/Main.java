@@ -9,6 +9,7 @@ import Project.Settings.BeeperControl;
 import Project.Settings.CloudUsers;
 import Project.Settings.ProjectSettingPerUser;
 import Project.Settings.TestSuites;
+import Project.TestWrapper.Browser;
 import Project.TestWrapper.Device;
 import com.experitest.appium.SeeTestClient;
 import com.google.api.services.sheets.v4.Sheets;
@@ -32,7 +33,8 @@ import static Project.MainWrapper.InitDeviceList.initDevicesList;
 public class Main {
 
     final protected static String RUN_ONE_DEVICE_SN = "14bdd0fd9904";
-    public final static int NUMBER_OF_DEVICES_TO_RUN = 12; //choose 0 to run ALL devices
+    public final static int NUMBER_OF_DEVICES_TO_RUN = 1; //choose 0 to run ALL devices
+    public final static int BROWSERS = 1; //choose 0 to turn off selenium run
 
     //**Add Report To google Sheets**
     public static Boolean WriteToGoogleSheet = true;
@@ -42,12 +44,13 @@ public class Main {
     public static void initTheMain() {
 
         EnterInput = false;
+        collectSupportData = false;
         //T: ***Init The Test***
         //T: 1. Choose the platform to run (if Grid is true choose the cloud user)
         Grid = true;
         cloudUser = CloudUsers.LiranDeepCloud;
 //        cloudUser = CloudUsers.LiranCloud;
-        //T: 2. Choose on what devices to run: (Can add devices SN or Name (without ADB:))
+        //T: 2. Choose on what devices t o run: (Can add devices SN or Name (without ADB:))
         //TODO: make sure devices can't be added twice
         //TODO: fix that adb: or ios: also work
         //TODO: add option to run on random X devices
@@ -84,14 +87,14 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         startTime = new SimpleDateFormat("dd.MM.yyyy - HH.mm.ss").format(new java.util.Date());
-        if(WriteToGoogleSheet){
-            System.out.println("The Main File Report is: "+"https://docs.google.com/spreadsheets/d/"+mainSpreadShit+"/edit#gid=1716146997");
+        if(WriteToGoogleSheet) {
+            System.out.println("The Main File Report is: " + "https://docs.google.com/spreadsheets/d/" + mainSpreadShit + "/edit#gid=1716146997");
             System.out.println("***");
             System.out.println("***");
             System.out.println("APPROVE THE GOOGLE SHEETS PERMISSIONS");
 
             GoogleSheetsIntegration.sheets_setup();
-           String ID =  GoogleSheetsIntegration.newSheet(String.valueOf(startTime));
+            String ID = GoogleSheetsIntegration.newSheet(String.valueOf(startTime));
             SPREADSHEET_ID = ID;
             GoogleSheetsIntegration.add_SPREADSHEET_ID(startTime, SPREADSHEET_ID);
             System.out.println("GoogleSheetID:  " + "https://docs.google.com/spreadsheets/d/" + SPREADSHEET_ID + "/edit#gid=0");
@@ -139,8 +142,9 @@ public class Main {
         infoFile.addRowToReport(false, cloudUser.toString());
 
         //T: 4: Create threads for each device and start to Run
-        if (Main.devices.size() <= 0)
+        if (Main.devices.size() <= 0 && Main.BROWSERS<=0) {
             throw new Exception("Devices list is 0");
+        }
         ExecutorService executorService = Executors.newCachedThreadPool();
 //        ArrayList<Future> futures = new ArrayList<>();
 
@@ -159,14 +163,28 @@ public class Main {
 //            futures.add(executorService.submit(r));
                 executorService.execute(r);
 
-
         }
+
+        //T: 4.1. Create Threads for Selenium Agent Browsers
+            for (int j = 0; j < BROWSERS; j++) {
+                String browserName = "Browser_"+(j+1);
+                Browser b = new Browser(browserName);
+                browsers.add(b);
+
+                System.out.println("starting device - " + browserName);
+                Runner r = new Runner(b);
+                System.out.println("Runner is up for device - " + browserName);
+//            futures.add(executorService.submit(r));
+                executorService.execute(r);
+            }
 
 
 
         //T: Create CollectSupportData Thread usinneg beeperControl
         //Run collect support data only if the test is long enough
-        collectSupportData();
+        if(collectSupportData) {
+            collectSupportData();
+        }
 
 
         System.err.println("Started All Threads");
@@ -212,6 +230,7 @@ public class Main {
     //***Init Test Vars***
     //**Devices**
     public static List<Device> devices = new ArrayList<>(); // the devices list which we run on
+    public static List<Browser> browsers = new ArrayList<>(); // the devices list which we run on
     public static List<String> Choosedevices = new ArrayList<>(); // the devices SN the user want to run on
     public static boolean chooseSpesificDevices; //Choose specific devices or run on all connected devices
     public static boolean Runby_NumberOfRounds; //Choose nubmer of rounds or decided the time length you want to run
@@ -222,6 +241,7 @@ public class Main {
 
     public static boolean Devices;
     public static boolean Grid = false;
+    public static boolean collectSupportData = false;
     public static Boolean EnterInput;
 
 
@@ -307,6 +327,18 @@ public class Main {
         }
         return null;
     }
+
+    public static Browser searchBrowserBySN(String SN) {
+        for (Browser browser : browsers) {
+            if (browser.getSerialnumber().equals(SN)) {
+                return browser;
+            }
+        }
+        return null;
+    }
+
+
+
 
     //run collect support data only if the test is long enough
     private static void collectSupportData() { //with beep
