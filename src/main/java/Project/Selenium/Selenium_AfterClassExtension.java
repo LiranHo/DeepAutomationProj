@@ -28,7 +28,7 @@ public class Selenium_AfterClassExtension implements AfterEachCallback {
         String Agent = baseTest.browser.getAgent();
         Thread.sleep(2000);
         //String ReporterStatus = Api_Reporter.GetTestResultStatus(baseTest.testID);
-        String ReporterStatus = "";
+        String ReporterStatus = "N/A"; //its take to much time to get this property and they all will be in incomplete status.
 
         String reportPath = baseTest.reportURL;
         if(!reportPath.contains("http") && !reportPath.contains("ReportURL")) {
