@@ -1,12 +1,3 @@
 {
-  "type": "service_account",
-  "project_id": "graphic-brook-237211",
-  "private_key_id": "afe39c9aed0717e721ad06a08ef50a6f426530ba",
-  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDeX+m7v1sxKOw1\n7kPAaDTh6q8YJ2OiawU1gKzK+X2Soyqd4Co916d4cul7GkdF8UptZ7rrgV9IE9Db\nDmzdu0JJm3iYPd17uCs2KJPhRTcVZcTgIJQS3B00oBPSjR6Q/nywKRqEWf9s5VT+\nvbQ1XqtbdmLZaMC9nHmTlMGMXa5N3YUxVGH0cH0dk34+KuXMtEhqSrO83D+ksOh3\nK11Z2fpeMe4THDWc9j9Sgpt/E6mdtDQyHdKcY0rn8NwnhudSslocdXWpLoDyD4vr\nK+f/YzxD6Uqpq1Vecm2nOU+JCWblwkdY/EaTRbCWJ4I8Ptj1bo17iRKYxLcxe3Ql\nn0TIzU6PAgMBAAECggEAWi8WuSQlZR3+Ee8jvfvk+nw1b3vF/gAeGDEropOlGBuh\nNG7NYtA7ZG9h/iFNp3FwaEdJuKn6jN4wdS53+0Ku4vAw67knQj4SFEBHnPP3n29q\n9SRxOObY11dWQq0lqNL0mXLKBMQFAVJOcpNX6s8OeqTb+OTxSdSUP8Rz7Cuv/XZo\nPcTfX3ar5CrxYkjoedFfTItP5sAX/AS2/HTrOpLv7N1bfHbMcy71NQaCxMw/qrYs\nLXIseRNajUVbXMj1Dx659kTwhCmJSAdH8rE5qfvuG4zIKHM8Vd3WxdGcOPOth3mi\n4Yx/CdysOZe9lpwPTjGo/uC5vzHnwgSYyfkn4f53ZQKBgQDwhNbmM0mBA+1plNgV\ns1JZMcuFG88uvWj7QZwP9WyfJrViz02H0+d510mktfi/k9b64e3QcdO96NpWUUQW\n5DOowMO90ZLXhTSYuPRcV4ZjF9NJUSKv3ZUF4Tt1V/RE8/Ysl+pNerM0qw2EoY2e\nGBtLklv9+pGnbU2vOMc3QlfKtQKBgQDssBncIKRYObvpKWyZgix2TuFRFOSuqFSC\ntBRtVOE4/LDk/zJsGKus25FZCXv10FglhMYmg7INAdzich7Uw+SVHh5n68bRXivB\nrxUh4HQk/BKAiDjZRggo56MDlER2ss7opIl777PGk7oAs80UzAvIU+PWurQUos5L\noXODH7GKswKBgC46GeOcr9/wFU1Zoj5pfMZP38HxmlxtYyQHdCtNDFd6ZRpcpZYZ\nkD/GtQzHPMv1ajhF/CM3/W5etrgoXmHX8mXYxsZQ5Vwu6fEAe1bUK6wYBC/vPC94\n8w9yPq9K/FPUX9gqSoohrxfMWIjJVCKyl2xq8OtboWsAgxHOY9unEKCRAoGAMsY4\nVfOerdp8yDD9vhShyyNyzH0J7bnonz1YYHfj9OCoZgek3nGQan2TuaECOaJfNnU8\nOMjpqkarBtzqZkQ7xg13Al4fAY0NH/iaNPE8mS6GHZKbd2jBmVzPqJXm9fu3zUp2\nv+KVE1VfgoUPypVXNbthVhApT3/5d1oEOK3U3WcCgYEA1Dg3LXk5Zi2w6VftQxp9\nq9Wer+EETV+2OV8f6jf/4VjK/o+rtYnA8lHqK+/aur5Y87VfRP8C1Jyd6ZTrwKUq\ng5+nIgIkINVCV0ndwc92U8/6U3ZJYKz8/Fti67hl8gBEHA4XCdr6FCRHY+x+HpxD\nGQUdKlKWyAYnuODswhrEOWg=\n-----END PRIVATE KEY-----\n",
-  "client_email": "deep-298@graphic-brook-237211.iam.gserviceaccount.com",
-  "client_id": "111258438244732121272",
-  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  "token_uri": "https://oauth2.googleapis.com/token",
-  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/deep-298%40graphic-brook-237211.iam.gserviceaccount.com"
+  ---
 }
