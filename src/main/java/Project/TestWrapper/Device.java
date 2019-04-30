@@ -15,7 +15,6 @@ public class Device extends Thread{
 
 
 
-
     public Device(String serialnumber, String name, String os, String version, String model, String category, String manufacture, String remote, String reservedtoyou, String agent){
         this.serialnumber =serialnumber;
         this.name =name;

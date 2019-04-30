@@ -9,11 +9,16 @@ import io.appium.java_client.android.AndroidDriver;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.platform.suite.api.SelectPackages;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Platform;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -22,6 +27,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 @ExtendWith(Selenium_AfterClassExtension.class)
 @DisplayName("Base Test Browser")
@@ -48,6 +54,9 @@ public class BaseTest_Browser {
 
     public DesiredCapabilities dc = new DesiredCapabilities();
     public Browser browser = null;
+
+    protected boolean USE_WAIT_UNTIL = false;//help to ignore from browsers issues
+    protected WebDriverWait wait;
 
 
 
@@ -81,6 +90,10 @@ public class BaseTest_Browser {
         //Create Driver
 
             createDriver();
+
+            if (browser!=null && driver!=null){
+                initSeleniumDriverSettings();
+            }
 
         testID = BaseTest.findTestID((String)driver.getCapabilities().getCapability("reportUrl"));
         System.out.println("This testID is"+testID);
@@ -131,9 +144,6 @@ public class BaseTest_Browser {
 
     }
 
-
-
-
     public void createDriver() throws Exception {
         System.out.println("Create Driver for browser: "+browser.getSerialnumber());
 
@@ -176,8 +186,19 @@ public class BaseTest_Browser {
 
     }
 
+    public void initSeleniumDriverSettings() {
+        browser.setBrowserInfo(dc.getVersion(), String.valueOf(dc.getPlatform()), (String)dc.getCapability("agentName"),  dc.getBrowserName());
+//        dc.getVersion();
+//        dc.getPlatform();
+//        dc.getBrowserName();
+//        dc.getCapability("reportUrl");
+//        dc.getCapability("sessionId");
+//        dc.getCapability("agentName");
+//        dc.getCapability("viewUrl");
 
-    protected void CollectSupportDataFromBeep(String theClassThatActivateMe) {
+    }
+
+        protected void CollectSupportDataFromBeep(String theClassThatActivateMe) {
         System.out.println("** BeeperControl check in class " + theClassThatActivateMe + " \t Main.CollectSupportDataVar = " + Main.CollectSupportDataVar.get());
         if(Main.CollectSupportDataVar.compareAndSet(true,false)){ //check if true and than change it to false
             System.out.println("CollectSupportData from browser: "+browser.getSerialnumber());
@@ -192,6 +213,9 @@ public class BaseTest_Browser {
         return this.testName;
     }
 
+    protected WebElement myFindElement(By xPath) {
+        return USE_WAIT_UNTIL ? wait.until(ExpectedConditions.visibilityOfElementLocated(xPath)) : driver.findElement(xPath);
+    }
 
 
-}
+    }

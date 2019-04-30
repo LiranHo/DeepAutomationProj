@@ -14,12 +14,13 @@ public enum TestSuites {
     WebTests("Project.Tests.WebTests"),
     //AllTest("Project.Tests"),
     AllTest("Project.Tests", "Project.Selenium.SeleniumTests"),
+//    SeleniumTests(Project.Selenium.SeleniumTests.PerformanceTest.class),
     SeleniumTests("Project.Selenium.SeleniumTests"),
     //OneTimeTest(Project.Test_NotInLongRun.RegressionTests_noLongRun.GridTest.class),
     //OneTimeTest_1("Project.Test_NotInLongRun.InstallAndLaunch_Tests.UnlockManyTimes"),
    // LongRunTest_NoRelease(LongRunTestWithoutReleaseOriginal.class),
    // BaseTest_LongRun(Project.LongRun.BaseTest_LongRun.class),
-    //NothingTest(Project.Tests.NothingTest.class), /*Check the code environment without actual test*/
+    NothingTest(Project.Tests.NothingTest.class), /*Check the code environment without actual test*/
     Maintenance("Project.Maintenance"),
 
 

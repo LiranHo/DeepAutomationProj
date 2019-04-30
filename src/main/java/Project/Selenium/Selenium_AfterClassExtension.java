@@ -27,7 +27,8 @@ public class Selenium_AfterClassExtension implements AfterEachCallback {
         String deviceSN= baseTest.browser.getSerialnumber();
         String Agent = baseTest.browser.getAgent();
         Thread.sleep(2000);
-        String ReporterStatus = Api_Reporter.GetTestResultStatus(baseTest.testID);
+        //String ReporterStatus = Api_Reporter.GetTestResultStatus(baseTest.testID);
+        String ReporterStatus = "";
 
         String reportPath = baseTest.reportURL;
         if(!reportPath.contains("http") && !reportPath.contains("ReportURL")) {
@@ -43,7 +44,7 @@ public class Selenium_AfterClassExtension implements AfterEachCallback {
         if(testResult.equals(false)){
             System.err.println("afterTestExecution - FAIL \t"+"+Thread.currentThread().getName() "+Thread.currentThread().getName()+"\t devicesn: "+deviceSN);
             String error=executionException.toString().replaceAll("\n"," | ");
-            Main.report.addRowToReport("Report",testName, deviceSN,Agent,String.valueOf(testResult), ReporterStatus,StartTime ,EndTime,calculateTestDuring(testDuring),sessionID,reportPath,error);
+            Main.report.addRowToReport(baseTest.browser.getBrowserName(),testName, deviceSN,Agent,String.valueOf(testResult), ReporterStatus,StartTime ,EndTime,calculateTestDuring(testDuring),sessionID,reportPath,error);
 //           System.out.println("the test failed");
             Main.countTests_fail++;
 
@@ -53,7 +54,7 @@ public class Selenium_AfterClassExtension implements AfterEachCallback {
 
         if(testResult.equals(true)){
             System.err.println("afterTestExecution - PASS \t"+"+Thread.currentThread().getName() "+Thread.currentThread().getName()+"\t devicesn: "+deviceSN);
-            Main.report.addRowToReport("Report",testName, deviceSN,Agent,String.valueOf(testResult),ReporterStatus, StartTime , EndTime,calculateTestDuring(testDuring),sessionID,reportPath,"");
+            Main.report.addRowToReport(baseTest.browser.getBrowserName(),testName, deviceSN,Agent,String.valueOf(testResult),ReporterStatus, StartTime , EndTime,calculateTestDuring(testDuring),sessionID,reportPath,"");
 //            System.out.println("the test passed");
             Main.countTests_pass++;
 

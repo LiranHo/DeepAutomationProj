@@ -2,29 +2,20 @@ package Project.TestWrapper;
 
 public class Browser extends Thread{
     private String serialnumber;
-    private String name;
+    private String browserName;
     private String os;
-    private String version;
-    private String model;
-    private String category;
-    private String manufacture;
-    private String remote;
-    private String reservedtoyou;
+    private String browserVersion;
+    private String platform;
     private String agent;
     private String deviceFolderPath="";
-
 
     public Browser(String serialnumber){
         this.serialnumber=serialnumber;
         this.os="Browser";
 
-        this.name ="";
-        this.version ="";
-        this.model ="";
-        this.category ="";
-        this.manufacture ="";
-        this.remote ="";
-        this.reservedtoyou = "";
+        this.browserName ="";
+        this.browserVersion ="";
+        this.platform ="";
         this.agent = "";
     }
 
@@ -33,15 +24,11 @@ public class Browser extends Thread{
         String deviceParameter=
                 "Device info: "+delimiter+
                         "serialnumber: "+this.serialnumber+delimiter+
-                        "name: "+this.name+delimiter+
+                        "browserName: "+this.browserName +delimiter+
                         "os: "+this.os+delimiter+
-                        "version: "+this.version+delimiter+
-                        "model: "+this.model+delimiter+
-                        "category: "+this.category+delimiter+
-                        "manufacture: "+this.manufacture+delimiter+
-                        "remote: "+this.remote+
+                        "browserVersion: "+this.browserVersion +delimiter+
+                        "platform: "+this.platform +delimiter+
                         "agent: "+this.agent;
-        if(this.remote.equals("true")){deviceParameter+=delimiter+"reservedtoyou: "+this.reservedtoyou;}
 
         return deviceParameter;
 
@@ -57,8 +44,20 @@ public class Browser extends Thread{
         return this.serialnumber;
     }
     public String getAgent(){ return this.agent;}
+    public String getplatform(){ return this.platform;}
+    public String getBrowserVersion(){ return this.browserVersion;}
+    public String getBrowserName(){ return this.browserName;}
 
     public String getOS(){ return this.os;}
+
+
+    public void setBrowserInfo(String browserVersion, String platform, String agent, String browserName){
+        this.browserVersion=browserVersion;
+        this.platform=platform;
+        this.agent=agent;
+        this.browserName=browserName;
+
+    }
 
 
 

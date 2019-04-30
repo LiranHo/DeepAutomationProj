@@ -77,7 +77,7 @@ public class Main {
         //T: Init reports
         // INIT report and add first raw titles
         report = Reporter.Reporter("MainReport", innerDirectoryPath);
-        report.addRowToReport("Type", "Test Name", "Device SN", "Agent","Status", "Reporter Status","Start Time" ,"End Time","Test During", "Session ID", "Report URL", "Exception");
+        report.addRowToReport("Platform", "Test Name", "Device SN", "Agent","Status", "Reporter Status","Start Time" ,"End Time","Test During", "Session ID", "Report URL", "Exception");
 
         // INIT info file
         infoFile = new Files("Init Info", innerDirectoryPath);

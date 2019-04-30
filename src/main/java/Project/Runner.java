@@ -46,7 +46,7 @@ public class Runner implements Runnable {
                 System.out.println("Calling runTest with sn -"+Thread.currentThread().getName());
                 runTest(Main.testsSuites);
                 CountRounds++;
-                Main.sout("Info","CountRounds for device: "+ThreadName+"is : "+CountRounds);
+                Main.sout("Info","CountRounds for device: "+ThreadName+" is : "+CountRounds);
             }
         } else {
             //Run by selected TIME
@@ -56,7 +56,7 @@ public class Runner implements Runnable {
                 TimePassedSinceStart = Math.round(CurrentTime - StartTime) / 1000;
                 runTest(Main.testsSuites);
                 CountRounds++; //need to know who many runs there was in this test
-                Main.sout("Info","CountRounds for device: "+ThreadName+"is : "+CountRounds);
+                Main.sout("Info","CountRounds for device: "+ThreadName+" is : "+CountRounds);
 
             }
             while (TimePassedSinceStart <= Main.TimeToRun);
