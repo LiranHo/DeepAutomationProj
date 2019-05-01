@@ -50,20 +50,25 @@ public class InitDeviceList {
 
         //print the devices list
         System.out.println("Devices List info: " + delimiter);
-        if(NUMBER_OF_DEVICES_TO_RUN<=0) {
-            numberOfDeviceInThisRun=devices.size();
-            System.out.println("Number of Devices in this run: " +numberOfDeviceInThisRun);
+        if(NUMBER_OF_DEVICES_TO_RUN < 0) { // run all devices + browsers
+            numberOfDeviceInThisRun=devices.size()+BROWSERS;
+            System.out.println("Number of Devices in this run: " +devices.size());
+            System.out.println("Number of Browsers in this run: " +BROWSERS);
+            System.out.println("Number of Devices + Browsers in this run: " +numberOfDeviceInThisRun);
 
         }
         else {
-            numberOfDeviceInThisRun = Math.min(NUMBER_OF_DEVICES_TO_RUN,devices.size());
-            System.out.println("Number of Devices in this run: " + numberOfDeviceInThisRun);
+            numberOfDeviceInThisRun = Math.min(NUMBER_OF_DEVICES_TO_RUN,devices.size()) + BROWSERS;
+            System.out.println("Number of Devices in this run: " + Math.min(NUMBER_OF_DEVICES_TO_RUN,devices.size()));
+            System.out.println("Number of Browsers in this run: " +BROWSERS);
             System.out.println("Number of devices the user want to run on is: "+NUMBER_OF_DEVICES_TO_RUN);
+            System.out.println("Number of Devices + Browsers in this run: " +numberOfDeviceInThisRun);
+
         }
         PrintDevicesInfo = "";
         PrintDeviceSN = "";
         for (int i = 0; i < devices.size(); i++) {
-            if(Main.NUMBER_OF_DEVICES_TO_RUN>0){
+            if(Main.NUMBER_OF_DEVICES_TO_RUN>=0){
                 if(i>=Main.NUMBER_OF_DEVICES_TO_RUN){
                     break;
                 }

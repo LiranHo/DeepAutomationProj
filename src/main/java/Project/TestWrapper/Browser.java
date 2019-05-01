@@ -16,7 +16,7 @@ public class Browser extends Thread{
         this.browserName ="";
         this.browserVersion ="";
         this.platform ="";
-        this.agent = "";
+        this.agent = ". ";
     }
 
     public String toString(){
@@ -54,7 +54,7 @@ public class Browser extends Thread{
     public void setBrowserInfo(String browserVersion, String platform, String agent, String browserName){
         this.browserVersion=browserVersion;
         this.platform=platform;
-        this.agent=agent;
+        this.agent=agent+" : "+platform;
         this.browserName=browserName;
 
     }

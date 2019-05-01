@@ -146,7 +146,6 @@ public class BaseTest_Browser {
 
     public void createDriver() throws Exception {
         System.out.println("Create Driver for browser: "+browser.getSerialnumber());
-
         dc.setCapability("RunName", Main.startTime);
         dc.setCapability("testName", testName);
       //  dc.setCapability("deviceQuery", "@serialNumber='"+browser.getSerialnumber()+"'");

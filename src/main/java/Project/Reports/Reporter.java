@@ -61,7 +61,7 @@ public class Reporter extends ReportBasics{
             if(Main.WriteToGoogleSheet){
             try {
                 //Add row to google sheet
-                GoogleSheetsIntegration.addTowAppending(String.valueOf(currentTime), type, testName, deviceSN,Agent, status,ReporterStatus,startTime, endTime, testDuring,SessionID, reportURL , exception);
+                GoogleSheetsIntegration.addTowAppending(String.valueOf(currentTime), type, testName, deviceSN , Agent, status,ReporterStatus,startTime, endTime, testDuring,SessionID, reportURL , exception);
             } catch (IOException e) {
                 e.printStackTrace();
             }

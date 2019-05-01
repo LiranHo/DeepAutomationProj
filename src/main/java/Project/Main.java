@@ -33,8 +33,8 @@ import static Project.MainWrapper.InitDeviceList.initDevicesList;
 public class Main {
 
     final protected static String RUN_ONE_DEVICE_SN = "14bdd0fd9904";
-    public final static int NUMBER_OF_DEVICES_TO_RUN = 1; //choose 0 to run ALL devices
-    public final static int BROWSERS = 1; //choose 0 to turn off selenium run
+    public final static int NUMBER_OF_DEVICES_TO_RUN = 0; //choose -1 to run ALL devices
+    public final static int BROWSERS = 0; //choose 0 to turn off selenium run
 
     //**Add Report To google Sheets**
     public static Boolean WriteToGoogleSheet = true;
@@ -143,18 +143,17 @@ public class Main {
 
         //T: 4: Create threads for each device and start to Run
         if (Main.devices.size() <= 0 && Main.BROWSERS<=0) {
-            throw new Exception("Devices list is 0");
+            throw new Exception("Devices list is 0 | There is no Browsers");
         }
         ExecutorService executorService = Executors.newCachedThreadPool();
 //        ArrayList<Future> futures = new ArrayList<>();
 
         int i=0;
         for (Device device : devices) {
-            if(NUMBER_OF_DEVICES_TO_RUN>0) {
+            if(NUMBER_OF_DEVICES_TO_RUN>=0) {
                 if( i>=NUMBER_OF_DEVICES_TO_RUN)
                     break;
                 i++;
-
             }
 
                 System.out.println("starting device - " + device.getSerialnumber());

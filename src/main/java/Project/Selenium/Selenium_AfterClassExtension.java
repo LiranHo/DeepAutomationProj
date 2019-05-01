@@ -65,9 +65,9 @@ public class Selenium_AfterClassExtension implements AfterEachCallback {
 
 
     protected void addToSummaryReport(boolean result){
-        SummaryReport.add1_Total_TestsNum();
+        SummaryReport.add1_Selenium_TestsNum();
         if(!result){
-            SummaryReport.add1_Total_TestsFailed();
+            SummaryReport.add1_Selenium_TestsFailed();
         }
     }
 
