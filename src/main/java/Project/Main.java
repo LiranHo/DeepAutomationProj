@@ -50,7 +50,7 @@ public class Main {
         Grid = true;
         cloudUser = CloudUsers.LiranDeepCloud;
 //        cloudUser = CloudUsers.LiranCloud;
-        //T: 2. Choose on what devices t o run: (Can add devices SN or Name (without ADB:))
+        //T: 2. Choose on what devices to run: (Can add devices SN or Name (without ADB:))
         //TODO: make sure devices can't be added twice
         //TODO: fix that adb: or ios: also work
         //TODO: add option to run on random X devices
@@ -143,7 +143,7 @@ public class Main {
 
         //T: 4: Create threads for each device and start to Run
         if (Main.devices.size() <= 0 && Main.BROWSERS<=0) {
-            throw new Exception("Devices list is 0 | There is no Browsers");
+            throw new Exception("Devices list is 0 | There are no Browsers");
         }
         ExecutorService executorService = Executors.newCachedThreadPool();
 //        ArrayList<Future> futures = new ArrayList<>();

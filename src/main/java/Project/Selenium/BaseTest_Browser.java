@@ -186,7 +186,8 @@ public class BaseTest_Browser {
     }
 
     public void initSeleniumDriverSettings() {
-        browser.setBrowserInfo(dc.getVersion(), String.valueOf(dc.getPlatform()), (String)dc.getCapability("agentName"),  dc.getBrowserName());
+
+        browser.setBrowserInfo(driver.getCapabilities().getVersion(), String.valueOf(driver.getCapabilities().getPlatform()), (String)driver.getCapabilities().getCapability("agentName"),  driver.getCapabilities().getBrowserName());
 //        dc.getVersion();
 //        dc.getPlatform();
 //        dc.getBrowserName();
