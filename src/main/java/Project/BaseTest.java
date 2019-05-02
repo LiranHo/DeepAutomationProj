@@ -87,6 +87,9 @@ public class BaseTest {
 
         createDriver();
 
+        client.addTestProperty("DHM", device.getAgent());
+
+
 
         testID = findTestID((String)driver.getCapabilities().getCapability("reportUrl"));
         System.out.println("This testID is"+testID);
@@ -230,6 +233,18 @@ public class BaseTest {
 
     public String getTestName() {
         return this.testName;
+    }
+
+
+    public String removeColonFromSerialNumber (String serial) {
+        String[] deviceArray;
+        if (serial.contains(":")) {
+            deviceArray = device.getSerialnumber().split(":",2);
+            return deviceArray[0]+"_"+deviceArray[1];
+        } else {
+            return serial;
+        }
+
     }
 
 
