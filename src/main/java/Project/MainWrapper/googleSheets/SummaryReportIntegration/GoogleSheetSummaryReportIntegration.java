@@ -4,8 +4,12 @@ import Project.Main;
 import Project.MainWrapper.googleSheets.GoogleSheetsIntegration;
 import com.google.api.services.sheets.v4.model.UpdateValuesResponse;
 import com.google.api.services.sheets.v4.model.ValueRange;
+import com.google.gson.Gson;
+import org.mortbay.util.ajax.JSON;
 
+import java.io.FileReader;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -70,7 +74,29 @@ public class GoogleSheetSummaryReportIntegration extends GoogleSheetsIntegration
                 .update(Main.mainSpreadShit, "D"+lineNumber, body)
                 .setValueInputOption("RAW")
                 .execute();
+
+        addSummaryReportLine_ReporterView(lineNumber);
     }
+
+    //Add summary report - add reporter view
+    //java encode url parameters
+    public static void addSummaryReportLine_ReporterView(int lineNumber) throws IOException {
+        String reportURL = Main.cloudUser.getCloudFullAdress()+"/reporter/#/test-view-view/100?testView=";
+        String reportParameters = "{\"byKey\": \"RunName\",  \"byKeyValue\": \""+ Main.startTime+"\"}";
+        String ReportLink = reportURL+ URLEncoder.encode(reportParameters, "UTF-8");
+        System.out.println(ReportLink);
+
+
+        ValueRange body = new ValueRange()
+                .setValues(Arrays.asList(
+                        Arrays.asList(ReportLink)));
+        UpdateValuesResponse result = sheetsService.spreadsheets().values()
+                .update(Main.mainSpreadShit, "P"+lineNumber, body)
+                .setValueInputOption("RAW")
+                .execute();
+    }
+
+
 
     //Add summary report to the run line
     public static void addSummaryReportLine_TestsResultsInfo(int lineNumber, String EndTime, int Total_TestsNum, int Total_TestFailed, int  Android_TestsNum ,int Android_TestFailed, int IOS_TestsNum ,int IOS_TestFailed , int Selenium_TestsNum ,int Selenium_TestFailed) throws IOException {
