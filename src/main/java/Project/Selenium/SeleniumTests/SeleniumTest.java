@@ -15,7 +15,11 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.Random;
+
 public class SeleniumTest extends BaseTest_Browser {
+
+    String browserType = browser.getplatform();
 
     @DisplayName("SeleniumTest")
     @Test
@@ -32,9 +36,8 @@ public class SeleniumTest extends BaseTest_Browser {
 
     @Override
     public void ChooseAppDC(){
-        dc.setCapability("testName","SeleniumTest");
-        dc.setCapability(CapabilityType.BROWSER_NAME, BrowserType.CHROME);
-        dc.setCapability(CapabilityType.PLATFORM, Platform.ANY);
+        testName = this.getClass().getSimpleName() + " " +browser.getplatform();
+        dc.setCapability("testName",testName);
 
     }
 

@@ -2,6 +2,7 @@ package Project.Selenium;
 
 import Project.BaseTest;
 import Project.Main;
+import Project.Selenium.SeleniumTests.AllBrowsersTypeTestsSuite;
 import Project.TestWrapper.Browser;
 import Project.TestWrapper.BrowsersAndDevicesHandle.DisableDevices;
 import Project.TestWrapper.Device;
@@ -27,6 +28,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 @ExtendWith(Selenium_AfterClassExtension.class)
@@ -144,6 +146,17 @@ public class BaseTest_Browser {
 
     }
 
+    public String getBrowserType(){
+        int length = AllBrowsersTypeTestsSuite.browserType.length;
+        int rand = new Random().nextInt(AllBrowsersTypeTestsSuite.browserType.length);
+        String browserType = AllBrowsersTypeTestsSuite.browserType[rand];
+        System.out.println("Browser type is: "+browserType + "| "+browser.getSerialnumber() );
+
+        return browserType;
+
+    }
+
+
     public void createDriver() throws Exception {
         System.out.println("Create Driver for browser: "+browser.getSerialnumber());
         dc.setCapability("RunName", Main.startTime);
@@ -158,7 +171,7 @@ public class BaseTest_Browser {
         dc.setCapability("projectName",  Main.cloudUser.getprojectName());
         dc.setCapability("reportFormat", "xml");
 
-        if (Main.Grid) {
+            dc.setCapability(CapabilityType.BROWSER_NAME, getBrowserType()); //set the browser type capability
             ChooseAppDC();
                 Main.sout("Info","Starting upload Browser "+browser.getSerialnumber());
                 try {
@@ -170,11 +183,6 @@ public class BaseTest_Browser {
 
                 Main.sout("Info","Succession to find browser "+browser.getSerialnumber());
 
-
-        } else{ //Not Grid
-            Main.sout("Error!","Can't run on Not Grid Tests");
-            throw new Exception("Can't run not Grid tests for now");
-        }
 
 
         //Add relevant info

@@ -10,7 +10,8 @@ import org.openqa.selenium.remote.CapabilityType;
 import java.util.Random;
 
 public class WikiTest extends BaseTest_Browser {
-    String browserType;
+    String browserType = browser.getplatform();
+
 
     public void setBrowserType(String browserType){
         this.browserType= browserType;
@@ -31,11 +32,9 @@ public class WikiTest extends BaseTest_Browser {
 
     @Override
     public void ChooseAppDC(){
-        int rand = new Random().nextInt(AllBrowsersTypeTestsSuite.browserType.length);
-        browserType = AllBrowsersTypeTestsSuite.browserType[rand];
-        testName = this.getClass().getSimpleName() + " " + browserType;
+        String browserType = browser.getplatform();
+        testName = this.getClass().getSimpleName() + " " +browser.getplatform();
         dc.setCapability("testName",testName);
-        dc.setCapability(CapabilityType.BROWSER_NAME, browserType);
     }
 
 }
