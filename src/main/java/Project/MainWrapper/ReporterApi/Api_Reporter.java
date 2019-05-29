@@ -22,21 +22,26 @@ public class Api_Reporter {
 
     public static String GetTestResultStatus(String TestID) {
         String status = null;
-        String url = Main.cloudUser.getCloudFullAdress()+"/reporter" + "/api/tests/"+TestID;
-        System.out.println("API_Reporter Url is: "+url);
+        System.out.println("GetTestResultStatus API_Reporter Url is " + TestID);
+        if (TestID.equals(null)) {
+            System.out.println("GetTestResultStatus NULL!!");
+        } else {
+            String url = Main.cloudUser.getCloudFullAdress() + "/reporter" + "/api/tests/" + TestID;
+            System.out.println("API_Reporter Url is (GetTestResultStatus): " + url);
 
-        try {
-            responseString = Unirest.get(url)
-                    .basicAuth(Main.cloudUser.userName, Main.cloudUser.Password)
-                    .header("content-type", "application/json")
-                    .asString();
-         //   System.out.println(responseString.getBody());
-            status = parsingJson(responseString.getBody(),"status");
-        } catch (Exception e) {
-            e.printStackTrace();
+            try {
+                responseString = Unirest.get(url)
+                        .basicAuth(Main.cloudUser.userName, Main.cloudUser.Password)
+                        .header("content-type", "application/json")
+                        .asString();
+                //   System.out.println(responseString.getBody());
+                status = parsingJson(responseString.getBody(), "status");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+            return status;
 
-        return status;
     }
 
 
@@ -44,7 +49,7 @@ public class Api_Reporter {
     public static String getReporterVersion() {
         String ReporterVersion="";
         String url = Main.cloudUser.getCloudFullAdress()+"/reporter/api/serverConfiguration";
-        System.out.println("API_Reporter Url is: "+url);
+        System.out.println("API_Reporter Url is: (getReporterVersion) "+url);
 
         try {
             responseString = Unirest.get(url)

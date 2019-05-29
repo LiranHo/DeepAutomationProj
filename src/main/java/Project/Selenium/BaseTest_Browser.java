@@ -85,7 +85,6 @@ public class BaseTest_Browser extends CreateDriverForBrowser {
         driver = createDriver(browser.getSerialnumber(), testName, dc);
         sessionID = String.valueOf(driver.getSessionId());
 
-           // createDriver();
 
             if (browser!=null && driver!=null){
                 initSeleniumDriverSettings();

@@ -40,7 +40,8 @@ public class SeleniumTest extends BaseTest_Browser {
         browserType = AllBrowsersTypeTestsSuite.browserType[rand];
         testName = this.getClass().getSimpleName() + " " + browserType;
         dc.setCapability("testName",testName);
-        dc.setCapability(CapabilityType.BROWSER_NAME, browserType);
+        //dc.setCapability(CapabilityType.BROWSER_NAME, browserType);
+        dc.setCapability(CapabilityType.BROWSER_NAME, "chrome");
 
     }
 
