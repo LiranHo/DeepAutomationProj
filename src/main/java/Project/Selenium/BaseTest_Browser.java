@@ -2,6 +2,7 @@ package Project.Selenium;
 
 import Project.BaseTest;
 import Project.Main;
+import Project.Selenium.SeleniumTests.AllBrowsersTypeTestsSuite;
 import Project.TestWrapper.Browser;
 import Project.TestWrapper.BrowsersAndDevicesHandle.DisableDevices;
 import org.junit.jupiter.api.*;
@@ -20,6 +21,8 @@ import java.io.StringWriter;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 @ExtendWith(Selenium_AfterClassExtension.class)
 @DisplayName("Base Test Browser")
@@ -82,7 +85,7 @@ public class BaseTest_Browser extends CreateDriverForBrowser {
         driver = createDriver(browser.getSerialnumber(), testName, dc);
         sessionID = String.valueOf(driver.getSessionId());
 
-//        createDriver();
+           // createDriver();
 
             if (browser!=null && driver!=null){
                 initSeleniumDriverSettings();
@@ -92,9 +95,6 @@ public class BaseTest_Browser extends CreateDriverForBrowser {
         System.out.println("This testID is"+testID);
 
     }
-
-//
-
 
     @AfterEach
     public void tearDown() {
