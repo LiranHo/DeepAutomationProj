@@ -4,17 +4,11 @@ import Project.BaseTest;
 import Project.Main;
 import Project.TestWrapper.Browser;
 import Project.TestWrapper.BrowsersAndDevicesHandle.DisableDevices;
-import Project.TestWrapper.Device;
-import io.appium.java_client.android.AndroidDriver;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.platform.suite.api.SelectPackages;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Capabilities;
-import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.BrowserType;
-import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -23,18 +17,16 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 @ExtendWith(Selenium_AfterClassExtension.class)
 @DisplayName("Base Test Browser")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SelectPackages("SeleniumTests")
 @DisableDevices
-public class BaseTest_Browser {
+public class BaseTest_Browser extends CreateDriverForBrowser {
 
     public String reportURL = "ReportURL";
     public String sessionID;
@@ -86,10 +78,11 @@ public class BaseTest_Browser {
         testStartTime = new SimpleDateFormat("dd.MM.yyyy - HH.mm.ss").format(new Date());
         testStartTime_calculate = System.currentTimeMillis();
 
-
         //Create Driver
+        driver = createDriver(browser.getSerialnumber(), testName, dc);
+        sessionID = String.valueOf(driver.getSessionId());
 
-            createDriver();
+//        createDriver();
 
             if (browser!=null && driver!=null){
                 initSeleniumDriverSettings();
@@ -99,6 +92,9 @@ public class BaseTest_Browser {
         System.out.println("This testID is"+testID);
 
     }
+
+//
+
 
     @AfterEach
     public void tearDown() {
@@ -132,57 +128,6 @@ public class BaseTest_Browser {
         }
 
         testEndTime = new SimpleDateFormat("dd.MM.yyyy - HH.mm.ss").format(new Date());
-
-    }
-
-    //Choose the application to work with in the test, if doesn't overided it will use nothing
-    public void ChooseAppDC(){
-        Main.sout("Info","Doesn't use any application");
-//        dc.setCapability("testName", "Chrome Browser");
-//        dc.setCapability(CapabilityType.BROWSER_NAME, BrowserType.CHROME);
-//        dc.setCapability(CapabilityType.PLATFORM, Platform.ANY);
-
-    }
-
-    public void createDriver() throws Exception {
-        System.out.println("Create Driver for browser: "+browser.getSerialnumber());
-        dc.setCapability("RunName", Main.startTime);
-        dc.setCapability("testName", testName);
-      //  dc.setCapability("deviceQuery", "@serialNumber='"+browser.getSerialnumber()+"'");
-        if(Main.cloudUser.getAccessKey().equals("0")){
-            dc.setCapability("username", Main.cloudUser.getUserName());
-            dc.setCapability("password", Main.cloudUser.getPassword());
-        }else{
-            dc.setCapability("accessKey", Main.cloudUser.getAccessKey());
-        }
-        dc.setCapability("projectName",  Main.cloudUser.getprojectName());
-        dc.setCapability("reportFormat", "xml");
-
-        if (Main.Grid) {
-            ChooseAppDC();
-                Main.sout("Info","Starting upload Browser "+browser.getSerialnumber());
-                try {
-                    driver = new RemoteWebDriver(new URL( Main.cloudUser.getCloudFullAdress()+"/wd/hub"), dc);
-                } catch (MalformedURLException e) {
-                    Main.sout("Exception!","Failed to start browser "+browser.getSerialnumber());
-                    return;
-                }
-
-                Main.sout("Info","Succession to find browser "+browser.getSerialnumber());
-
-
-        } else{ //Not Grid
-            Main.sout("Error!","Can't run on Not Grid Tests");
-            throw new Exception("Can't run not Grid tests for now");
-        }
-
-
-        //Add relevant info
-        System.out.println("Client SessionID: " + driver.getSessionId());
-        //driver.getRemoteAddress();
-
-        sessionID = String.valueOf(driver.getSessionId());
-
     }
 
     public void initSeleniumDriverSettings() {
@@ -217,5 +162,45 @@ public class BaseTest_Browser {
         return USE_WAIT_UNTIL ? wait.until(ExpectedConditions.visibilityOfElementLocated(xPath)) : driver.findElement(xPath);
     }
 
+
+
+//    public void createDriver() throws Exception {
+//        System.out.println("Create Driver for browser: "+browser.getSerialnumber());
+//        dc.setCapability("RunName", Main.startTime);
+//        dc.setCapability("testName", testName);
+//        //  dc.setCapability("deviceQuery", "@serialNumber='"+browser.getSerialnumber()+"'");
+//        if(Main.cloudUser.getAccessKey().equals("0")){
+//            dc.setCapability("username", Main.cloudUser.getUserName());
+//            dc.setCapability("password", Main.cloudUser.getPassword());
+//        }else{
+//            dc.setCapability("accessKey", Main.cloudUser.getAccessKey());
+//        }
+//        dc.setCapability("projectName",  Main.cloudUser.getprojectName());
+//        dc.setCapability("reportFormat", "xml");
+//
+//        if (Main.Grid) {
+//            addCustomeCapabilities();
+//            Main.sout("Info","Starting upload Browser "+browser.getSerialnumber());
+//            try {
+//                driver = new RemoteWebDriver(new URL( Main.cloudUser.getCloudFullAdress()+"/wd/hub"), dc);
+//            } catch (MalformedURLException e) {
+//                Main.sout("Exception!","Failed to start browser "+browser.getSerialnumber());
+//                return;
+//            }
+//
+//            Main.sout("Info","Succession to find browser "+browser.getSerialnumber());
+//
+//
+//        } else{ //Not Grid
+//            Main.sout("Error!","Can't run on Not Grid Tests");
+//            throw new Exception("Can't run not Grid tests for now");
+//        }
+//
+//
+//        //Add relevant info
+//        System.out.println("Client SessionID: " + driver.getSessionId());
+//        //driver.getRemoteAddress();
+//
+//    }
 
     }

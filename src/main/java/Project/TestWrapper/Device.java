@@ -90,4 +90,11 @@ public class Device extends Thread{
             return false;
     }
 
+    public boolean isBrowser(){
+        if (os.equals("Browser"))
+            return true;
+        else
+            return false;
+    }
+
 }

@@ -30,7 +30,7 @@ public class WikiTest extends BaseTest_Browser {
     }
 
     @Override
-    public void ChooseAppDC(){
+    public void addCustomeCapabilities(){
         int rand = new Random().nextInt(AllBrowsersTypeTestsSuite.browserType.length);
         browserType = AllBrowsersTypeTestsSuite.browserType[rand];
         testName = this.getClass().getSimpleName() + " " + browserType;

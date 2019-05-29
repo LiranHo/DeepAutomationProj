@@ -45,13 +45,15 @@ public class BingTest extends BaseTest_Browser {
     }
 
     @Override
-    public void ChooseAppDC(){
-        int rand = new Random().nextInt(AllBrowsersTypeTestsSuite.browserType.length);
-        browserType = AllBrowsersTypeTestsSuite.browserType[rand];
-        System.out.println("Browser type is: "+browserType + "| "+browser.getSerialnumber() );
-        testName = this.getClass().getSimpleName() + " " + browserType;
-        dc.setCapability("testName",testName);
-        dc.setCapability(CapabilityType.BROWSER_NAME, browserType);
+    public void addCustomeCapabilities(){
+        int length= AllBrowsersTypeTestsSuite.browserType.length;
+            int rand = new Random().nextInt(AllBrowsersTypeTestsSuite.browserType.length);
+            browserType = AllBrowsersTypeTestsSuite.browserType[rand];
+            System.out.println("Browser type is: " + browserType + "| " + browser.getSerialnumber());
+            testName = this.getClass().getSimpleName() + " " + browserType;
+            dc.setCapability("testName",testName);
+            dc.setCapability(CapabilityType.BROWSER_NAME, browserType);
+
     }
 
 

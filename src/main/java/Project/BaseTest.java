@@ -43,10 +43,6 @@ public class BaseTest {
     public static String FolderinnerDeviceDirPath;
    // GridClient gridClient;
     //STA settings
-    protected static String host = "localhost";
-    protected static int port = 8889;
-   // protected Client client = null;
-
     protected AppiumDriver driver = null;
     public SeeTestClient client = null;
 

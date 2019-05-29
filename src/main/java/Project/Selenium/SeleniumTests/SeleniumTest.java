@@ -15,14 +15,17 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class SeleniumTest extends BaseTest_Browser {
+import java.util.Random;
 
+public class SeleniumTest extends BaseTest_Browser {
+    String browserType;
     @DisplayName("SeleniumTest")
     @Test
     public void browserTestGoogleSearch() {
-        for(int i=0;i<2;i++){
+        System.out.println("Enter to SeleniumTest - browserTestGoogleSearch | "+ browserType);
+        for(int i=0;i<1;i++){
             driver.get("https://www.google.com");
-            new WebDriverWait(driver, 10).until(ExpectedConditions.presenceOfElementLocated(By.name("q")));
+             new WebDriverWait(driver, 10).until(ExpectedConditions.presenceOfElementLocated(By.name("q")));
             WebElement searchBar = driver.findElement(By.name("q"));
             searchBar.click();
             searchBar.sendKeys("Experitest");
@@ -31,10 +34,13 @@ public class SeleniumTest extends BaseTest_Browser {
     }
 
     @Override
-    public void ChooseAppDC(){
-        dc.setCapability("testName","SeleniumTest");
-        dc.setCapability(CapabilityType.BROWSER_NAME, BrowserType.CHROME);
-        dc.setCapability(CapabilityType.PLATFORM, Platform.ANY);
+    public void addCustomeCapabilities(){
+        int length = AllBrowsersTypeTestsSuite.browserType.length ;
+        int rand = new Random().nextInt(AllBrowsersTypeTestsSuite.browserType.length);
+        browserType = AllBrowsersTypeTestsSuite.browserType[rand];
+        testName = this.getClass().getSimpleName() + " " + browserType;
+        dc.setCapability("testName",testName);
+        dc.setCapability(CapabilityType.BROWSER_NAME, browserType);
 
     }
 

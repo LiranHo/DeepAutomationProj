@@ -132,7 +132,7 @@ public class PerformanceTest extends BaseTest_Browser {
     }
 
     @Override
-    public void ChooseAppDC(){
+    public void addCustomeCapabilities(){
         dc.setCapability("useWaitUntil", USE_WAIT_UNTIL);//default is 300
 
         int rand = new Random().nextInt(AllBrowsersTypeTestsSuite.browserType.length);
