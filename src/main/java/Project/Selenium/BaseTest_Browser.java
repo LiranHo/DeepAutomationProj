@@ -7,7 +7,7 @@ import Project.TestWrapper.Browser;
 import Project.TestWrapper.BrowsersAndDevicesHandle.DisableDevices;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.platform.suite.api.SelectPackages;
+//import org.junit.platform.suite.api.SelectPackages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit;
 @ExtendWith(Selenium_AfterClassExtension.class)
 @DisplayName("Base Test Browser")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@SelectPackages("SeleniumTests")
+//@SelectPackages("SeleniumTests")
 @DisableDevices
 public class BaseTest_Browser extends CreateDriverForBrowser {
 

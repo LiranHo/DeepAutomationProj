@@ -10,7 +10,7 @@ import io.appium.java_client.ios.IOSDriver;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.junit.platform.suite.api.SelectPackages;
+//import org.junit.platform.suite.api.SelectPackages;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -25,7 +25,7 @@ import java.util.Date;
 @ExtendWith(AfterClassExtension.class)
 @DisplayName("Base Test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@SelectPackages("Tests")
+//@SelectPackages("Tests")
 @DisableBrowsers
 public class BaseTest {
 
@@ -82,10 +82,7 @@ public class BaseTest {
         testStartTime_calculate = System.currentTimeMillis();
 
         createDriver();
-
-        client.addTestProperty("DHM", device.getAgent());
-
-
+//        client.addTestProperty("DHM", device.getAgent());
 
         testID = findTestID((String)driver.getCapabilities().getCapability("reportUrl"));
         System.out.println("This testID is"+testID);
@@ -148,6 +145,7 @@ public class BaseTest {
     public void createDriver() throws Exception {
         System.out.println("Create Driver for device: "+device.getSerialnumber());
 
+        dc.setCapability("DHM", device.getAgent());
         dc.setCapability("RunName", Main.startTime);
         dc.setCapability("testName", testName);
         dc.setCapability("deviceQuery", "@serialNumber='"+device.getSerialnumber()+"'");
