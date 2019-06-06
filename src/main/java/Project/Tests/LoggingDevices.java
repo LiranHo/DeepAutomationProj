@@ -16,7 +16,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class LoggingDevices extends BaseTest {
 
 
-    @DisplayName("LoggingDevices_test")
+    @DisplayName("Install_big_application")
     @Test
     public void LoggingDevices_test() {
         Main.sout("Info!", "Starting testLoggingDevices_test for device " + device.getSerialnumber()+".txt");
@@ -37,7 +37,16 @@ public class LoggingDevices extends BaseTest {
 
     @Override
     public void ChooseAppDC(){
-        dc.setCapability("testName", "LoggingDevices_test");
+        dc.setCapability("testName", "Install big application");
+        if (device.isAndroid()) {
+            dc.setCapability(MobileCapabilityType.APP, "cloud:com.example.shaharyannay.dotgame/.Activity.LoginActivity");
+            dc.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, "com.example.shaharyannay.dotgame");
+            dc.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, ".Activity.LoginActivity");
+
+        } else { //Device IOS
+            dc.setCapability(MobileCapabilityType.APP, "cloud:com.nianticlabs.pokemongo");
+            dc.setCapability(IOSMobileCapabilityType.BUNDLE_ID, "com.nianticlabs.pokemongo");
+        }
 
     }
 
