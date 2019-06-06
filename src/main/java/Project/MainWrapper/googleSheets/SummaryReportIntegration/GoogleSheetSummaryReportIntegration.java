@@ -63,7 +63,6 @@ public class GoogleSheetSummaryReportIntegration extends GoogleSheetsIntegration
     }
 
 
-
     //Add summary report to the run line
     public static void addSummaryReportLine_CloudInfo(int lineNumber, String CloudVersion, String SeeTestVersion, String ReporterVersion ) throws IOException {
         ValueRange body = new ValueRange()
@@ -91,7 +90,7 @@ public class GoogleSheetSummaryReportIntegration extends GoogleSheetsIntegration
                 .setValues(Arrays.asList(
                         Arrays.asList(ReportLink)));
         UpdateValuesResponse result = sheetsService.spreadsheets().values()
-                .update(Main.mainSpreadShit, "P"+lineNumber, body)
+                .update(Main.mainSpreadShit, "Q"+lineNumber, body)
                 .setValueInputOption("RAW")
                 .execute();
     }
@@ -99,11 +98,11 @@ public class GoogleSheetSummaryReportIntegration extends GoogleSheetsIntegration
 
 
     //Add summary report to the run line
-    public static void addSummaryReportLine_TestsResultsInfo(int lineNumber, String EndTime, int Total_TestsNum, int Total_TestFailed, int  Android_TestsNum ,int Android_TestFailed, int IOS_TestsNum ,int IOS_TestFailed , int Selenium_TestsNum ,int Selenium_TestFailed) throws IOException {
+    public static void addSummaryReportLine_TestsResultsInfo(int lineNumber, String EndTime, int Total_TestsNum, int Total_TestFailed, int  Android_TestsNum ,int Android_TestFailed, int IOS_TestsNum ,int IOS_TestFailed ,String Agents_Per_list_print,  int Selenium_TestsNum ,int Selenium_TestFailed) throws IOException {
        // getValueFromCell_int(Main.mainSpreadShit, lineNumber, 5);
         ValueRange body = new ValueRange()
                 .setValues(Arrays.asList(
-                        Arrays.asList(EndTime, Total_TestsNum, Total_TestFailed, Android_TestsNum ,Android_TestFailed, IOS_TestsNum ,IOS_TestFailed , Selenium_TestsNum ,Selenium_TestFailed)));
+                        Arrays.asList(EndTime, Total_TestsNum, Total_TestFailed, Android_TestsNum ,Android_TestFailed, IOS_TestsNum ,IOS_TestFailed , Agents_Per_list_print , Selenium_TestsNum ,Selenium_TestFailed)));
         UpdateValuesResponse result = sheetsService.spreadsheets().values()
                 .update(Main.mainSpreadShit, "G"+lineNumber, body)
                 .setValueInputOption("RAW")

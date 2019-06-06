@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Api_Reporter {
@@ -85,6 +86,24 @@ public class Api_Reporter {
         return CloudVersion;
 
     }
+
+    public static JSONArray getAgentsFromCloud() {
+        JSONArray jsonArr=null;
+        String url = Main.cloudUser.getCloudFullAdress()+"/api/v2/agents";
+        try {
+            responseString = Unirest.get(url)
+                    .basicAuth(Main.cloudUser.userName, Main.cloudUser.Password)
+                    .header("content-type", "application/json")
+                    .asString();
+            jsonArr = new JSONArray(responseString.getBody());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return jsonArr;
+
+    }
+
 
     public static void main(String[] args) {
         Main.initTheMain();

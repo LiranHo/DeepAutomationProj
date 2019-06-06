@@ -1,5 +1,7 @@
 package Project.TestWrapper;
 
+import Project.Main;
+
 public class Device extends Thread{
     private String serialnumber;
     private String name;
@@ -10,7 +12,7 @@ public class Device extends Thread{
     private String manufacture;
     private String remote;
     private String reservedtoyou;
-    private String agent;
+    private Agent agent;
     private String deviceFolderPath="";
 
 
@@ -25,11 +27,11 @@ public class Device extends Thread{
         this.manufacture =manufacture;
         this.remote =remote;
         this.reservedtoyou = reservedtoyou;
-        this.agent = agent;
+        this.agent = Main.searchAgentByID(agent);
     }
 
     public Device(String serialnumber){
-        this(serialnumber,"","","","","","","","","");
+        this(serialnumber,"","","","","","","","",new Agent("","").toString());
     }
 
    // public Device(String serialnumber, boolean browser){
@@ -38,6 +40,10 @@ public class Device extends Thread{
 
 
     public String toString(){
+        String thisAgent="";
+        if(agent!=null){
+            thisAgent = this.agent.toString();
+        }
         String delimiter = "\r\n";
         String deviceParameter=
                 "Device info: "+delimiter+
@@ -49,7 +55,7 @@ public class Device extends Thread{
                         "category: "+this.category+delimiter+
                         "manufacture: "+this.manufacture+delimiter+
                         "remote: "+this.remote+
-                        "agent: "+this.agent;
+                        "agent: "+thisAgent;
         if(this.remote.equals("true")){deviceParameter+=delimiter+"reservedtoyou: "+this.reservedtoyou;}
 
         return deviceParameter;
@@ -68,7 +74,8 @@ public class Device extends Thread{
     public String getSerialnumber(){
         return this.serialnumber;
     }
-    public String getAgent(){ return this.agent;}
+    public Agent getAgent(){ return this.agent;}
+    public String getAgentName(){ return this.agent.toString();}
     public String getVersion(){ return this.version;}
     public String getCategory(){ return this.category;}
     public String getManufactor(){ return this.manufacture;}

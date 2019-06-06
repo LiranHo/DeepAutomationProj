@@ -1,6 +1,7 @@
 package Project;
 
 import Project.TestWrapper.AfterClassExtension;
+import Project.TestWrapper.Agent;
 import Project.TestWrapper.Device;
 import Project.TestWrapper.BrowsersAndDevicesHandle.DisableBrowsers;
 import com.experitest.appium.SeeTestClient;
@@ -10,7 +11,7 @@ import io.appium.java_client.ios.IOSDriver;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.remote.DesiredCapabilities;
-//import org.junit.platform.suite.api.SelectPackages;
+import org.junit.platform.suite.api.SelectPackages;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -67,6 +68,7 @@ public class BaseTest {
         if (Main.searchDeviceBySN(DeviceSN) != null) {
             device = Main.searchDeviceBySN(DeviceSN);
         }
+        device.getAgent().addDeviceToAgent(device);
         testName = device.getSerialnumber();
         System.out.println(new Date() + "\t" + device.getSerialnumber() + "\tBaseTest BeforeAll - device " + Thread.currentThread().getName());
         FolderinnerDeviceDirPath = device.getDeviceFolderPath();
@@ -145,7 +147,7 @@ public class BaseTest {
     public void createDriver() throws Exception {
         System.out.println("Create Driver for device: "+device.getSerialnumber());
 
-        dc.setCapability("DHM", device.getAgent());
+        dc.setCapability("DHM", device.getAgentName());
         dc.setCapability("RunName", Main.startTime);
         dc.setCapability("testName", testName);
         dc.setCapability("deviceQuery", "@serialNumber='"+device.getSerialnumber()+"'");

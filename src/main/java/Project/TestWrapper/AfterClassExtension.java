@@ -11,6 +11,7 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import java.util.Optional;
 public class AfterClassExtension implements AfterEachCallback {
     boolean deviceOS_isIOS;
+    Agent agent;
 
     @Override
     public void afterEach(ExtensionContext context) throws Exception {
@@ -24,7 +25,7 @@ public class AfterClassExtension implements AfterEachCallback {
         String testName = context.getDisplayName();
 
         String deviceSN= baseTest.device.getSerialnumber();
-        String Agent = baseTest.device.getAgent();
+        agent = baseTest.device.getAgent();
         deviceOS_isIOS= baseTest.device.isIOS();
         String ReporterStatus = Api_Reporter.GetTestResultStatus(baseTest.testID);
 
@@ -42,28 +43,38 @@ public class AfterClassExtension implements AfterEachCallback {
         if(testResult.equals(false)){
             System.err.println("afterTestExecution - FAIL \t"+"+Thread.currentThread().getName() "+Thread.currentThread().getName()+"\t devicesn: "+deviceSN);
             String error=executionException.toString().replaceAll("\n"," | ");
-            Main.report.addRowToReport(getDeviceOSinString(),testName, deviceSN,Agent,String.valueOf(testResult), ReporterStatus,StartTime ,EndTime,calculateTestDuring(testDuring),sessionID,reportPath,error);
+            Main.report.addRowToReport(getDeviceOSinString(),testName, deviceSN,agent.getAgentName(),String.valueOf(testResult), ReporterStatus,StartTime ,EndTime,calculateTestDuring(testDuring),sessionID,reportPath,error);
 //           System.out.println("the test failed");
             Main.countTests_fail++;
 
+            addTestResultToAgent(false);
             addToSummaryReport(false);
 
         }
 
         if(testResult.equals(true)){
             System.err.println("afterTestExecution - PASS \t"+"+Thread.currentThread().getName() "+Thread.currentThread().getName()+"\t devicesn: "+deviceSN);
-            Main.report.addRowToReport(getDeviceOSinString(),testName, deviceSN,Agent,String.valueOf(testResult),ReporterStatus, StartTime , EndTime,calculateTestDuring(testDuring),sessionID,reportPath,"");
+            Main.report.addRowToReport(getDeviceOSinString(),testName, deviceSN,agent.getAgentName(),String.valueOf(testResult),ReporterStatus, StartTime , EndTime,calculateTestDuring(testDuring),sessionID,reportPath,"");
 //            System.out.println("the test passed");
             Main.countTests_pass++;
 
+            addTestResultToAgent(true);
             addToSummaryReport(true);
 
         }
     }
 
 
+    public void addTestResultToAgent(boolean result){
+        agent.addTestToAgent(result);
+    }
 
     protected void addToSummaryReport(boolean result){
+        try {
+            SummaryReport.getAgentsPer();
+        }catch (Exception e){
+            System.out.println("SummaryReport.getAgentsPer failed "+e.getMessage());
+        }
         SummaryReport.add1_Total_TestsNum();
         if(!result){
             SummaryReport.add1_Total_TestsFailed();

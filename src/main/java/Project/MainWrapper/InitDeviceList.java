@@ -1,8 +1,11 @@
 package Project.MainWrapper;
 
 import Project.Main;
+import Project.TestWrapper.Agent;
 import Project.TestWrapper.Device;
 import com.experitest.client.GridClient;
+import com.mashape.unirest.http.Unirest;
+import org.json.JSONArray;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -18,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static Project.Main.*;
+import static Project.MainWrapper.ReporterApi.Api_Reporter.getAgentsFromCloud;
 
 public class InitDeviceList {
 
@@ -40,11 +44,12 @@ public class InitDeviceList {
             }else {
                 gridClient = new GridClient(cloudUser.AccessKey, cloudUser.grid_domain, cloudUser.grid_port, cloudUser.isSecured);
             }
-                devices = getDevices(gridClient.getDevicesInformation());
-
+            initAgents();
+            devices = getDevices(gridClient.getDevicesInformation());
 
 //           gridClient = new GridClient(userName, Password, projectName, grid_domain, grid_port, isSecured);
 //             devices = getDevices(gridClient.getDevicesInformation());
+
 
         }
 
@@ -155,6 +160,19 @@ public class InitDeviceList {
         System.out.println("Number of Devices connected: " + nodeList.getLength());
 
         return nodeList;
+
+    }
+
+    public static void initAgents(){
+        JSONArray jsonArr = getAgentsFromCloud();
+//        String AgentHostIP="";
+//        String AgentName="";
+
+        for (int i = 0; i < jsonArr.length(); i++) {
+            String AgentName = (jsonArr.getJSONObject(i).getString("name"));
+            String AgentHostIP =  jsonArr.getJSONObject(i).getString("hostOrIp");
+            agents.add(new Agent(AgentName, AgentHostIP));
+        }
 
     }
 

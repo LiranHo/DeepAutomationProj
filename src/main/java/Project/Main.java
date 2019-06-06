@@ -9,6 +9,7 @@ import Project.Settings.BeeperControl;
 import Project.Settings.CloudUsers;
 import Project.Settings.ProjectSettingPerUser;
 import Project.Settings.TestSuites;
+import Project.TestWrapper.Agent;
 import Project.TestWrapper.Browser;
 import Project.TestWrapper.Device;
 import com.experitest.appium.SeeTestClient;
@@ -229,6 +230,7 @@ public class Main {
     //***Init Test Vars***
     //**Devices**
     public static List<Device> devices = new ArrayList<>(); // the devices list which we run on
+    public static List<Agent> agents = new ArrayList<>(); // the devices list which we run on
     public static List<Browser> browsers = new ArrayList<>(); // the devices list which we run on
     public static List<String> Choosedevices = new ArrayList<>(); // the devices SN the user want to run on
     public static boolean chooseSpesificDevices; //Choose specific devices or run on all connected devices
@@ -322,6 +324,15 @@ public class Main {
         for (Device device : devices) {
             if (device.getSerialnumber().equals(SN)) {
                 return device;
+            }
+        }
+        return null;
+    }
+
+    public static Agent searchAgentByID(String ID) {
+        for (Agent agent : agents) {
+            if (agent.getAgentName().contains(ID)||agent.getAgentNumber().contains(ID)) {
+                return agent;
             }
         }
         return null;

@@ -39,11 +39,11 @@ public class Runner implements Runnable {
 
     public void run() {
         Thread.currentThread().setName(ThreadName);
-        System.out.println("current thread is: " + Thread.currentThread().getName());
+        System.out.println("Start Run thread : " + Thread.currentThread().getName());
         //Run by selected ROUNDS
         if (Main.Runby_NumberOfRounds) {
             while (Main.NumberOfRoundsToRun > CountRounds) {
-                System.out.println("Calling runTest with sn -"+Thread.currentThread().getName());
+//                System.out.println("Calling runTest with sn -"+Thread.currentThread().getName());
                 runTest(Main.testsSuites);
                 CountRounds++;
                 Main.sout("Info","CountRounds for device: "+ThreadName+" is : "+CountRounds);
