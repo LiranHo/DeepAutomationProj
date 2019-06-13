@@ -38,16 +38,26 @@ public class Selenium_AfterClassExtension implements AfterEachCallback {
         String StartTime=String.valueOf(baseTest.testStartTime);
         long testDuring =System.currentTimeMillis() - baseTest.testStartTime_calculate;
 
+        int count_Could_not_start_selenium_grid_test = 0;
+
 
         Main.countTests++;
 
         if(testResult.equals(false)){
             System.err.println("afterTestExecution - FAIL \t"+"+Thread.currentThread().getName() "+Thread.currentThread().getName()+"\t devicesn: "+deviceSN);
             String error=executionException.toString().replaceAll("\n"," | ");
-            Main.report.addRowToReport(baseTest.browser.getBrowserName(),testName, deviceSN,Agent,String.valueOf(testResult), ReporterStatus,StartTime ,EndTime,calculateTestDuring(testDuring),sessionID,reportPath,error);
-//           System.out.println("the test failed");
-            Main.countTests_fail++;
+            if(BaseTest_Browser.ifNotNeedToBeTestedAsFailed(error)){
+                count_Could_not_start_selenium_grid_test++;
+                System.out.println("BaseTest_Browser.ifNotNeedToBeTestedAsFailed is true - won't be count as failure");
+                System.out.println("count_Could_not_start_selenium_grid_test: "+count_Could_not_start_selenium_grid_test);
+                Main.report.addRowToReport(baseTest.browser.getBrowserName(),testName, "Could not start selenium grid test #"+count_Could_not_start_selenium_grid_test,Agent,String.valueOf(testResult), ReporterStatus,StartTime ,EndTime,calculateTestDuring(testDuring),sessionID,reportPath,error);
+            }
+            else {
 
+                Main.report.addRowToReport(baseTest.browser.getBrowserName(), testName, deviceSN, Agent, String.valueOf(testResult), ReporterStatus, StartTime, EndTime, calculateTestDuring(testDuring), sessionID, reportPath, error);
+//           System.out.println("the test failed");
+                Main.countTests_fail++;
+            }
             addToSummaryReport(false);
 
         }

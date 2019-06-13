@@ -7,7 +7,7 @@ import Project.TestWrapper.Browser;
 import Project.TestWrapper.BrowsersAndDevicesHandle.DisableDevices;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-//import org.junit.platform.suite.api.SelectPackages;
+import org.junit.platform.suite.api.SelectPackages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit;
 @ExtendWith(Selenium_AfterClassExtension.class)
 @DisplayName("Base Test Browser")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-//@SelectPackages("SeleniumTests")
+@SelectPackages("SeleniumTests")
 @DisableDevices
 public class BaseTest_Browser extends CreateDriverForBrowser {
 
@@ -202,4 +202,18 @@ public class BaseTest_Browser extends CreateDriverForBrowser {
 //
 //    }
 
-    }
+
+        public static boolean ifNotNeedToBeTestedAsFailed(String e){
+        if(e.contains("Could not start selenium grid test"))
+            {
+                System.out.println("Could not start selenium grid test");
+                return true;
+            }
+        else{
+                return false;
+            }
+            //Optional[org.openqa.selenium.WebDriverException: Unable to parse remote response: Could not start selenium grid test. Test request timed out. | Build info: version: '3.12.0', revision: '7c6e0b3', time: '2018-05-08T14:04:26.12Z' | System info: host: 'lirans-mac-mini.experitest.local', ip: 'fe80:0:0:0:1c7d:e6e:561b:5b1b%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.12.6', java.version: '1.8.0_151' | Driver info: driver.version: RemoteWebDriver]
+
+        }
+
+}
