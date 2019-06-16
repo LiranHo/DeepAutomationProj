@@ -64,7 +64,7 @@ public class SummaryReport {
     public static void getAgentsPer(){
         Agents_Per_list_print="";
         for (Agent agent : Main.agents) {
-            Agents_Per_list_print += agent.getAgentName()+": \t"+agent.getAgentPassedPercentage()+"%"+Main.delimiter;
+            Agents_Per_list_print += agent.getAgentName()+": \t"+agent.getAgentPassedPercentage()+"%" +"\t| \tIncomplete: " +agent.getAgentIncompletePercentage()+"% "+Main.delimiter;
         }
     }
 

@@ -58,8 +58,14 @@ public class AfterClassExtension implements AfterEachCallback {
 //            System.out.println("the test passed");
             Main.countTests_pass++;
 
-            addTestResultToAgent(true);
-            addToSummaryReport(true);
+            if(ReporterStatus.equals("Incomplete")){
+                addTestResultToAgent("Incomplete");
+                addToSummaryReport(false);
+            }
+            else {
+                addTestResultToAgent(true);
+                addToSummaryReport(true);
+            }
 
         }
     }
@@ -68,6 +74,12 @@ public class AfterClassExtension implements AfterEachCallback {
     public void addTestResultToAgent(boolean result){
         agent.addTestToAgent(result);
     }
+
+    public void addTestResultToAgent(String result){
+        agent.addTestToAgent(result);
+    }
+
+
 
     protected void addToSummaryReport(boolean result){
         try {
