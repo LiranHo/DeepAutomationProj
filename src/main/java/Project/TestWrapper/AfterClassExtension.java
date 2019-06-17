@@ -27,7 +27,13 @@ public class AfterClassExtension implements AfterEachCallback {
         String deviceSN= baseTest.device.getSerialnumber();
         agent = baseTest.device.getAgent();
         deviceOS_isIOS= baseTest.device.isIOS();
-        String ReporterStatus = Api_Reporter.GetTestResultStatus(baseTest.testID);
+        String ReporterStatus = "null";
+        try {
+            ReporterStatus = Api_Reporter.GetTestResultStatus(baseTest.testID);
+        }catch (Exception e){
+            System.out.println("ReporterStatus is null");
+//            ReporterStatus += " - "+ e.getMessage();
+        }
 
         String reportPath = baseTest.reportURL;
         if(!reportPath.contains("http") && !reportPath.contains("ReportURL")) {
@@ -40,6 +46,12 @@ public class AfterClassExtension implements AfterEachCallback {
 
         Main.countTests++;
 
+
+        boolean incompleteTest = false;
+        if(ReporterStatus.equals("null")||ReporterStatus.equals("Incomplete")){
+            incompleteTest = true;
+        }
+
         if(testResult.equals(false)){
             System.err.println("afterTestExecution - FAIL \t"+"+Thread.currentThread().getName() "+Thread.currentThread().getName()+"\t devicesn: "+deviceSN);
             String error=executionException.toString().replaceAll("\n"," | ");
@@ -47,18 +59,21 @@ public class AfterClassExtension implements AfterEachCallback {
 //           System.out.println("the test failed");
             Main.countTests_fail++;
 
-            addTestResultToAgent(false);
+            if(incompleteTest){
+                addTestResultToAgent("Incomplete");
+            }else {
+                addTestResultToAgent(false);
+            }
             addToSummaryReport(false);
-
         }
 
         if(testResult.equals(true)){
-            System.err.println("afterTestExecution - PASS \t"+"+Thread.currentThread().getName() "+Thread.currentThread().getName()+"\t devicesn: "+deviceSN);
+            System.err.println("afterTestExecution - PASS \t"+"+Thread.currentThread().getName() "+Thread.currentThread().getName()+"\t device sn: "+deviceSN);
             Main.report.addRowToReport(getDeviceOSinString(),testName, deviceSN,agent.getAgentName(),String.valueOf(testResult),ReporterStatus, StartTime , EndTime,calculateTestDuring(testDuring),sessionID,reportPath,"");
 //            System.out.println("the test passed");
             Main.countTests_pass++;
 
-            if(ReporterStatus.equals("Incomplete")){
+            if(incompleteTest){
                 addTestResultToAgent("Incomplete");
                 addToSummaryReport(false);
             }
