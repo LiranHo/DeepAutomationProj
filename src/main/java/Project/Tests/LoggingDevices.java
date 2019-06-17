@@ -21,24 +21,28 @@ public class LoggingDevices extends BaseTest {
     public void LoggingDevices_test() {
         Main.sout("Info!", "Starting testLoggingDevices_test for device " + device.getSerialnumber()+".txt");
 
+        if (!(device.getSerialnumber().equals("016fd8f1dd4f22bd"))) {
             client.startLoggingDevice(Main.innerDirectoryPath+"\\"+device.getSerialnumber()+"\\"+testStartTime);
             client.sleep(1000*30);
 
-        try {
-            client.stopLoggingDevice();
-        } catch (Exception e) {
-            client.report(e.getMessage(),false);
-            Main.sout("Exception | LoggingDevices ",device.getSerialnumber(),e.getMessage());
-            driver.quit();
-            throw e;
+            try {
+                client.stopLoggingDevice();
+            } catch (Exception e) {
+                client.report(e.getMessage(),false);
+                Main.sout("Exception | LoggingDevices ",device.getSerialnumber(),e.getMessage());
+                driver.quit();
+                throw e;
+            }
         }
+
+
     }
 
 
     @Override
     public void ChooseAppDC(){
         dc.setCapability("testName", "Install big application");
-        if (device.isAndroid()) {
+        if (device.isAndroid() && !(device.getSerialnumber().equals("016fd8f1dd4f22bd"))) {
             dc.setCapability(MobileCapabilityType.APP, "cloud:com.example.shaharyannay.dotgame/.Activity.LoginActivity");
             dc.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, "com.example.shaharyannay.dotgame");
             dc.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, ".Activity.LoginActivity");
