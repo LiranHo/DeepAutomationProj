@@ -28,6 +28,15 @@ public class SimpleWebTest extends BaseTest {
     public void SimpleWebTest() {
         Main.sout("Info!", "Starting test Test_Simple_web for device " + device.getSerialnumber());
 
+        if (device.isAndroid()) {
+            client.setNetworkConnection("wifi", true);
+            String appsInstalled = client.getInstalledApplications();
+            if (!appsInstalled.contains("com.android.chrome")) {
+                System.out.printf("Chrome is not installed, install it now");
+                driver.executeScript("seetest:client.install(\"cloud:com.android.chrome/com.google.android.apps.chrome.Main\", \"true\", \"true\")");
+            }
+        }
+
         try {
             driver.get("https://www.google.com");
         } catch (Exception e) {
