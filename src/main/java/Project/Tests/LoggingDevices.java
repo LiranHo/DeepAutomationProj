@@ -42,11 +42,12 @@ public class LoggingDevices extends BaseTest {
     @Override
     public void ChooseAppDC(){
         dc.setCapability("testName", "Install big application");
-        if (device.isAndroid() && !(device.getSerialnumber().equals("016fd8f1dd4f22bd"))) {
-            dc.setCapability(MobileCapabilityType.APP, "cloud:com.example.shaharyannay.dotgame/.Activity.LoginActivity");
-            dc.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, "com.example.shaharyannay.dotgame");
-            dc.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, ".Activity.LoginActivity");
-
+        if (device.isAndroid()) {
+            if (!(device.getSerialnumber().equals("016fd8f1dd4f22bd"))) {
+                dc.setCapability(MobileCapabilityType.APP, "cloud:com.example.shaharyannay.dotgame/.Activity.LoginActivity");
+                dc.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, "com.example.shaharyannay.dotgame");
+                dc.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, ".Activity.LoginActivity");
+            }
         } else { //Device IOS
             dc.setCapability(MobileCapabilityType.APP, "cloud:com.nianticlabs.pokemongo");
             dc.setCapability(IOSMobileCapabilityType.BUNDLE_ID, "com.nianticlabs.pokemongo");
