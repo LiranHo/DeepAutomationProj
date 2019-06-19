@@ -25,6 +25,8 @@ public class LoggingDevices extends BaseTest {
             client.startLoggingDevice(Main.innerDirectoryPath+"\\"+device.getSerialnumber()+"\\"+testStartTime);
             client.sleep(1000*30);
 
+            client.closeAllApplications();
+
             try {
                 client.stopLoggingDevice();
             } catch (Exception e) {
