@@ -28,7 +28,7 @@ public class Device extends Thread {
         this.remote = remote;
         this.reservedtoyou = reservedtoyou;
         this.agent = Main.searchAgentByID(agent);
-        if(Main.cleanDeviceLogBeforeAllTests){
+        if(Main.cleanDeviceLogBeforeAllTests && this.os.equals("android")){
             cleanDeviceLogBeforeAllTests = true;
         }
     }
