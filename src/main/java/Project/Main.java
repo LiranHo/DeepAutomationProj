@@ -42,6 +42,8 @@ public class Main {
     public static String mainSpreadShit = "1U7IY_cj-ussOLovn1joM5X7elxRV46mPu3G_YpiXOHQ";
 
 
+    //---
+    public static Boolean cleanDeviceLogBeforeAllTests = true;
     public static void initTheMain() {
 
         EnterInput = false;
@@ -206,13 +208,13 @@ public class Main {
 //        }
 
         //stop the collectSupportData- beep
-        if(beep!=null) {
+        if (beep != null) {
             beep.Terminate();
 //            while(!beep.beeperHandle.isCancelled()) {
 //                Main.sout("Info!", "beep.Terminate() and is isCancelled()= " + beep.beeperHandle.isCancelled());
 //                beep.beeperHandle.cancel(true);
 //            }
-            Main.sout("Info!", "beep.Terminate()" );
+            Main.sout("Info!", "beep.Terminate()");
         }
 
         //Add tests info to the info file
@@ -275,7 +277,7 @@ public class Main {
     public static int countTests_fail = 0;
     public static int countTests_pass = 0;
     private static BeeperControl beep;
-    final public static int CollectEveryX_inMin=30; //Optimal is 30 MIN
+    final public static int CollectEveryX_inMin = 30; //Optimal is 30 MIN
     public static AtomicBoolean CollectSupportDataVar = new AtomicBoolean(false);
     public static AtomicInteger SummaryReportVar = new AtomicInteger(0);
     public static String PrintDevicesInfo;
@@ -284,7 +286,6 @@ public class Main {
     //**Google Sheets report**
     public static String SPREADSHEET_ID = "";
     public static int ThisRunLineInSummaryReport = -1;
-
 
 
     //**Applications install paths**
@@ -331,7 +332,7 @@ public class Main {
 
     public static Agent searchAgentByID(String ID) {
         for (Agent agent : agents) {
-            if (agent.getAgentName().contains(ID)||agent.getAgentNumber().contains(ID)) {
+            if (agent.getAgentName().contains(ID) || agent.getAgentNumber().contains(ID)) {
                 return agent;
             }
         }
@@ -346,8 +347,6 @@ public class Main {
         }
         return null;
     }
-
-
 
 
     //run collect support data only if the test is long enough
@@ -368,28 +367,26 @@ public class Main {
         }
 
     }
-    public static void sout(String type,String deviceSN, String output)throws NullPointerException { //print and add to file "error file"
+
+    public static void sout(String type, String deviceSN, String output) throws NullPointerException { //print and add to file "error file"
         //if using ! in the type - it will be printes in red in the console
-        if(type.toLowerCase().contains("!")){
-            System.err.println(Main.ErrorFile.addRowToReport(type,deviceSN,output));
-        }else
-            System.out.println(Main.ErrorFile.addRowToReport(type,deviceSN,output));
+        if (type.toLowerCase().contains("!")) {
+            System.err.println(Main.ErrorFile.addRowToReport(type, deviceSN, output));
+        } else
+            System.out.println(Main.ErrorFile.addRowToReport(type, deviceSN, output));
     }
 
 
-
-    public static void sout(String type, String output)throws NullPointerException{ //print and add to file "error file"
+    public static void sout(String type, String output) throws NullPointerException { //print and add to file "error file"
         //if using ! in the type - it will be printes in red in the console
-        if(type.toLowerCase().contains("!")){
-            System.err.println(Main.ErrorFile.addRowToReport(type,output));
-        }else
-            System.out.println(Main.ErrorFile.addRowToReport(type,output));
+        if (type.toLowerCase().contains("!")) {
+            System.err.println(Main.ErrorFile.addRowToReport(type, output));
+        } else
+            System.out.println(Main.ErrorFile.addRowToReport(type, output));
     }
 
     //Finals - aid variables
     public static final String delimiter = "\r\n";
-
-
 
 
 }
