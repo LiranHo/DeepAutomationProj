@@ -30,8 +30,14 @@ public class SimpleWebTest extends BaseTest {
 
         if (device.isAndroid()) {
             client.setNetworkConnection("wifi", true);
+            try { // forget all networks and set wifi to 'lab'
+                client.run("am instrument -w -r com.experitest.device.devicecontrol/com.experitest.device.devicecontrol.instrumentations.WifiForgetAll");
+                client.run("am instrument -w -r -e ssid lab -e password 0528544681 com.experitest.device.devicecontrol/com.experitest.device.devicecontrol.instrumentations.WifiConfig");
+            } catch (Exception e) {
+
+            }
             String appsInstalled = client.getInstalledApplications();
-            if (!appsInstalled.contains("com.android.chrome")) {
+            if (!appsInstalled.contains("com.android.chrome")) { // check if chrome installed, if not - install it
                 System.out.printf("Chrome is not installed, install it now");
                 driver.executeScript("seetest:client.install(\"cloud:com.android.chrome/com.google.android.apps.chrome.Main\", \"true\", \"true\")");
             }
