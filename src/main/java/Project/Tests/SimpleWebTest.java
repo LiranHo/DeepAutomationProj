@@ -29,10 +29,13 @@ public class SimpleWebTest extends BaseTest {
         Main.sout("Info!", "Starting test Test_Simple_web for device " + device.getSerialnumber());
 
         if (device.isAndroid()) {
-            client.setNetworkConnection("wifi", true);
-            try { // forget all networks and set wifi to 'lab'
-                client.run("am instrument -w -r com.experitest.device.devicecontrol/com.experitest.device.devicecontrol.instrumentations.WifiForgetAll");
-                client.run("am instrument -w -r -e ssid lab -e password 0528544681 com.experitest.device.devicecontrol/com.experitest.device.devicecontrol.instrumentations.WifiConfig");
+            try { // set wifi to 'lab' - not in Xioami devices!
+                String manuf = device.getManufactor();
+                System.out.println("***** manufactor for device " + device.getManufactor() + " is: " + manuf);
+                if (!manuf.equals("xiaomi")) {
+//                    client.run("am instrument -w -r com.experitest.device.devicecontrol/com.experitest.device.devicecontrol.instrumentations.WifiForgetAll"); // forget all wifi
+                    client.run("am instrument -w -r -e ssid lab -e password 0528544681 com.experitest.device.devicecontrol/com.experitest.device.devicecontrol.instrumentations.WifiConfig");
+                }
             } catch (Exception e) {
 
             }
@@ -44,6 +47,7 @@ public class SimpleWebTest extends BaseTest {
         }
 
         try {
+            client.sleep(15000);
             driver.get("https://www.google.com");
         } catch (Exception e) {
 
