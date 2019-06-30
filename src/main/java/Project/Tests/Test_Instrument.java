@@ -31,7 +31,7 @@ public class Test_Instrument extends BaseTest {
             prefix = "accessibilityLabel";
         }
         if (device.isIOS()) {
-            Main.sout("Info!", "Starting test Test_OSS for device " + device.getSerialnumber());
+            Main.sout("Info!", "Starting test Test_Instrument for device " + device.getSerialnumber());
             driver.rotate(ScreenOrientation.PORTRAIT);
             driver.findElement(By.xpath("//*[@" + prefix + "='usernameTextField']")).sendKeys("company");
             driver.findElement(By.xpath("//*[@" + prefix + "='passwordTextField']")).sendKeys("company");
