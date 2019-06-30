@@ -17,7 +17,7 @@ public class InstallBigApplication extends BaseTest {
 
 
     @DisplayName("Install_big_application")
-//    @Test
+    @Test
     public void LoggingDevices_test() {
         Main.sout("Info!", "Starting Test_InstallBigApp for device " + device.getSerialnumber()+".txt");
 
