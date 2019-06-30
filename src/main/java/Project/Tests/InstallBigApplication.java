@@ -13,13 +13,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class LoggingDevices extends BaseTest {
+public class InstallBigApplication extends BaseTest {
 
 
     @DisplayName("Install_big_application")
-    @Test
+//    @Test
     public void LoggingDevices_test() {
-        Main.sout("Info!", "Starting testLoggingDevices_test for device " + device.getSerialnumber()+".txt");
+        Main.sout("Info!", "Starting Test_InstallBigApp for device " + device.getSerialnumber()+".txt");
 
         if (!(device.getSerialnumber().equals("016fd8f1dd4f22bd"))) {
             client.startLoggingDevice(Main.innerDirectoryPath+"\\"+device.getSerialnumber()+"\\"+testStartTime);
@@ -31,7 +31,7 @@ public class LoggingDevices extends BaseTest {
                 client.stopLoggingDevice();
             } catch (Exception e) {
                 client.report(e.getMessage(),false);
-                Main.sout("Exception | LoggingDevices ",device.getSerialnumber(),e.getMessage());
+                Main.sout("Exception | InstallBigApplication ",device.getSerialnumber(),e.getMessage());
                 driver.quit();
                 throw e;
             }
