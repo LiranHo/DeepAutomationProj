@@ -52,6 +52,8 @@ public class BaseTest {
     //protected AndroidDriver<AndroidElement> AndroidDriver = null;
     public DesiredCapabilities dc = new DesiredCapabilities();
 
+    protected boolean isAppiumNative = false;
+
 
     @BeforeAll
     public void Init() {
@@ -162,8 +164,6 @@ public class BaseTest {
 
     public void createDriver() throws Exception {
         System.out.println("Create Driver for device: " + device.getSerialnumber());
-
-
         dc.setCapability("DHM", device.getAgentName());
         dc.setCapability("RunName", Main.startTime);
         dc.setCapability("testName", testName);
@@ -179,6 +179,10 @@ public class BaseTest {
 
         if (Main.Grid) {
             ChooseAppDC();
+            if (dc.getCapability("appiumVersion") != null) {
+                isAppiumNative = true;
+            }
+            System.out.println("isAppiumNative for device " + device.getSerialnumber() + " is: " + isAppiumNative);
             if (device.isAndroid()) {
 //                dc.setCapability(MobileCapabilityType.APP, "cloud:com.experitest.ExperiBank/.LoginActivity");
 //                dc.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, "com.experitest.ExperiBank");
@@ -210,7 +214,9 @@ public class BaseTest {
             }
 
             try {
-                client = new SeeTestClient(driver);
+                if (!isAppiumNative) {
+                    client = new SeeTestClient(driver);
+                }
             } catch (Exception e) {
                 Main.sout("Exception!", "Failed to start SeeTestClient device " + device.getSerialnumber());
             }
