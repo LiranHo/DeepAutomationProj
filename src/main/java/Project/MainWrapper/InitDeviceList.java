@@ -44,7 +44,10 @@ public class InitDeviceList {
             }else {
                 gridClient = new GridClient(cloudUser.AccessKey, cloudUser.grid_domain, cloudUser.grid_port, cloudUser.isSecured);
             }
-            initAgents();
+
+                initAgents();
+
+
             devices = getDevices(gridClient.getDevicesInformation());
 
 //           gridClient = new GridClient(userName, Password, projectName, grid_domain, grid_port, isSecured);
@@ -168,10 +171,16 @@ public class InitDeviceList {
 //        String AgentHostIP="";
 //        String AgentName="";
 
-        for (int i = 0; i < jsonArr.length(); i++) {
-            String AgentName = (jsonArr.getJSONObject(i).getString("name"));
-            String AgentHostIP =  jsonArr.getJSONObject(i).getString("hostOrIp");
-            agents.add(new Agent(AgentName, AgentHostIP));
+        if(jsonArr==null){
+            agents.add(new Agent("N/A", "N/A"));
+        }
+        else {
+
+            for (int i = 0; i < jsonArr.length(); i++) {
+                String AgentName = (jsonArr.getJSONObject(i).getString("name"));
+                String AgentHostIP = jsonArr.getJSONObject(i).getString("hostOrIp");
+                agents.add(new Agent(AgentName, AgentHostIP));
+            }
         }
 
     }

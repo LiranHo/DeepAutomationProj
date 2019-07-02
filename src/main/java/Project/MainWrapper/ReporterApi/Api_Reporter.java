@@ -1,19 +1,10 @@
 package Project.MainWrapper.ReporterApi;
 
 import Project.Main;
-import Project.Settings.CloudUsers;
 import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Objects;
 
 public class Api_Reporter {
 
@@ -95,11 +86,17 @@ public class Api_Reporter {
                     .basicAuth(Main.cloudUser.userName, Main.cloudUser.Password)
                     .header("content-type", "application/json")
                     .asString();
-            jsonArr = new JSONArray(responseString.getBody());
+
+            if(responseString.getBody().contains("Access is denied")){
+                return jsonArr;
+            }else {
+                jsonArr = new JSONArray(responseString.getBody());
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return jsonArr;
 
     }
@@ -125,6 +122,10 @@ public class Api_Reporter {
 
         return returnValue;
     }
+
+
+
+
 
 
 }

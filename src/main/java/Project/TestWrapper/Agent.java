@@ -19,42 +19,41 @@ public class Agent {
     private static DecimalFormat df2 = new DecimalFormat("#.##");
 
 
-
-    public Agent(String agentName){
+    public Agent(String agentName) {
         this.agentName = agentName;
         this.agentNumber = "-";
         deviceInAgent = new ArrayList<>();
         numberOfDevices = 0;
         numberOfTests_Total = 0;
-        numberOfTests_Pass= 0;
-        numberOfTests_Incomplete =0;
-        numberOfTests_Failed = 0;
-
-    }
-
-    public Agent(String agentName, String agentNumber){
-        this.agentName = agentName;
-        this.agentNumber = agentNumber;
-        deviceInAgent = new ArrayList<>();
-        numberOfDevices = 0;
-        numberOfTests_Total = 0;
-        numberOfTests_Pass= 0;
+        numberOfTests_Pass = 0;
         numberOfTests_Incomplete = 0;
         numberOfTests_Failed = 0;
 
     }
 
-    public void addDeviceToAgent(Device device){
+    public Agent(String agentName, String agentNumber) {
+        this.agentName = agentName;
+        this.agentNumber = agentNumber;
+        deviceInAgent = new ArrayList<>();
+        numberOfDevices = 0;
+        numberOfTests_Total = 0;
+        numberOfTests_Pass = 0;
+        numberOfTests_Incomplete = 0;
+        numberOfTests_Failed = 0;
+
+    }
+
+    public void addDeviceToAgent(Device device) {
         deviceInAgent.add(device);
 
     }
 
-    public void addTestToAgent(boolean passed){
-        System.out.println("Add test result to agent "+this.getAgentName()+" - result is "+passed);
+    public void addTestToAgent(boolean passed) {
+        System.out.println("Add test result to agent " + this.getAgentName() + " - result is " + passed);
         numberOfTests_Total++;
-        if(passed){
+        if (passed) {
             numberOfTests_Pass++;
-        }else {
+        } else {
             numberOfTests_Failed++;
         }
     }
@@ -67,42 +66,38 @@ public class Agent {
         }
     }
 
-    public String toString(){
+    public String toString() {
         return this.agentName;
     }
 
-    public String getAgentName(){
+    public String getAgentName() {
         return agentName;
     }
 
-    public String getAgentNumber(){
+    public String getAgentNumber() {
         return agentNumber;
     }
 
-    public String getAgentPassedPercentage(){
+    public String getAgentPassedPercentage() {
 
-        System.out.println("Calculate getAgentPassedPercentage for agent"+this.getAgentName() );
-        if(numberOfTests_Total>0) {
+        System.out.println("Calculate getAgentPassedPercentage for agent" + this.getAgentName());
+        if (numberOfTests_Total > 0) {
             double result = (numberOfTests_Pass / numberOfTests_Total) * 100;
-            System.out.println("Calculation is "+result+" | " +this.getAgentName() );
+            System.out.println("Calculation is " + result + " | " + this.getAgentName());
             return df2.format(result);
-        }else
+        } else
             return "0";
     }
 
-        public String getAgentIncompletePercentage(){
-        System.out.println("Calculate getAgentIncompletePercentage for agent"+this.getAgentName() );
-        if(numberOfTests_Total>0) {
+    public String getAgentIncompletePercentage() {
+        System.out.println("Calculate getAgentIncompletePercentage for agent" + this.getAgentName());
+        if (numberOfTests_Total > 0) {
             double result = (numberOfTests_Incomplete / numberOfTests_Total) * 100;
-            System.out.println("Calculation is "+result+" | " +this.getAgentName() );
+            System.out.println("Calculation is " + result + " | " + this.getAgentName());
             return df2.format(result);
-        }else
+        } else
             return "0";
     }
-
-
-
-
 
 
 }

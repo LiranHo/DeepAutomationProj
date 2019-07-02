@@ -31,6 +31,7 @@ public class Device extends Thread {
         if(Main.cleanDeviceLogBeforeAllTests && this.os.equals("android")){
             cleanDeviceLogBeforeAllTests = true;
         }
+
     }
 
     public Device(String serialnumber) {
@@ -85,7 +86,12 @@ public class Device extends Thread {
     }
 
     public String getAgentName() {
-        return this.agent.toString();
+        if(agent==null){
+            return "no Agent";
+        }
+        else {
+            return this.agent.toString();
+        }
     }
 
     public String getVersion() {
