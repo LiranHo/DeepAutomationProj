@@ -25,7 +25,6 @@ public class SummaryReport {
 
 
 
-
     public static void updateTestsResult_SummeryReport() throws IOException {
         String EndTime = new SimpleDateFormat("dd.MM.yyyy - HH.mm.ss").format(new java.util.Date());
         GoogleSheetSummaryReportIntegration.addSummaryReportLine_TestsResultsInfo(Main.ThisRunLineInSummaryReport,EndTime, Total_TestsNum,
@@ -64,7 +63,7 @@ public class SummaryReport {
     public static void getAgentsPer(){
         Agents_Per_list_print="";
         for (Agent agent : Main.agents) {
-            Agents_Per_list_print += agent.getAgentName()+": \t"+agent.getAgentPassedPercentage()+"%" +"\t| \tIncomplete: " +agent.getAgentIncompletePercentage()+"% "+Main.delimiter;
+            Agents_Per_list_print += agent.getAgentName()+": \t"+"Total: "+agent.getNumberOfTests_Total()+"\t| Tests Passed(%): "+agent.getAgentPassedPercentage()+"%" +"\t| Incomplete: " +agent.getAgentIncompletePercentage()+"% "+Main.delimiter;
         }
     }
 

@@ -99,5 +99,8 @@ public class Agent {
             return "0";
     }
 
+    public String getNumberOfTests_Total(){
+        return String.valueOf(numberOfTests_Total);
+    }
 
 }
