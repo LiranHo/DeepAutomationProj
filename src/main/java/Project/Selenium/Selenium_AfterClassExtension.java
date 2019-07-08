@@ -26,7 +26,8 @@ public class Selenium_AfterClassExtension implements AfterEachCallback {
 
         String deviceSN= baseTest.browser.getSerialnumber();
         String Agent = baseTest.browser.getAgent();
-        Thread.sleep(2000);
+        String thisRunBrowserType = baseTest.thisRunBrowserType;
+//        Thread.sleep(2000);
         //String ReporterStatus = Api_Reporter.GetTestResultStatus(baseTest.testID);
         String ReporterStatus = "N/A"; //its take to much time to get this property and they all will be in incomplete status.
 
@@ -46,19 +47,19 @@ public class Selenium_AfterClassExtension implements AfterEachCallback {
         if(testResult.equals(false)){
             System.err.println("afterTestExecution - FAIL \t"+"+Thread.currentThread().getName() "+Thread.currentThread().getName()+"\t devicesn: "+deviceSN);
             String error=executionException.toString().replaceAll("\n"," | ");
-            if(BaseTest_Browser.ifNotNeedToBeTestedAsFailed(error)){
+            if(BaseTest_Browser.ifNotNeedToBeTestedAsFailed(error, thisRunBrowserType)){
                 count_Could_not_start_selenium_grid_test++;
                 System.out.println("BaseTest_Browser.ifNotNeedToBeTestedAsFailed is true - won't be count as failure");
                 System.out.println("count_Could_not_start_selenium_grid_test: "+count_Could_not_start_selenium_grid_test);
-                Main.report.addRowToReport(baseTest.browser.getBrowserName(),testName, "Could not start selenium grid test #"+count_Could_not_start_selenium_grid_test,Agent,String.valueOf(testResult), ReporterStatus,StartTime ,EndTime,calculateTestDuring(testDuring),sessionID,reportPath,error);
+                Main.report.addRowToReport(baseTest.thisRunBrowserType,testName, "Could not start selenium grid test #"+count_Could_not_start_selenium_grid_test,Agent,String.valueOf(testResult), ReporterStatus,StartTime ,EndTime,calculateTestDuring(testDuring),sessionID,reportPath,error);
             }
             else {
 
                 Main.report.addRowToReport(baseTest.browser.getBrowserName(), testName, deviceSN, Agent, String.valueOf(testResult), ReporterStatus, StartTime, EndTime, calculateTestDuring(testDuring), sessionID, reportPath, error);
 //           System.out.println("the test failed");
                 Main.countTests_fail++;
+                addToSummaryReport(false);
             }
-            addToSummaryReport(false);
 
         }
 
