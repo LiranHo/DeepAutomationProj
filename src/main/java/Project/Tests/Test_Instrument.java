@@ -30,21 +30,19 @@ public class Test_Instrument extends BaseTest {
         if (device.isIOS()) {
             prefix = "accessibilityLabel";
         }
-        if (device.isIOS()) {
-            Main.sout("Info!", "Starting test Test_Instrument for device " + device.getSerialnumber());
-            driver.rotate(ScreenOrientation.PORTRAIT);
-            driver.findElement(By.xpath("//*[@" + prefix + "='usernameTextField']")).sendKeys("company");
-            driver.findElement(By.xpath("//*[@" + prefix + "='passwordTextField']")).sendKeys("company");
-            driver.findElement(By.xpath("//*[@" + prefix + "='loginButton']")).click();
-            driver.findElement(By.xpath("//*[@" + prefix + "='makePaymentButton']")).click();
-            driver.findElement(By.xpath("//*[@" + prefix + "='phoneTextField']")).sendKeys("0541234567");
-            driver.findElement(By.xpath("//*[@" + prefix + "='nameTextField']")).sendKeys("Jon Snow");
-            driver.findElement(By.xpath("//*[@" + prefix + "='amountTextField']")).sendKeys("50");
-            driver.findElement(By.xpath("//*[@" + prefix + "='countryButton']")).click();
-            driver.findElement(By.xpath("//*[@" + prefix + "='Switzerland']")).click();
-            driver.findElement(By.xpath("//*[@" + prefix + "='sendPaymentButton']")).click();
-            driver.findElement(By.xpath("//*[@" + prefix + "='Yes']")).click();
-        }
+
+        driver.rotate(ScreenOrientation.PORTRAIT);
+        driver.findElement(By.xpath("//*[@" + prefix + "='usernameTextField']")).sendKeys("company");
+        driver.findElement(By.xpath("//*[@" + prefix + "='passwordTextField']")).sendKeys("company");
+        driver.findElement(By.xpath("//*[@" + prefix + "='loginButton']")).click();
+        driver.findElement(By.xpath("//*[@" + prefix + "='makePaymentButton']")).click();
+        driver.findElement(By.xpath("//*[@" + prefix + "='phoneTextField']")).sendKeys("0541234567");
+        driver.findElement(By.xpath("//*[@" + prefix + "='nameTextField']")).sendKeys("Jon Snow");
+        driver.findElement(By.xpath("//*[@" + prefix + "='amountTextField']")).sendKeys("50");
+        driver.findElement(By.xpath("//*[@" + prefix + "='countryButton']")).click();
+        driver.findElement(By.xpath("//*[@" + prefix + "='Switzerland']")).click();
+        driver.findElement(By.xpath("//*[@" + prefix + "='sendPaymentButton']")).click();
+        driver.findElement(By.xpath("//*[@" + prefix + "='Yes']")).click();
 
 
     }
