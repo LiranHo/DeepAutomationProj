@@ -12,6 +12,7 @@ import Project.Settings.TestSuites;
 import Project.TestWrapper.Agent;
 import Project.TestWrapper.Browser;
 import Project.TestWrapper.Device;
+import Project.TestWrapper.SupportDataV2;
 import com.experitest.appium.SeeTestClient;
 import com.google.api.services.sheets.v4.Sheets;
 import io.appium.java_client.android.AndroidDriver;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -48,6 +50,7 @@ public class Main {
 
         EnterInput = false;
         collectSupportData = false;
+        collectSupportDataV2 = true;
         //T: ***Init The Test***
         //T: 1. Choose the platform to run (if Grid is true choose the cloud user)
         Grid = true;
@@ -188,11 +191,23 @@ public class Main {
             collectSupportData();
         }
 
+        ScheduledExecutorService executorScheduler = null;
+        if (collectSupportDataV2) {
+            try {
+                executorScheduler = Executors.newSingleThreadScheduledExecutor();
+                executorScheduler.scheduleAtFixedRate(new SupportDataV2(Main.innerDirectoryPath), 2, 4, TimeUnit.HOURS);
+            } catch (Exception e) {
+                System.out.println("Failed to create scheduler");
+                e.printStackTrace();
+            }
+        }
+
 
         System.err.println("Started All Threads");
 
 
         executorService.shutdown();
+        executorScheduler.awaitTermination(5, TimeUnit.MINUTES);
         if(executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.SECONDS)) {
             System.out.println("Finished all threads");
         } else {
@@ -245,6 +260,7 @@ public class Main {
     public static boolean Devices;
     public static boolean Grid = false;
     public static boolean collectSupportData = false;
+    public static boolean collectSupportDataV2 = false;
     public static Boolean EnterInput;
 
 
