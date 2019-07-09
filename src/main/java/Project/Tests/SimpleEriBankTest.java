@@ -27,16 +27,16 @@ public class SimpleEriBankTest extends BaseTest {
         driver.findElement(By.xpath("//*[@id='usernameTextField']")).sendKeys("company");
         driver.hideKeyboard();
         driver.findElement(By.xpath("//*[@id='passwordTextField']")).sendKeys("company");
-        Thread.sleep(2000);
         driver.findElement(By.xpath("//*[@id='loginButton']")).click();
+        Thread.sleep(2000);
         driver.findElement(By.xpath("//*[@id='makePaymentButton']")).click();
         driver.findElement(By.xpath("//*[@id='phoneTextField']")).sendKeys("0541234567");
         driver.findElement(By.xpath("//*[@id='nameTextField']")).sendKeys("Jon Snow");
         driver.findElement(By.xpath("//*[@id='amountTextField']")).sendKeys("50");
         driver.findElement(By.xpath("//*[@id='countryButton']")).click();
+        Thread.sleep(2000);
         driver.findElement(By.xpath("//*[@text='Switzerland']")).click();
         driver.findElement(By.xpath("//*[@id='sendPaymentButton']")).click();
-        Thread.sleep(2000);
         driver.findElement(By.xpath("//*[@text='Yes']")).click();
 
 
