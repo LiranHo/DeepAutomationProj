@@ -39,6 +39,7 @@ public class BaseTest_Browser extends CreateDriverForBrowser {
     public String testEndTime;
     public long testStartTime_calculate;
     public String testID;
+    public String thisRunBrowserType;
 
     private URL url;
     protected long testDuring;
@@ -83,6 +84,7 @@ public class BaseTest_Browser extends CreateDriverForBrowser {
 
         //Create Driver
         driver = createDriver(browser.getSerialnumber(), testName, dc);
+        thisRunBrowserType = driver.getCapabilities().getCapability("browserName").toString();
         sessionID = String.valueOf(driver.getSessionId());
 
 
@@ -102,6 +104,7 @@ public class BaseTest_Browser extends CreateDriverForBrowser {
         try {
             if (driver == null) {
                 Main.sout("Error!", "Tear Down - Driver is null, do nothing " + browser.getSerialnumber());
+
                 return;
             }
 
@@ -203,16 +206,27 @@ public class BaseTest_Browser extends CreateDriverForBrowser {
 //    }
 
 
-        public static boolean ifNotNeedToBeTestedAsFailed(String e){
-        if(e.contains("Could not start selenium grid test"))
-            {
-                System.out.println("Could not start selenium grid test");
+        public static boolean ifNotNeedToBeTestedAsFailed(String e, String thisRunBrowserType){
+            boolean ifBrowserTypeIsProblematic = thisRunBrowserType==null
+                    ;
+            if(e.contains("Could not start selenium grid test. No browser found matching the desired capabilities") && ifBrowserTypeIsProblematic){
+                System.out.println("Browser type is: "+thisRunBrowserType);
                 return true;
             }
-        else{
+            else{
                 return false;
             }
-            //Optional[org.openqa.selenium.WebDriverException: Unable to parse remote response: Could not start selenium grid test. Test request timed out. | Build info: version: '3.12.0', revision: '7c6e0b3', time: '2018-05-08T14:04:26.12Z' | System info: host: 'lirans-mac-mini.experitest.local', ip: 'fe80:0:0:0:1c7d:e6e:561b:5b1b%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.12.6', java.version: '1.8.0_151' | Driver info: driver.version: RemoteWebDriver]
+
+
+//        if(e.contains("Could not start selenium grid test"))
+//            {
+//                System.out.println("Could not start selenium grid test");
+//                return true;
+//            }
+//        else{
+//                return false;
+//            }
+//            //Optional[org.openqa.selenium.WebDriverException: Unable to parse remote response: Could not start selenium grid test. Test request timed out. | Build info: version: '3.12.0', revision: '7c6e0b3', time: '2018-05-08T14:04:26.12Z' | System info: host: 'lirans-mac-mini.experitest.local', ip: 'fe80:0:0:0:1c7d:e6e:561b:5b1b%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.12.6', java.version: '1.8.0_151' | Driver info: driver.version: RemoteWebDriver]
 
         }
 

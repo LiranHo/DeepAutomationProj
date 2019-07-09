@@ -28,6 +28,7 @@ public class CreateDriverForBrowser {
         dc.setCapability("reportFormat", "xml");
 
 
+        chooseBrowserCapabilities();
         addCustomeCapabilities();
 
             Main.sout("Info","Starting upload Browser "+serialNumber);
@@ -40,6 +41,10 @@ public class CreateDriverForBrowser {
             Main.sout("Info","Succession to find browser "+serialNumber);
 
         return driver;
+
+    }
+
+    public void chooseBrowserCapabilities(){
 
     }
 
