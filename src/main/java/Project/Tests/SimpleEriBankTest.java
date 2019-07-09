@@ -34,7 +34,7 @@ public class SimpleEriBankTest extends BaseTest {
         driver.findElement(By.xpath("//*[@id='nameTextField']")).sendKeys("Jon Snow");
         driver.findElement(By.xpath("//*[@id='amountTextField']")).sendKeys("50");
         driver.findElement(By.xpath("//*[@id='countryButton']")).click();
-        driver.findElement(By.linkText("Switzerland")).click();
+        driver.findElement(By.xpath("//*[@text='Switzerland']")).click();
         driver.findElement(By.xpath("//*[@id='sendPaymentButton']")).click();
         Thread.sleep(2000);
         driver.findElement(By.xpath("//*[@text='Yes']")).click();
