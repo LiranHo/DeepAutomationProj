@@ -42,7 +42,7 @@ public class Test_Instrument extends BaseTest {
         driver.findElement(By.xpath("//*[@" + prefix + "='countryButton']")).click();
         driver.findElement(By.xpath("//*[@text='Switzerland']")).click();
         driver.findElement(By.xpath("//*[@" + prefix + "='sendPaymentButton']")).click();
-        driver.findElement(By.xpath("//*[@" + prefix + "='Yes']")).click();
+        driver.findElement(By.xpath("//*[@text='Yes']")).click();
 
 
     }
