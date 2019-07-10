@@ -47,5 +47,6 @@ dependencies {
     compile group: 'com.experitest', name: 'appium-seetest-extension', version: '+'
 
 //    compile group: 'org.python', name: 'jython', version: '2.7.0'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
 
 }
