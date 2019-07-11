@@ -40,10 +40,12 @@ public class Test_Instrument extends BaseTest {
         driver.findElement(By.xpath("//*[@" + prefix + "='nameTextField']")).sendKeys("Jon Snow");
         driver.findElement(By.xpath("//*[@" + prefix + "='amountTextField']")).sendKeys("50");
         driver.findElement(By.xpath("//*[@" + prefix + "='countryButton']")).click();
-        driver.findElement(By.xpath("//*[@text='Switzerland']")).click();
-        driver.findElement(By.xpath("//*[@" + prefix + "='sendPaymentButton']")).click();
-        driver.findElement(By.xpath("//*[@text='Yes']")).click();
-
+        String deviceVersion = device.getVersion();
+        if (!deviceVersion.startsWith("13.")) {
+            driver.findElement(By.xpath("//*[@text='Switzerland']")).click();
+            driver.findElement(By.xpath("//*[@" + prefix + "='sendPaymentButton']")).click();
+            driver.findElement(By.xpath("//*[@text='Yes']")).click();
+        }
 
     }
 

@@ -41,10 +41,11 @@ public class Test_Monitor extends BaseTest {
         driver.findElement(By.xpath("//*[@id='nameTextField']")).sendKeys("Jon Snow");
         driver.findElement(By.xpath("//*[@id='amountTextField']")).sendKeys("50");
         driver.findElement(By.xpath("//*[@id='countryButton']")).click();
-        driver.findElement(By.linkText("Switzerland")).click();
-        driver.findElement(By.xpath("//*[@id='sendPaymentButton']")).click();
-        Thread.sleep(2000);
-        driver.findElement(By.xpath("//*[@text='Yes']")).click();
+        if (!deviceVersion.startsWith("13.")) {
+            driver.findElement(By.xpath("//*[@text='Switzerland']")).click();
+            driver.findElement(By.xpath("//*[@id='sendPaymentButton']")).click();
+            driver.findElement(By.xpath("//*[@text='Yes']")).click();
+        }
         client.report("before get monitor data", true);
 
         String sub_sessionID = sessionID.split(":")[1];
