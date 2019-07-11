@@ -27,8 +27,10 @@ public class Test_Monitor extends BaseTest {
     @Test
     public void Test_Monitor() throws InterruptedException {
         Main.sout("Info!", "Starting test Test_Monitor for device " + device.getSerialnumber());
-        client.addTestProperty("TestType", "TestMonitor");
-        client.startMonitor("com.experitest.ExperiBank");
+        String deviceVersion = device.getVersion();
+        if (!deviceVersion.startsWith("4.")) {
+            client.startMonitor("com.experitest.ExperiBank");
+        }
         driver.rotate(ScreenOrientation.PORTRAIT);
         driver.findElement(By.xpath("//*[@id='usernameTextField']")).sendKeys("company");
         driver.hideKeyboard();
@@ -47,7 +49,9 @@ public class Test_Monitor extends BaseTest {
 
         String sub_sessionID = sessionID.split(":")[1];
         try {
-            client.getMonitorsData(Main.innerDirectoryPath+ File.separator+"getMonitor"+File.separator+device.getSerialnumber()+File.separator+""+sub_sessionID+".csv");
+            if (!deviceVersion.startsWith("4.")) {
+                client.getMonitorsData(Main.innerDirectoryPath+ File.separator+"getMonitor"+File.separator+device.getSerialnumber()+File.separator+""+sub_sessionID+".csv");
+            }
         }
         catch (Exception e) {
             e.printStackTrace();
