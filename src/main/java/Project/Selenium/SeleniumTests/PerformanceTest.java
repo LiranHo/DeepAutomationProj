@@ -17,7 +17,7 @@ import java.net.URL;
 import java.util.Random;
 
 public class PerformanceTest extends BaseTest_Browser {
-    String browserType = browser.getplatform();
+    String browserType ;
 
     public void setBrowserType(String browserType){
         this.browserType= browserType;
@@ -29,11 +29,12 @@ public class PerformanceTest extends BaseTest_Browser {
     public void PerformanceTest() {
         wait = new WebDriverWait(driver, 90);
 
-        driver.get("https://qacloud.experitest.com");
+//        driver.get("https://qacloud.experitest.com");
+        driver.get("https://qa-win2016.experitest.com");
         WebElement username = myFindElement(By.xpath("//*[@name=\"username\"]"));
 //        WebElement username = myFindElement(By.xpath("//*[@name=\"username\"]"));
-        username.sendKeys("ariel");
-        myFindElement(By.xpath("//*[@name=\"password\"]")).sendKeys("Experitest2012");
+        username.sendKeys("liranh");
+        myFindElement(By.xpath("//*[@name=\"password\"]")).sendKeys("Experitest20121");
         myFindElement(By.xpath("//*[@name=\"login\"]")).click();
         //Firefox open a new tab when try to click on log in button
         if (browser.getplatform().equals(BrowserType.FIREFOX) &&
