@@ -48,6 +48,9 @@ public class Main {
     public static Boolean cleanDeviceLogBeforeAllTests = true;
     public static void initTheMain() {
 
+        collectSupportData = true;
+        collectSupportDataV2 = false;
+
         EnterInput = false;
         collectSupportData = false;
         collectSupportDataV2 = true;
@@ -173,11 +176,11 @@ public class Main {
         //T: 4.1. Create Threads for Selenium Agent Browsers
             for (int j = 0; j < BROWSERS; j++) {
                 String browserName = "Browser_"+(j+1);
-                Browser b = new Browser(browserName);
-                browsers.add(b);
+                Browser browser = new Browser(browserName);
+                browsers.add(browser);
 
                 System.out.println("starting device - " + browserName);
-                Runner r = new Runner(b);
+                Runner r = new Runner(browser);
                 System.out.println("Runner is up for device - " + browserName);
 //            futures.add(executorService.submit(r));
                 executorService.execute(r);
@@ -207,7 +210,9 @@ public class Main {
 
 
         executorService.shutdown();
-        executorScheduler.awaitTermination(5, TimeUnit.MINUTES);
+       if(collectSupportDataV2) {
+           executorScheduler.awaitTermination(5, TimeUnit.MINUTES);
+       }
         if(executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.SECONDS)) {
             System.out.println("Finished all threads");
         } else {
