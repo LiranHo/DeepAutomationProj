@@ -24,10 +24,10 @@ public class GoogleSheetsIntegration {
 
 
     //SPREADSHEET
-    public static void addTowAppending(String time, String type, String testName, String deviceSN,String Agent, String status,String Reportstatus,String startTime, String endTime,String testDuring,String SessionID, String reportURL , String exception ) throws IOException {
+    public static void addTowAppending(String time, String type, String testName, String deviceSN, String Agent, String status, String Reportstatus, String startTime, String endTime, String testDuring, String SessionID, String reportURL, String exception) throws IOException {
         ValueRange appendBody = new ValueRange()
                 .setValues(Arrays.asList(
-                        Arrays.asList(time, type, testName, deviceSN , Agent, status, Reportstatus ,startTime, endTime, testDuring,SessionID, reportURL , exception)));
+                        Arrays.asList(time, type, testName, deviceSN, Agent, status, Reportstatus, startTime, endTime, testDuring, SessionID, reportURL, exception)));
         AppendValuesResponse appendResult = sheetsService.spreadsheets().values()
                 .append(Main.SPREADSHEET_ID, "A1", appendBody)
                 .setValueInputOption("USER_ENTERED")
@@ -43,7 +43,7 @@ public class GoogleSheetsIntegration {
     public static void add_SPREADSHEET_ID(String fileName, String SPREADSHEET_ID) throws IOException {
         ValueRange appendBody = new ValueRange()
                 .setValues(Arrays.asList(
-                        Arrays.asList("",fileName, "https://docs.google.com/spreadsheets/d/"+SPREADSHEET_ID+"/edit#gid=0")));
+                        Arrays.asList("", fileName, "https://docs.google.com/spreadsheets/d/" + SPREADSHEET_ID + "/edit#gid=0")));
         AppendValuesResponse appendResult = sheetsService.spreadsheets().values()
                 .append(Main.mainSpreadShit, "A1", appendBody)
                 .setValueInputOption("USER_ENTERED")
@@ -64,10 +64,10 @@ public class GoogleSheetsIntegration {
                 .setFields("spreadsheetId")
                 .execute();
         System.out.println("Spreadsheet ID: " + spreadSheet.getSpreadsheetId());
-        String SS_ID  = spreadSheet.getSpreadsheetId();
-        String SS_URL  = spreadSheet.getSpreadsheetUrl();
+        String SS_ID = spreadSheet.getSpreadsheetId();
+        String SS_URL = spreadSheet.getSpreadsheetUrl();
 
-     //   spreadSheet.setSheets(sheets);
+        //   spreadSheet.setSheets(sheets);
 
     }
 
@@ -80,9 +80,9 @@ public class GoogleSheetsIntegration {
                 .execute();
 
 //        System.out.println("Spreadsheet ID: " + spreadSheet.getSpreadsheetId());
-        String SS_ID  = spreadSheet.getSpreadsheetId();
-        java.util.List<Sheet> sheets =  new ArrayList<>();
-        sheets.add(new Sheet().setProperties(new SheetProperties ().setTitle("title"))
+        String SS_ID = spreadSheet.getSpreadsheetId();
+        java.util.List<Sheet> sheets = new ArrayList<>();
+        sheets.add(new Sheet().setProperties(new SheetProperties().setTitle("title"))
         );
         spreadSheet.setSheets(sheets);
 
@@ -109,7 +109,7 @@ public class GoogleSheetsIntegration {
     }
 
 
-        //Find And Replace
+    //Find And Replace
     public static void find_And_Replace(String title) throws IOException {
         List<Request> requests = new ArrayList<>();
 // Change the spreadsheet's title.
@@ -137,17 +137,17 @@ public class GoogleSheetsIntegration {
     }
 
 
-    public static String getValueFromCell_string(String SpreadSheet , int line, int column ) throws IOException {
+    public static String getValueFromCell_string(String SpreadSheet, int line, int column) throws IOException {
         ValueRange R = sheetsService.spreadsheets().values()
-                .get(SpreadSheet,"A1:O").execute();
+                .get(SpreadSheet, "A1:O").execute();
 
         return (String) R.getValues().get(line).get(column);
 
     }
 
-    public static int getValueFromCell_int(String SpreadSheet ,int line, int column ) throws IOException {
+    public static int getValueFromCell_int(String SpreadSheet, int line, int column) throws IOException {
         ValueRange R = sheetsService.spreadsheets().values()
-                .get(SpreadSheet,"A1:O").execute();
+                .get(SpreadSheet, "A1:O").execute();
 
         return (int) R.getValues().get(line).get(column);
 
@@ -156,21 +156,22 @@ public class GoogleSheetsIntegration {
     //Print All Sheet
     public static void printAllSheet() throws IOException {
         ValueRange R = sheetsService.spreadsheets().values()
-        .get(Main.SPREADSHEET_ID,"A1:O").execute();
-        
-        int countLines =  R.getValues().size();
-        int countColumn = ((ArrayList)((ArrayList) R.getValues()).get(0)).size();
+                .get(Main.SPREADSHEET_ID, "A1:O").execute();
 
-        for (int row = 0; row <countLines; row++) {
-            for (int column = 0; column <countColumn ; column++) {
-              try {
-                  System.out.println(R.getValues().get(row).get(column));
-              }catch (Exception e){}
+        int countLines = R.getValues().size();
+        int countColumn = ((ArrayList) ((ArrayList) R.getValues()).get(0)).size();
+
+        for (int row = 0; row < countLines; row++) {
+            for (int column = 0; column < countColumn; column++) {
+                try {
+                    System.out.println(R.getValues().get(row).get(column));
+                } catch (Exception e) {
+                }
             }
-            System.out.println("##EndOfRow"+row+"##");
+            System.out.println("##EndOfRow" + row + "##");
         }
 
     }
 
 
-    }
+}

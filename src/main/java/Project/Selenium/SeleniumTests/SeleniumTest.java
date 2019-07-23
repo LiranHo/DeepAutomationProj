@@ -18,7 +18,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.Random;
 
 public class SeleniumTest extends BaseTest_Browser {
-    String browserType;
     @DisplayName("SeleniumTest")
     @Test
     public void browserTestGoogleSearch() {
@@ -35,14 +34,15 @@ public class SeleniumTest extends BaseTest_Browser {
 
     @Override
     public void addCustomeCapabilities(){
-        int length = AllBrowsersTypeTestsSuite.browserType.length ;
-        int rand = new Random().nextInt(AllBrowsersTypeTestsSuite.browserType.length);
-        browserType = AllBrowsersTypeTestsSuite.browserType[rand];
-        testName = this.getClass().getSimpleName() + " " + browserType;
-        dc.setCapability("testName",testName);
-        //dc.setCapability(CapabilityType.BROWSER_NAME, browserType);
-        dc.setCapability(CapabilityType.BROWSER_NAME, "chrome");
-
+//        int length = AllBrowsersTypeTestsSuite.browserType.length ;
+//        int rand = new Random().nextInt(AllBrowsersTypeTestsSuite.browserType.length);
+//        browserType = AllBrowsersTypeTestsSuite.browserType[rand];
+//        System.out.println(browserType);
+//        testName = this.getClass().getSimpleName() + " " + browserType;
+//        dc.setCapability("testName",testName);
+//        //dc.setCapability(CapabilityType.BROWSER_NAME, browserType);
+//        dc.setCapability(CapabilityType.BROWSER_NAME, browserType);
+////        dc.setCapability(CapabilityType.BROWSER_NAME, "safari");
     }
 
 }

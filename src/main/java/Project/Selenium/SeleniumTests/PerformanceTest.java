@@ -135,9 +135,8 @@ public class PerformanceTest extends BaseTest_Browser {
     @Override
     public void addCustomeCapabilities(){
         dc.setCapability("useWaitUntil", USE_WAIT_UNTIL);//default is 300
-
-        String browserType = browser.getplatform();
-        testName = this.getClass().getSimpleName() + " " +browser.getplatform();
-        dc.setCapability("testName",testName);
+//        String browserType = browser.getplatform();
+//        testName = this.getClass().getSimpleName() + " " +browser.getplatform();
+//        dc.setCapability("testName",testName);
     }
 }

@@ -1,14 +1,22 @@
 package Project.Selenium;
 
 import Project.Main;
+import Project.Selenium.SeleniumTests.AllBrowsersTypeTestsSuite;
 import Project.TestWrapper.Device;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Random;
 
 public class CreateDriverForBrowser {
+
+    public String browserType;
+    public boolean browserTypeOnlyOnce=false;
+
+
 
 
     public RemoteWebDriver createDriver(String serialNumber, String testName, DesiredCapabilities dc)  {
@@ -29,7 +37,10 @@ public class CreateDriverForBrowser {
 
 
         chooseBrowserCapabilities();
+        //add chosen browser, and add atomic boolean to check if edge is up
         addCustomeCapabilities();
+        System.out.println(browserType);
+
 
             Main.sout("Info","Starting upload Browser "+serialNumber);
             try {
@@ -40,6 +51,8 @@ public class CreateDriverForBrowser {
 
             Main.sout("Info","Succession to find browser "+serialNumber);
 
+
+
         return driver;
 
     }
@@ -48,7 +61,8 @@ public class CreateDriverForBrowser {
 
     }
 
-    //Choose the application to work with in the test, if doesn't override it will use nothing
+
+        //Choose the application to work with in the test, if doesn't override it will use nothing
     public void addCustomeCapabilities(){
         Main.sout("Info","Doesn't use any application");
 //        dc.setCapability("testName", "Chrome Browser");

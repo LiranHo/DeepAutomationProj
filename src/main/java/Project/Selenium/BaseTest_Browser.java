@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.platform.suite.api.SelectPackages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -20,9 +21,12 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @ExtendWith(Selenium_AfterClassExtension.class)
 @DisplayName("Base Test Browser")
@@ -40,6 +44,10 @@ public class BaseTest_Browser extends CreateDriverForBrowser {
     public long testStartTime_calculate;
     public String testID;
     public String thisRunBrowserType;
+
+    public static Boolean isEdgeRunning=false;
+
+
 
     private URL url;
     protected long testDuring;
@@ -84,6 +92,8 @@ public class BaseTest_Browser extends CreateDriverForBrowser {
 
         //Create Driver
         driver = createDriver(browser.getSerialnumber(), testName, dc);
+
+
         thisRunBrowserType = driver.getCapabilities().getCapability("browserName").toString();
         sessionID = String.valueOf(driver.getSessionId());
 
@@ -111,6 +121,15 @@ public class BaseTest_Browser extends CreateDriverForBrowser {
             Main.sout("Info","Report URL for browser: "+browser.getSerialnumber()+"  "+driver.getCapabilities().getCapability("reportUrl"));
             reportURL= (String) driver.getCapabilities().getCapability("reportUrl");
 
+            //remove the browser type from RunningBrowsersTypes list
+
+            if(driver.getCapabilities().getCapability("browserName").toString().equalsIgnoreCase("MicrosoftEdge")){
+                isEdgeRunning=false;
+            }
+//
+//            if(SearchBrowserTypeInAList(driver.getCapabilities().getCapability("browserName").toString(), true)){
+//                System.out.println("browser type "+driver.getCapabilities().getCapability("browserName").toString()+" is removed succesfully");
+//            }
 
             Main.sout("Info"," driver.quit() Start: "+browser.getSerialnumber());
             driver.quit();
@@ -132,6 +151,9 @@ public class BaseTest_Browser extends CreateDriverForBrowser {
         testEndTime = new SimpleDateFormat("dd.MM.yyyy - HH.mm.ss").format(new Date());
     }
 
+
+
+
     public void initSeleniumDriverSettings() {
 
         browser.setBrowserInfo(driver.getCapabilities().getVersion(), String.valueOf(driver.getCapabilities().getPlatform()), (String)driver.getCapabilities().getCapability("agentName"),  driver.getCapabilities().getBrowserName());
@@ -142,6 +164,27 @@ public class BaseTest_Browser extends CreateDriverForBrowser {
 //        dc.getCapability("sessionId");
 //        dc.getCapability("agentName");
 //        dc.getCapability("viewUrl");
+
+    }
+
+    public void chooseBrowserCapabilities(){
+        String [] thisBrowserType = AllBrowsersTypeTestsSuite.browserType;
+        String browserToRunOnce = "MicrosoftEdge";
+
+        int length= thisBrowserType.length;
+        synchronized (BaseTest_Browser.isEdgeRunning) {
+            int rand = new Random().nextInt(BaseTest_Browser.isEdgeRunning ? thisBrowserType.length - 1 : thisBrowserType.length);
+            browserType = thisBrowserType[rand];
+            if (browserType.equalsIgnoreCase(browserToRunOnce)) {
+                BaseTest_Browser.isEdgeRunning = true;
+            }
+        }
+
+        System.out.println("Browser type is: " + browserType + "| " + browser.getSerialnumber());
+        testName = this.getClass().getSimpleName() + " " + browserType;
+        dc.setCapability("testName",testName);
+        dc.setCapability(CapabilityType.BROWSER_NAME, browserType);
+
 
     }
 
@@ -166,45 +209,6 @@ public class BaseTest_Browser extends CreateDriverForBrowser {
 
 
 
-//    public void createDriver() throws Exception {
-//        System.out.println("Create Driver for browser: "+browser.getSerialnumber());
-//        dc.setCapability("RunName", Main.startTime);
-//        dc.setCapability("testName", testName);
-//        //  dc.setCapability("deviceQuery", "@serialNumber='"+browser.getSerialnumber()+"'");
-//        if(Main.cloudUser.getAccessKey().equals("0")){
-//            dc.setCapability("username", Main.cloudUser.getUserName());
-//            dc.setCapability("password", Main.cloudUser.getPassword());
-//        }else{
-//            dc.setCapability("accessKey", Main.cloudUser.getAccessKey());
-//        }
-//        dc.setCapability("projectName",  Main.cloudUser.getprojectName());
-//        dc.setCapability("reportFormat", "xml");
-//
-//        if (Main.Grid) {
-//            addCustomeCapabilities();
-//            Main.sout("Info","Starting upload Browser "+browser.getSerialnumber());
-//            try {
-//                driver = new RemoteWebDriver(new URL( Main.cloudUser.getCloudFullAdress()+"/wd/hub"), dc);
-//            } catch (MalformedURLException e) {
-//                Main.sout("Exception!","Failed to start browser "+browser.getSerialnumber());
-//                return;
-//            }
-//
-//            Main.sout("Info","Succession to find browser "+browser.getSerialnumber());
-//
-//
-//        } else{ //Not Grid
-//            Main.sout("Error!","Can't run on Not Grid Tests");
-//            throw new Exception("Can't run not Grid tests for now");
-//        }
-//
-//
-//        //Add relevant info
-//        System.out.println("Client SessionID: " + driver.getSessionId());
-//        //driver.getRemoteAddress();
-//
-//    }
-
 
         public static boolean ifNotNeedToBeTestedAsFailed(String e, String thisRunBrowserType){
             boolean ifBrowserTypeIsProblematic = thisRunBrowserType==null
@@ -217,17 +221,7 @@ public class BaseTest_Browser extends CreateDriverForBrowser {
                 return false;
             }
 
-
-//        if(e.contains("Could not start selenium grid test"))
-//            {
-//                System.out.println("Could not start selenium grid test");
-//                return true;
-//            }
-//        else{
-//                return false;
-//            }
-//            //Optional[org.openqa.selenium.WebDriverException: Unable to parse remote response: Could not start selenium grid test. Test request timed out. | Build info: version: '3.12.0', revision: '7c6e0b3', time: '2018-05-08T14:04:26.12Z' | System info: host: 'lirans-mac-mini.experitest.local', ip: 'fe80:0:0:0:1c7d:e6e:561b:5b1b%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.12.6', java.version: '1.8.0_151' | Driver info: driver.version: RemoteWebDriver]
-
         }
+
 
 }
