@@ -136,8 +136,14 @@ public class InitDeviceList {
                 //Create new folder for this device
 //                device.setDeviceFolderPath(Main.createNewDir(Main.innerDirectoryPath, eElement.getAttribute("serialnumber")));
               //  System.out.println("device.setDeviceFolderPath is off");
-                devicesMap.add(device);
-
+                if (chooseSpecificAgent) {
+                    String CurrentDeviceAgent = eElement.getAttribute("dhminternalhost");
+                    if (CurrentDeviceAgent.equals(whichAgentToRun)){
+                        devicesMap.add(device);
+                    }
+                } else {
+                    devicesMap.add(device);
+                }
             }
         }
 
