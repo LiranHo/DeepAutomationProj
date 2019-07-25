@@ -64,7 +64,10 @@ public class Main {
         //TODO: fix that adb: or ios: also work
         //TODO: add option to run on random X devices
         chooseSpesificDevices = false;
-        Choosedevices.add("14bdd0fd9904");
+        chooseSpecificAgent = false; // will only effect if choose Specific Device is false
+        whichAgentToRun = "192.168.2.70"; // IP of the agent
+
+//        Choosedevices.add("14bdd0fd9904");
       //  Choosedevices.add("87345845f042238c45d80e66c7b95b48766337eb");
         //Choosedevices.add("34c8cc257d54");
 
@@ -256,6 +259,8 @@ public class Main {
     public static List<Browser> browsers = new ArrayList<>(); // the devices list which we run on
     public static List<String> Choosedevices = new ArrayList<>(); // the devices SN the user want to run on
     public static boolean chooseSpesificDevices; //Choose specific devices or run on all connected devices
+    public static boolean chooseSpecificAgent; // Choose specific agent to run connected devices
+    public static String whichAgentToRun; // IP of agent to run on
     public static boolean Runby_NumberOfRounds; //Choose nubmer of rounds or decided the time length you want to run
     public static int NumberOfRoundsToRun; //Choose nubmer of rounds
     public static int TimeToRun; //decided the time length you want to run: Hours * Min
