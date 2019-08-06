@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.platform.suite.api.SelectPackages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -184,6 +185,10 @@ public class BaseTest_Browser extends CreateDriverForBrowser {
         testName = this.getClass().getSimpleName() + " " + browserType;
         dc.setCapability("testName",testName);
         dc.setCapability(CapabilityType.BROWSER_NAME, browserType);
+
+        if(browserType.equalsIgnoreCase("internet explorer")){
+            dc.setCapability(InternetExplorerDriver.FORCE_CREATE_PROCESS, true);
+        }
 
 
     }
