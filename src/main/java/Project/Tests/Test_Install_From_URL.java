@@ -36,9 +36,12 @@ public class Test_Install_From_URL extends BaseTest {
         driver.findElement(By.xpath("//*[@id='amountTextField']")).sendKeys("50");
         driver.findElement(By.xpath("//*[@id='countryButton']")).click();
         Thread.sleep(2000);
-        driver.findElement(By.xpath("//*[@text='Switzerland']")).click();
-        driver.findElement(By.xpath("//*[@id='sendPaymentButton']")).click();
-        driver.findElement(By.xpath("//*[@text='Yes']")).click();
+        String deviceVersion = device.getVersion();
+        if (!deviceVersion.startsWith("13.")) {
+            driver.findElement(By.xpath("//*[@text='Switzerland']")).click();
+            driver.findElement(By.xpath("//*[@id='sendPaymentButton']")).click();
+            driver.findElement(By.xpath("//*[@text='Yes']")).click();
+        }
 
 
     }
