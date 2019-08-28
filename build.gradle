@@ -49,4 +49,8 @@ dependencies {
 //    compile group: 'org.python', name: 'jython', version: '2.7.0'
     compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
 
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.1.1'
+
+
+
 }

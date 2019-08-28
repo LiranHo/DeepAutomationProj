@@ -48,8 +48,6 @@ public class Main {
     public static Boolean cleanDeviceLogBeforeAllTests = true;
     public static void initTheMain() {
 
-        collectSupportData = true;
-        collectSupportDataV2 = false;
 
         EnterInput = false;
         collectSupportData = false;
@@ -82,14 +80,18 @@ public class Main {
         BatteryMonitoring = false;
 
         //T: ***Start To Prepare The Test***
-        if(startTime == null) {
+        if (startTime == null) {
             startTime = new SimpleDateFormat("dd.MM.yyyy - HH.mm.ss").format(new java.util.Date());
         }
         innerDirectoryPath = createNewDir(projectBaseDirectory, startTime); //create new directory for this test run
+
+
+
+
         //T: Init reports
         // INIT report and add first raw titles
         report = Reporter.Reporter("MainReport", innerDirectoryPath);
-        report.addRowToReport("Platform", "Test Name", "Device SN", "Agent","Status", "Reporter Status","Start Time" ,"End Time","Test During", "Session ID", "Report URL", "Exception");
+        report.addRowToReport("Platform", "Test Name", "Device SN", "Agent", "Status", "Reporter Status", "Start Time", "End Time", "Test During", "Session ID", "Report URL", "Exception");
 
         // INIT info file
         infoFile = new Files("Init Info", innerDirectoryPath);
@@ -99,7 +101,7 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         startTime = new SimpleDateFormat("dd.MM.yyyy - HH.mm.ss").format(new java.util.Date());
-        if(WriteToGoogleSheet) {
+        if (WriteToGoogleSheet) {
             System.out.println("The Main File Report is: " + "https://docs.google.com/spreadsheets/d/" + mainSpreadShit + "/edit#gid=1716146997");
             System.out.println("***");
             System.out.println("***");
@@ -115,11 +117,18 @@ public class Main {
         }
         initTheMain();
 
-        if(WriteToGoogleSheet) {
+        if (WriteToGoogleSheet) {
             //Add Cloud Info to the SummaryReport
             GoogleSheetSummaryReportIntegration.AddNumberToTheFirstColumn(ThisRunLineInSummaryReport);
             infoAboutTheRun.addInfoAboutCloud();
+        }else {
+            infoAboutTheRun.addInfoAboutCloudVersion_notGoogleSheet();
         }
+
+        //get the cloud version
+        String build = Cloud_version_number.substring(5);
+        Cloud_version_number = Cloud_version_number.substring(0,4);
+        Cloud_build_number = Integer.valueOf(build);
 
 
         //NOTE: EnterInput
@@ -127,7 +136,6 @@ public class Main {
             Project.MainWrapper.GetInput.getInputFromUser();
         else
             Project.MainWrapper.GetInput.printCurrentTunProperties();
-
 
 
         System.err.println("###STARTING...###");
@@ -143,7 +151,7 @@ public class Main {
             System.err.println("Failed to initDevicesList");
             infoFile.addRowToReport(true, "*** Failed to initDevicesList *** " + delimiter + e.getMessage(), true);
             ErrorFile.addRowToReport(true, "*** Failed to initDevicesList *** " + delimiter + e.getMessage(), true);
-            report.addRowToReport("FAILURE", "initDevicesList", "", "","Fail", "","0", "","","","","");
+            report.addRowToReport("FAILURE", "initDevicesList", "", "", "Fail", "", "0", "", "", "", "", "");
 
             e.printStackTrace();
         }
@@ -154,25 +162,25 @@ public class Main {
         infoFile.addRowToReport(false, cloudUser.toString());
 
         //T: 4: Create threads for each device and start to Run
-        if (Main.devices.size() <= 0 && Main.BROWSERS<=0) {
+        if (Main.devices.size() <= 0 && Main.BROWSERS <= 0) {
             throw new Exception("Devices list is 0 | There are no Browsers");
         }
         ExecutorService executorService = Executors.newCachedThreadPool();
 //        ArrayList<Future> futures = new ArrayList<>();
 
-        int i=0;
+        int i = 0;
         for (Device device : devices) {
-            if(NUMBER_OF_DEVICES_TO_RUN>=0) {
-                if( i>=NUMBER_OF_DEVICES_TO_RUN)
+            if (NUMBER_OF_DEVICES_TO_RUN >= 0) {
+                if (i >= NUMBER_OF_DEVICES_TO_RUN)
                     break;
                 i++;
             }
 
-                System.out.println("starting device - " + device.getSerialnumber());
-                Runner r = new Runner(device);
-                System.out.println("Runner is up for device - " + device.getSerialnumber());
+            System.out.println("starting device - " + device.getSerialnumber());
+            Runner r = new Runner(device);
+            System.out.println("Runner is up for device - " + device.getSerialnumber());
 //            futures.add(executorService.submit(r));
-                executorService.execute(r);
+            executorService.execute(r);
 
         }
 
@@ -186,14 +194,14 @@ public class Main {
                 Runner r = new Runner(browser);
                 System.out.println("Runner is up for device - " + browserName);
 //            futures.add(executorService.submit(r));
-                executorService.execute(r);
-            }
+            executorService.execute(r);
+        }
 
 
 
         //T: Create CollectSupportData Thread usinneg beeperControl
         //Run collect support data only if the test is long enough
-        if(collectSupportData) {
+        if (collectSupportData) {
             collectSupportData();
         }
 
@@ -308,6 +316,10 @@ public class Main {
     public static AtomicInteger SummaryReportVar = new AtomicInteger(0);
     public static String PrintDevicesInfo;
     public static String PrintDeviceSN;
+    public static String Cloud_version_number="0000";
+    public static int Cloud_build_number=0000;
+
+
 
     //**Google Sheets report**
     public static String SPREADSHEET_ID = "";
@@ -315,11 +327,11 @@ public class Main {
 
 
     //**Applications install paths**
-    public static String EriBankInstallOnComputerPath = "E:\\Files - Liran - 2\\Applications_apk\\EriBank\\eribank.apk";
+    public static String EriBankInstallOnComputerPath = "E:\\FilesLiran2\\Applications_apk\\EriBank\\eribank.apk";
     public static String EriBankLaunchName = "com.experitest.ExperiBank/.LoginActivity";
     public static String EriBankPackageName = "com.experitest.ExperiBank";
 
-    public static String UiCatalogInstallOnComputerPath = "E:\\Files - Liran - 2\\Applications_apk\\UiCatalog\\UICatalog.apk";
+    public static String UiCatalogInstallOnComputerPath = "E:\\FilesLiran2\\Applications_apk\\UiCatalog\\UICatalog.apk";
     public static String UiCatalogLaunchName = "com.experitest.uicatalog/.MainActivity";
     public static String UiCatalogPackageName = "com.experitest.uicatalog";
 
