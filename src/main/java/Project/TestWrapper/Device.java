@@ -85,6 +85,8 @@ public class Device extends Thread {
         return this.agent;
     }
 
+    public String getDeviceName() {return this.name;}
+
     public String getAgentName() {
         if(agent==null){
             return "no Agent";
