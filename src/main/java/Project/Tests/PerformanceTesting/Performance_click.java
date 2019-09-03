@@ -44,12 +44,10 @@ public class Performance_click extends PerformanceTesting_BaseTest {
         driver.findElement(By.xpath("//*[@id='loginButton']")).click();
         long end = System.currentTimeMillis();
 
-        long time= 0;
+        long time=0;
         if(!driver.findElements(By.xpath("//*[@id='makePaymentButton']")).isEmpty()) {
-            time = end - start;
-            int id = (int)new Date().getTime();
-            connectToDB.insert((id<0 ? id*(-1) : id), "click", device.getSerialnumber(), time, Main.Cloud_version_number, Main.Cloud_build_number, Main.Cloud_version_number+"."+Main.Cloud_build_number);
-        }
+            time =  calculate_commnand_time(start, end);
+       }
         driver.closeApp();
         System.out.println(device.getSerialnumber()+"| The command time is: "+time);
 
