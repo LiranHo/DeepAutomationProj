@@ -12,23 +12,23 @@ import java.sql.PreparedStatement;
 
 public class connectToDB {
 
-    static String url = "jdbc:postgresql://localhost:5432/Performance";
+    static String url = "jdbc:postgresql://192.168.2.225:5432/Performance";
     static String user = "postgres";
     static String password = "123456";
 
     public static void main(String[] args) {
 //        connect();
-        insert(12,"CN","SN",10.01, "12.8", 1111);
+        insert(12,"CN","SN",10.01, "12.8", 1111,"12.8.1111");
     }
 
 
-    public static void insert(int id, String commandname, String devicesn, double during, String version_number, int build_number){
+    public static void insert(int id, String commandname, String devicesn, double during, String version_number, int build_number,  String full_version){
 //        int id = 12;
 //        String commandname = "CN";
 //        String devicesn = "SN";
 //        double during = 10.01;
 
-        String query = "INSERT INTO gridcommands(id, commandname, devicesn, during, version_number, build_number) VALUES(?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO gridcommands(id, commandname, devicesn, during, version_number, build_number, full_version) VALUES(?, ?, ?, ?, ?, ? , ?)";
 
 
         try (Connection con = DriverManager.getConnection(url, user, password);
@@ -40,6 +40,7 @@ public class connectToDB {
             pst.setDouble(4, during);
             pst.setString(5, version_number);
             pst.setInt(6, build_number);
+            pst.setString(7, full_version);
 
             pst.executeUpdate();
 

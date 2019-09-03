@@ -48,7 +48,7 @@ public class Performance_click extends PerformanceTesting_BaseTest {
         if(!driver.findElements(By.xpath("//*[@id='makePaymentButton']")).isEmpty()) {
             time = end - start;
             int id = (int)new Date().getTime();
-            connectToDB.insert((id<0 ? id*(-1) : id), "click", device.getSerialnumber(), time, Main.Cloud_version_number, Main.Cloud_build_number);
+            connectToDB.insert((id<0 ? id*(-1) : id), "click", device.getSerialnumber(), time, Main.Cloud_version_number, Main.Cloud_build_number, Main.Cloud_version_number+"."+Main.Cloud_build_number);
         }
         driver.closeApp();
         System.out.println(device.getSerialnumber()+"| The command time is: "+time);
