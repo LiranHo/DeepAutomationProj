@@ -51,17 +51,45 @@ public class connectToDB {
     }
 
 
+    public static void insertDeviceToDB(String devicesn, String device_name, String os, String os_version){
+        String checkIFexistsQuery = "SELECT devicesn from devices WHERE devices.devicesn = ?;";
+
+        //check if thie device already exists, if not enter it to the data base
+
+        try (Connection con = DriverManager.getConnection(url, user, password);
+            PreparedStatement pStmnt  = con.prepareStatement(checkIFexistsQuery)) {
+            pStmnt.setString(1, devicesn);
+            ResultSet rs = pStmnt.executeQuery();
+
+            if (!rs.next()) {
+                String query = "INSERT INTO devices(devicesn, device_name, os, os_version) VALUES(?, ?, ?, ?)";
+                PreparedStatement pst = con.prepareStatement(query);
+
+                pst.setString(1, devicesn);
+                pst.setString(2, device_name);
+                pst.setString(3, os);
+                pst.setString(4, os_version);
+
+                pst.executeUpdate();
+
+
+            }} catch (SQLException ex) {
+
+            System.out.println(ex.getNextException().getMessage());
+        }
+    }
+
 
     public static void connect(){
-     try (Connection con = DriverManager.getConnection(url, user, password);
-    Statement st = con.createStatement();
-    ResultSet rs = st.executeQuery("SELECT * FROM gridcommands")) {
-        if (rs.next()) {
-            System.out.println(rs.getString(1));
+        try (Connection con = DriverManager.getConnection(url, user, password);
+             Statement st = con.createStatement();
+             ResultSet rs = st.executeQuery("SELECT * FROM gridcommands")) {
+            if (rs.next()) {
+                System.out.println(rs.getString(1));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getNextException().getMessage());
         }
-    } catch (SQLException ex) {
-         System.out.println(ex.getNextException().getMessage());
-     }
     }
 
 
