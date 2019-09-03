@@ -14,10 +14,10 @@ public class PerformanceTesting_BaseTest extends BaseTest {
     public void setUp_extension() throws MalformedURLException {
     }
 
-    public long calculate_commnand_time(long start, long end){
+    public long calculate_commnand_time(String commandName, long start, long end){
         long time = end - start;
         int id = (int)new Date().getTime();
-        connectToDB.insert((id<0 ? id*(-1) : id), "click", device.getSerialnumber(), time, Main.Cloud_version_number, Main.Cloud_build_number, Main.Cloud_version_number+"."+Main.Cloud_build_number);
+        connectToDB.insert((id<0 ? id*(-1) : id), commandName, device.getSerialnumber(), time, Main.Cloud_version_number, Main.Cloud_build_number, Main.Cloud_version_number+"."+Main.Cloud_build_number);
 
         return time;
 

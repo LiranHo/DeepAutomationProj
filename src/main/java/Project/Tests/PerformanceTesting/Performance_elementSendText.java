@@ -1,24 +1,16 @@
 package Project.Tests.PerformanceTesting;
 
 
-import Project.Main;
-import Project.PerformanceTesting.connectToDB;
-import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.IOSMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ScreenOrientation;
 
+import javax.lang.model.element.Element;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Date;
-
-public class Performance_click extends PerformanceTesting_BaseTest {
+public class Performance_elementSendText extends PerformanceTesting_BaseTest {
     //Tests in Eribank app
 
     @Override
@@ -36,18 +28,17 @@ public class Performance_click extends PerformanceTesting_BaseTest {
     }
 
     @Test
-    public void Performance_click() {
+    public void Performance_elementSendText() {
         driver.rotate(ScreenOrientation.PORTRAIT);
-        driver.findElement(By.xpath("//*[@id='usernameTextField']")).sendKeys("company");
-        driver.hideKeyboard();
-        driver.findElement(By.xpath("//*[@id='passwordTextField']")).sendKeys("company");
         long start = System.currentTimeMillis();
-        driver.findElement(By.xpath("//*[@id='loginButton']")).click();
+        driver.findElement(By.xpath("//*[@id='usernameTextField']")).sendKeys("performanceTest");
         long end = System.currentTimeMillis();
+        driver.hideKeyboard();
 
         long time=0;
-        if(!driver.findElements(By.xpath("//*[@id='makePaymentButton']")).isEmpty()) {
-            time =  calculate_commnand_time("Click",start, end);
+
+        if(driver.findElement(By.xpath("//*[@id='usernameTextField']")).getAttribute("text").equalsIgnoreCase("performanceTest")) {
+            time =  calculate_commnand_time("Send Keys",start, end);
        }
         driver.closeApp();
         System.out.println(device.getSerialnumber()+"| The command time is: "+time);
